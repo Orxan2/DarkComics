@@ -1,0 +1,225 @@
+﻿@model HomeDetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+
+<!-- Comics Detail Start -->
+<section id="detail" class="bg-warning">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg" height="650"
+                     class="w-100" alt="cover" />
+            </div>
+            <div class="col-12 col-lg-8 position-relative">
+                <h1 class="text-center">Details</h1>
+                <ul class="details list-group">
+                    <li class="list-group-item border-0 bg-transparent"><h3>@(Model.Comic.IsTeam? @Model.Comic.Team.Name.ToString() : Model.Comic.Category.Character.Name.ToString()) @Model.Comic.Category.Name #@Model.Comic.Episode</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Published :</strong>@Model.Comic.CreatedDate.ToString("dd/MM/yyyy")</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Written By : </strong>Orxan Ibrahimov</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Art By : </strong>Orxan Ibrahimov</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Price : </strong>$@Model.Comic.Price.ToString("0.00")</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Type : </strong>@Model.Comic.ComicType</h3></li>
+                    <li class="list-group-item border-0 bg-transparent">
+                        <h3>
+                            <strong>Heroes : </strong>
+                            <img src="assets/img/comics/nightwing-rebirth/nightwing.png" width="50" height="50" class="rounded-circle" alt="nightwing" title="Nightwing - Dick Grayson" />
+                            <img src="assets/img/comics/batman-rebirth/batman-2.png" width="50" height="50" class="rounded-circle" alt="batman" title="Batman - Bruce Wayne" />
+                        </h3>
+                    </li>
+                    <li class="list-group-item border-0 bg-transparent">
+                        <p>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet dignissimos illo asperiores
+                            dolores, cumque placeat consequatur itaque quaerat cum doloremque commodi et repellat ad
+                            libero odit voluptates! Commodi, cum dolorem!
+                            Repudiandae asperiores modi necessitatibus ipsam, quibusdam, obcaecati assumenda, maiores
+                            blanditiis accusamus non itaque expedita adipisci similique impedit. Neque odio ipsam
+                            dolorem, quibusdam, ad recusandae quasi quidem possimus porro debitis quisquam?
+                            Quibusdam, consequatur. Inventore, esse animi? Laboriosam veritatis id saepe quae.
+                            Aspernatur perspiciatis ab itaque quod ullam non voluptatibus porro numquam cum repudiandae
+                            accusamus, harum quisquam possimus. Pariatur, voluptatibus? Qui, ex?
+                        </p>
+                    </li>
+                </ul>
+                <div class="d-none d-lg-block position-absolute top-0 end-0">
+                    <img src="assets/img/superman.png" style="mix-blend-mode: soft-light;" height="500" alt="deadpool" />
+                </div>
+                <a class="btn btn-success text-center d-lg-block">Add To Cart</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Comics Detail End -->
+
+<!-- More Than This Series End -->
+<section id="similar">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">More Than This Series</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="owl-carousel owl-theme">
+                    <div class="item">
+                        <div class="similar-comic">
+                            <a href="#" class="similar-comic__body">
+                                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                                <img src="assets/img/comics/nightwing-rebirth/nigtwing_volume.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="similar-comic__footer">
+                                <a href="" class="similar-comic__title my-3">Nightwing Rebirth #1</a>
+                                <a href="" class="similar-comic__btn">Go Detail</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="similar-comic">
+                            <a href="#" class="similar-comic__body">
+                                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                                <img src="assets/img/comics/nightwing-rebirth/nigtwing_volume.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="similar-comic__footer">
+                                <a href="" class="similar-comic__title my-3">Nightwing Rebirth #1</a>
+                                <a href="" class="similar-comic__btn">Go Detail</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="similar-comic">
+                            <a href="#" class="similar-comic__body">
+                                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                                <img src="assets/img/comics/nightwing-rebirth/nigtwing_volume.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="similar-comic__footer">
+                                <a href="" class="similar-comic__title my-3">Nightwing Rebirth #1</a>
+                                <a href="" class="similar-comic__btn">Go Detail</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- More Than This Series Start-->
+
+<!-- May be You Also Like Start -->
+<section id="recommendation">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">May be You Also Like</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="owl-carousel owl-theme">
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Nightwing Rebirth #2</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Cover</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/spiderman/amazing-spiderman-vol1-cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Amazing Spiderman #4</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Cover</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/batman-rebirth/batman-rebirth-vol1-cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Batman Rebirth Vol 3</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Book</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/nightwing-rebirth/Nightwing_Rebirth_Vol_1_1_cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Nightwing Rebirth #2</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Cover</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/spiderman/amazing-spiderman-vol1-cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Amazing Spiderman #4</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Cover</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="recommendation">
+                            <a href="#" class="recommendation__body">
+                                <img src="assets/img/comics/batman-rebirth/batman-rebirth-vol1-cover.jpg"
+                                     class="w-100 h-100" alt="volume">
+                            </a>
+                            <div class="recommendation__footer w-100 d-flex flex-column">
+                                <a href="">Batman Rebirth Vol 3</a>
+                                <a href="">Orxan Ibrahimov</a>
+                                <a href="">Book</a>
+                                <a href="" class="text-danger">$8.00</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- May be You Also Like End -->
