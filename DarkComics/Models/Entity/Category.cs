@@ -14,9 +14,12 @@ namespace DarkComics.Models.Entity
         [Required, StringLength(maximumLength: 100)]
         public string Name { get; set; }
         [Required, StringLength(maximumLength: 50)]
-        public string Image { get; set; }
+        public string Cover { get; set; }
         [Required, NotMapped]
-        public IFormFile Photo { get; set; }
+        public IFormFile FirstPhoto { get; set; }
+        public string Backface { get; set; }
+        [Required, NotMapped]
+        public IFormFile SecondPhoto { get; set; }
         public DateTime CreatedDate { get; set; }
         public Character Character { get; set; }
         public int? CharacterId { get; set; }

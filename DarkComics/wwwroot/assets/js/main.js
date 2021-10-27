@@ -10,12 +10,12 @@ $(document).ready(function () {
         responsive: {
             0: {
                 items: 1,
-                nav: true               
+                nav: true
             },
             480: {
                 items: 2,
                 nav: false,
-                margin:5
+                margin: 5
             },
             768: {
                 items: 3,
@@ -45,6 +45,46 @@ $(document).ready(function () {
             $(valueOfElement.children[0].children[1]).slideToggle();
         });
     });
+    let skip = 3;
+    let take = 3;
+    $('#loadMore').on('click', function () {
+        Load(skip, take);
+        skip += take;
+        let count = $('#loadMore').attr('data-count');
+        if (skip >= count) {
+            $('#loadMore').css('display','none');
+        }
+    });
 
+    $('#search .form-control').on('keyup', () => {
+        //let word = document.querySelector('#search .form-control').valueOfElement;
+        let word = $('#search .form-control').val();
+        console.log(word);
+        $('#addHere .col-12').each(function (index, element) {
+            //console.log(element)
+            $(element).css("display", "none");           
+        });
+        if (word == "") {
+            Load(0, 3);
+        }
+        $.ajax({
+            url: `/Comic/Search?search=${word}`,
+            type: "Get",
+            success: function (response) {
+                $('#addHere').append(response);
+            }
+        })
+    });
+    function Load(skip, take) {
+        //console.log('okay');
+        $.ajax({
+            url: `/Comic/LoadMore?skip=${skip}&take=${take}`,
+            type: "Get",
+            success: function (response) {
+                $('#addHere').append(response);
+            }
+        })
+    }
+
+    
 });
-

@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211027201834_AddProfileImage")]
+    partial class AddProfileImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +150,6 @@ namespace DarkComics.Migrations
                             IsActive = true,
                             Name = "Bruce Wayne",
                             NickName = "Dark Knight",
-                            Profile = "batman-profile.png",
                             SecondImage = "batman-2.png"
                         },
                         new
@@ -162,7 +163,6 @@ namespace DarkComics.Migrations
                             IsActive = true,
                             Name = "Dick  Grayson",
                             NickName = "Wonder Boy",
-                            Profile = "nightwing-profile.png",
                             SecondImage = "nightwing-2.png"
                         },
                         new
@@ -176,7 +176,6 @@ namespace DarkComics.Migrations
                             IsActive = true,
                             Name = "Peter Parker",
                             NickName = "Spidey",
-                            Profile = "batman-profile.png",
                             SecondImage = "batman-2.png"
                         });
                 });

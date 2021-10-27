@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211027121823_firstMigration")]
+    partial class firstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,14 +82,6 @@ namespace DarkComics.Migrations
                             Cover = "cover.jpg",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "New 52"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Backface = "backface.jpg",
-                            Cover = "cover.jpg",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Titans"
                         });
                 });
 
@@ -126,7 +120,7 @@ namespace DarkComics.Migrations
                     b.Property<string>("NickName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Profile")
+                    b.Property<string>("Powers")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondImage")
@@ -143,13 +137,10 @@ namespace DarkComics.Migrations
                             AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstAppearance = "Dedective Comics #1",
-                            FirstImage = "batman.png",
                             HeroName = "Batman",
                             IsActive = true,
                             Name = "Bruce Wayne",
-                            NickName = "Dark Knight",
-                            Profile = "batman-profile.png",
-                            SecondImage = "batman-2.png"
+                            NickName = "Dark Knight"
                         },
                         new
                         {
@@ -162,7 +153,6 @@ namespace DarkComics.Migrations
                             IsActive = true,
                             Name = "Dick  Grayson",
                             NickName = "Wonder Boy",
-                            Profile = "nightwing-profile.png",
                             SecondImage = "nightwing-2.png"
                         },
                         new
@@ -171,13 +161,10 @@ namespace DarkComics.Migrations
                             AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstAppearance = "Spiderman #1",
-                            FirstImage = "batman.png",
                             HeroName = "Spiderman",
                             IsActive = true,
                             Name = "Peter Parker",
-                            NickName = "Spidey",
-                            Profile = "batman-profile.png",
-                            SecondImage = "batman-2.png"
+                            NickName = "Spidey"
                         });
                 });
 

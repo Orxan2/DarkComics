@@ -13,6 +13,8 @@ namespace DarkComics.Models.Entity
 {
     public class Comic : BaseEntity
     {
+
+       
         [Required,StringLength(maximumLength:100)]
         public string Name { get; set; }
         [Required,NotMapped]
@@ -20,6 +22,7 @@ namespace DarkComics.Models.Entity
         [BindNever]
         public string Image { get; set; }
         public int Volume { get; set; }
+        public int SaleQuantity { get; set; }
         public double Episode { get; set; }
         [Required]
         public double Price { get; set; }

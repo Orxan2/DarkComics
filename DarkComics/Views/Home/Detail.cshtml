@@ -24,8 +24,11 @@
                     <li class="list-group-item border-0 bg-transparent">
                         <h3>
                             <strong>Heroes : </strong>
-                            <img src="assets/img/comics/nightwing-rebirth/nightwing.png" width="50" height="50" class="rounded-circle" alt="nightwing" title="Nightwing - Dick Grayson" />
-                            <img src="assets/img/comics/batman-rebirth/batman-2.png" width="50" height="50" class="rounded-circle" alt="batman" title="Batman - Bruce Wayne" />
+                            @foreach (var comicCharacter in Model.Comic.ComicCharacters)
+                            {
+                                <img src="~/assets/img/@comicCharacter.Character.HeroName.ToLower()/@comicCharacter.Character.Profile" width="50" height="50" class="rounded-circle" alt="@comicCharacter.Character.HeroName" title="@comicCharacter.Character.HeroName - @comicCharacter.Character.Name" />
+                            }
+                            
                         </h3>
                     </li>
                     <li class="list-group-item border-0 bg-transparent">

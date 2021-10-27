@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    [Migration("20211026114828_UpdateCharacterTables")]
-    partial class UpdateCharacterTables
+    [Migration("20211027194352_AddingCategory")]
+    partial class AddingCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,18 +28,21 @@ namespace DarkComics.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Backface")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CharacterId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Cover")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("Date")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -56,26 +59,37 @@ namespace DarkComics.Migrations
                         new
                         {
                             Id = 1,
+                            Backface = "backface.jpg",
                             CharacterId = 2,
+                            Cover = "cover.jpg",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "nightwing.png",
                             Name = "Rebirth"
                         },
                         new
                         {
                             Id = 2,
+                            Backface = "backface.jpg",
                             CharacterId = 1,
+                            Cover = "cover.jpg",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "nightwing.png",
                             Name = "Dedective Comics"
                         },
                         new
                         {
                             Id = 3,
+                            Backface = "backface.jpg",
                             CharacterId = 2,
+                            Cover = "cover.jpg",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "nightwing-3.png",
                             Name = "New 52"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Backface = "backface.jpg",
+                            Cover = "cover.jpg",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Titans"
                         });
                 });
 
@@ -97,6 +111,9 @@ namespace DarkComics.Migrations
                     b.Property<string>("FirstAppearance")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HeroName")
                         .HasColumnType("nvarchar(max)");
 
@@ -111,7 +128,7 @@ namespace DarkComics.Migrations
                     b.Property<string>("NickName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Powers")
+                    b.Property<string>("SecondImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -122,23 +139,37 @@ namespace DarkComics.Migrations
                         new
                         {
                             Id = 1,
+                            AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsActive = false,
-                            Name = "Batman"
+                            FirstAppearance = "Dedective Comics #1",
+                            HeroName = "Batman",
+                            IsActive = true,
+                            Name = "Bruce Wayne",
+                            NickName = "Dark Knight"
                         },
                         new
                         {
                             Id = 2,
+                            AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsActive = false,
-                            Name = "Nightwing"
+                            FirstAppearance = "Dedective Comics #14",
+                            FirstImage = "nightwing.png",
+                            HeroName = "Nightwing",
+                            IsActive = true,
+                            Name = "Dick  Grayson",
+                            NickName = "Wonder Boy",
+                            SecondImage = "nightwing-2.png"
                         },
                         new
                         {
                             Id = 3,
+                            AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsActive = false,
-                            Name = "Spiderman"
+                            FirstAppearance = "Spiderman #1",
+                            HeroName = "Spiderman",
+                            IsActive = true,
+                            Name = "Peter Parker",
+                            NickName = "Spidey"
                         });
                 });
 
@@ -240,6 +271,9 @@ namespace DarkComics.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("SaleQuantity")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
@@ -261,12 +295,14 @@ namespace DarkComics.Migrations
                             CategoryId = 1,
                             ComicType = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Episode = 2.0,
-                            IsActive = false,
+                            Episode = 1.0,
+                            Image = "1.jpg",
+                            IsActive = true,
                             IsTeam = false,
                             Name = "Night",
                             Price = 9.5,
                             Quantity = 23,
+                            SaleQuantity = 0,
                             Volume = 0
                         },
                         new
@@ -276,11 +312,13 @@ namespace DarkComics.Migrations
                             ComicType = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Episode = 6.0,
-                            IsActive = false,
+                            Image = "1.jpg",
+                            IsActive = true,
                             IsTeam = false,
                             Name = "orxan",
                             Price = 4.5,
                             Quantity = 12,
+                            SaleQuantity = 0,
                             Volume = 0
                         },
                         new
@@ -290,11 +328,61 @@ namespace DarkComics.Migrations
                             ComicType = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Episode = 9.0,
-                            IsActive = false,
+                            Image = "1.jpg",
+                            IsActive = true,
                             IsTeam = false,
                             Name = "bat",
                             Price = 6.0,
                             Quantity = 6,
+                            SaleQuantity = 0,
+                            Volume = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            ComicType = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Episode = 0.0,
+                            Image = "1.jpg",
+                            IsActive = true,
+                            IsTeam = false,
+                            Name = "bat",
+                            Price = 13.4,
+                            Quantity = 3,
+                            SaleQuantity = 0,
+                            Volume = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 1,
+                            ComicType = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Episode = 0.0,
+                            Image = "1.jpg",
+                            IsActive = true,
+                            IsTeam = false,
+                            Name = "dick",
+                            Price = 13.4,
+                            Quantity = 3,
+                            SaleQuantity = 0,
+                            Volume = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            ComicType = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Episode = 30.0,
+                            Image = "1.jpg",
+                            IsActive = true,
+                            IsTeam = false,
+                            Name = "orxan",
+                            Price = 4.5,
+                            Quantity = 12,
+                            SaleQuantity = 0,
                             Volume = 0
                         });
                 });

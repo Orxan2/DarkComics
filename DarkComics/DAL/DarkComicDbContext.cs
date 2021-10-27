@@ -77,18 +77,43 @@ namespace DarkComics.DAL
                 new Character
                 {
                     Id = 1,
-                    Name = "Batman"
+                    Name = "Bruce Wayne",
+                    NickName = "Dark Knight",
+                    AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                    HeroName = "Batman",
+                    FirstAppearance = "Dedective Comics #1",
+                    FirstImage = "batman.png",
+                    SecondImage = "batman-2.png",
+                    Profile = "batman-profile.png",
+                    IsActive = true
                 },
                 new Character
                  {
-                     Id = 2,
-                     Name = "Nightwing"
-                 },
+                    Id = 2,
+                    Name = "Dick  Grayson",
+                    NickName = "Wonder Boy",
+                    AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                    HeroName = "Nightwing",
+                    FirstAppearance = "Dedective Comics #14",
+                    FirstImage = "nightwing.png",
+                    SecondImage = "nightwing-2.png",
+                    Profile = "nightwing-profile.png",
+                    IsActive = true
+                    
+                },
                 new Character
                   {
                       Id = 3,
-                      Name = "Spiderman"
-                  }
+                      Name = "Peter Parker",
+                    NickName = "Spidey",
+                    AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                    HeroName = "Spiderman",
+                    FirstAppearance = "Spiderman #1",
+                    FirstImage = "batman.png",
+                    SecondImage = "batman-2.png",
+                    Profile = "batman-profile.png",
+                    IsActive = true
+                }
                 ));
             modelBuilder.Entity<TeamCharacter>(tc=>tc.HasData(
                 new TeamCharacter
@@ -115,23 +140,33 @@ namespace DarkComics.DAL
                 {
                    Id = 1,
                    Name = "Rebirth",
-                   CharacterId = 2,                   
-                   Image = "nightwing.png"
+                   CharacterId = 2,
+                    Cover = "cover.jpg",
+                    Backface = "backface.jpg"
                 },
                 new Category
                 {
                     Id = 2,
                     Name = "Dedective Comics",
                     CharacterId = 1,
-                    Image = "nightwing.png"
+                    Cover = "cover.jpg",
+                    Backface = "backface.jpg"
                 },
                 new Category
                 {
                     Id = 3,
                     Name = "New 52",
                     CharacterId = 2,
-                    Image = "nightwing-3.png"
-                }
+                    Cover = "cover.jpg",
+                    Backface = "backface.jpg"
+                },
+                 new Category
+                 {
+                     Id = 4,
+                     Name = "Titans",
+                     Cover = "cover.jpg",
+                     Backface = "backface.jpg"
+                 }
                 ));
             modelBuilder.Entity<Comic>(c => c.HasData(
                 new Comic
@@ -140,10 +175,11 @@ namespace DarkComics.DAL
                     Name = "Night",
                     CategoryId = 1,
                     ComicType = ComicType.Cover,
-                    Episode = 2,
+                    Episode = 1,
                     Quantity = 23,
                     Price = 9.50,
-                    IsTeam = false
+                    Image = "1.jpg",
+                    IsActive = true
                 },
                 new Comic
                 {
@@ -154,8 +190,9 @@ namespace DarkComics.DAL
                     Episode = 6,
                     Quantity = 12,
                     Price = 4.50,
-                    IsTeam = false
-                },
+                    Image = "1.jpg",
+                    IsActive = true
+                },                
                 new Comic
                 {
                     Id = 3,
@@ -165,8 +202,45 @@ namespace DarkComics.DAL
                     Episode = 9,
                     Quantity = 6,
                     Price = 6,
-                    IsTeam = false
-                }
+                    Image = "1.jpg",
+                    IsActive = true
+                },
+                 new Comic
+                 {
+                     Id = 4,
+                     Name = "bat",
+                     CategoryId = 2,
+                     ComicType = ComicType.Book,
+                     Volume = 1,
+                     Quantity = 3,
+                     Price = 13.40,
+                     Image = "1.jpg",
+                     IsActive = true
+                 },
+                  new Comic
+                  {
+                      Id = 5,
+                      Name = "dick",
+                      CategoryId = 1,
+                      ComicType = ComicType.Book,
+                      Volume = 1,
+                      Quantity = 3,
+                      Price = 13.40,
+                      Image = "1.jpg",
+                      IsActive = true
+                  },
+                   new Comic
+                   {
+                       Id = 6,
+                       Name = "orxan",
+                       CategoryId = 3,
+                       ComicType = ComicType.Cover,
+                       Episode = 30,
+                       Quantity = 12,
+                       Price = 4.50,
+                       Image = "1.jpg",
+                       IsActive = true
+                   }
                 ));
             modelBuilder.Entity<ComicCharacter>(cc=>cc.HasData(
                 new ComicCharacter
@@ -192,7 +266,7 @@ namespace DarkComics.DAL
                new Power
                {
                    Id = 1,
-                   Name = "super speed"
+                   Name = "super speed"                   
                },
                new Power
                {
