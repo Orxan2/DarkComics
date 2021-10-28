@@ -39,7 +39,39 @@
     </div>
 </section>
 <!-- Last Week Added Comics Start-->
+<!-- home section starts  -->
+<section class="home" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="content">
+                    <h3>upto 75% off</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam deserunt nostrum
+                        accusamus. Nam
+                        alias sit necessitatibus, aliquid ex minima at!
+                    </p>
+                    <a href="#" class="btn">shop now</a>
+                </div>
+            </div>
 
+            <div class="col-12 col-lg-6">
+                <div class="swiper books-slider">
+                    <div class="swiper-wrapper">
+                        @foreach (var comic in Model.Comics)
+                        {
+                            <a href="#" class="swiper-slide my-4">
+                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower().Replace(" ","-")/@comic.Episode/@comic.Image" alt="">
+                            </a>
+                        }
+                    </div>
+                    <img src="~/assets/img/stand.png" class="stand" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- home section end  -->
 <!-- Characters Section Start -->
 <section id="characters" class="py-5">
     <div class="container">
@@ -67,7 +99,7 @@
                                 <h1 class="text-center">@character.Name - @character.HeroName</h1>
                                 <div class="card-body">
                                     <p>
-                                       @character.AboutCharacter.ToString()
+                                        @character.AboutCharacter.ToString()
                                     </p>
                                 </div>
                                 <div class="card-footer">
@@ -83,7 +115,106 @@
     </div>
 </section>
 <!-- Characters Section End -->
+<!-- featured section starts  -->
+<section class="featured" id="featured">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="heading"> <span>featured books</span> </h1>
+                <div class="swiper featured-slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide box">
+                            <div class="icons">
+                                <a href="#" class="fas fa-search"></a>
+                                <a href="#" class="fas fa-heart"></a>
+                                <a href="#" class="fas fa-eye"></a>
+                            </div>
+                            <div class="image">
+                                <img src="assets/img/book-1.png" alt="book-1" />
+                            </div>
+                            <div class="content">
+                                <h3>featured books</h3>
+                                <div class="price">$15.99 <span>$20.99</span></div>
+                                <a href="#" class="btn">add to cart</a>
+                            </div>
+                        </div>
 
+                        <div class="swiper-slide box">
+                            <div class="icons">
+                                <a href="#" class="fas fa-search"></a>
+                                <a href="#" class="fas fa-heart"></a>
+                                <a href="#" class="fas fa-eye"></a>
+                            </div>
+                            <div class="image">
+                                <img src="assets/img/book-2.png" alt="book-2" />
+                            </div>
+                            <div class="content">
+                                <h3>featured books</h3>
+                                <div class="price">$15.99 <span>$20.99</span></div>
+                                <a href="#" class="btn">add to cart</a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide box">
+                            <div class="icons">
+                                <a href="#" class="fas fa-search"></a>
+                                <a href="#" class="fas fa-heart"></a>
+                                <a href="#" class="fas fa-eye"></a>
+                            </div>
+                            <div class="image">
+                                <img src="assets/img/book-3.png" alt="book-3" />
+                            </div>
+                            <div class="content">
+                                <h3>featured books</h3>
+                                <div class="price">$15.99 <span>$20.99</span></div>
+                                <a href="#" class="btn">add to cart</a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide box">
+                            <div class="icons">
+                                <a href="#" class="fas fa-search"></a>
+                                <a href="#" class="fas fa-heart"></a>
+                                <a href="#" class="fas fa-eye"></a>
+                            </div>
+                            <div class="image">
+                                <img src="assets/img/book-4.png" alt="book-4" />
+                            </div>
+                            <div class="content">
+                                <h3>featured books</h3>
+                                <div class="price">$15.99 <span>$20.99</span></div>
+                                <a href="#" class="btn">add to cart</a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide box">
+                            <div class="icons">
+                                <a href="#" class="fas fa-search"></a>
+                                <a href="#" class="fas fa-heart"></a>
+                                <a href="#" class="fas fa-eye"></a>
+                            </div>
+                            <div class="image">
+                                <img src="assets/img/book-5.png" alt="book-5" />
+                            </div>
+                            <div class="content">
+                                <h3>featured books</h3>
+                                <div class="price">$15.99 <span>$20.99</span></div>
+                                <a href="#" class="btn">add to cart</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- featured section ends -->
 <!-- Comics Start -->
 <section id="bestComics">
     <div class="container">
@@ -91,13 +222,13 @@
             <div class="col-12 position-relative">
                 <span class="heading px-4">The Best 3 Comics</span>
                 <!-- <div class="d-none d-lg-flex justify-content-between w-100">
-                    <img src="~/assets/img/cap-logo.png" width="250" alt="hero-read-comic" />
-                    <img src="~/assets/img/batman.png" width="250" alt="hero-read-comic" />
-                    <img src="~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
+                    <img src="~/~/assets/img/cap-logo.png" width="250" alt="hero-read-comic" />
+                    <img src="~/~/assets/img/batman.png" width="250" alt="hero-read-comic" />
+                    <img src="~/~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
                 </div> -->
                 <div id="hero-background" class="d-none d-lg-flex justify-content-between w-100">
-                    <img src="~/assets/img/cap-logo.png" width="300" alt="hero-read-comic" />
-                    <img src="~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
+                    <img src="~/~/assets/img/cap-logo.png" width="300" alt="hero-read-comic" />
+                    <img src="~/~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
                 </div>
             </div>
         </div>
@@ -108,23 +239,23 @@
                     <div class="cover my-5">
                         <div class="comics">
                             <figure class="front">
-                                <img src="~/assets/img/comics/spiderman/spiderman-vol1-cover.jpg" class="w-100 h-100"
+                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower()/@comic.Category.Cover" class="w-100 h-100"
                                      alt="cover" />
                             </figure>
                             <figure class="back">
-                                <img src="~/assets/img/comics/spiderman/spiderman-vol1-backfacejpg.jpg"
+                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower()/@comic.Category.Backface"
                                      class="w-100 h-100" alt="backface" />
                             </figure>
                         </div>
                         <div class="cover__info text-white px-3">
-                            <h5>@comic.ComicCharacters[0].Character.HeroName @comic.Category.Name @comic.Episode</h5>
+                            <h5>@comic.Category.Character.HeroName @comic.Category.Name #@comic.Episode</h5>
                             <p><strong>Type : </strong>@comic.ComicType.ToString()</p>
                             <p><strong>Price : </strong>$@comic.Price.ToString("0.00")</p>
                             <p><strong>Art By : </strong>Orxan Ibra</p>
                             <p><strong>Written By : </strong>Orxan Ibra</p>
                             <!-- <p><strong>Page Count : </strong>13</p> -->
                             <p><strong>Category : </strong>@comic.Category.Name</p>
-                            <a  asp-controller="Home" asp-action="Detail" asp-route-id="@comic.Id" class="cover__btn">Go Detail</a>
+                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@comic.Id" class="cover__btn">Go Detail</a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +265,6 @@
     </div>
 </section>
 <!-- Comics End -->
-
 <!-- Toys Start -->
 <section id="toys">
     <div class="container">
@@ -143,7 +273,7 @@
                 <span class="heading px-4">BestSeller Toys</span>
             </div>
             <div id="hero-background" class="d-none d-lg-flex justify-content-center w-100 py-5">
-                <img src="assets/img/toy.png" width="300" alt="toy-read-comic" />
+                <img src="~/assets/img/toy.png" width="300" alt="toy-read-comic" />
             </div>
         </div>
 
@@ -152,7 +282,7 @@
                 <div class="item rounded">
                     <div class="toy-card">
                         <a href="" class="toy-card__body">
-                            <img src="assets/img/cap-logo.png" alt="cap" />
+                            <img src="~/assets/img/cap-logo.png" alt="cap" />
                         </a>
                         <div class="toy-card__footer py-2">
                             <h3 class="px-3">Cap Toy</h3>
@@ -168,7 +298,7 @@
                 <div class="item rounded">
                     <div class="toy-card">
                         <a href="" class="toy-card__body">
-                            <img src="assets/img/toy.png" alt="cap" />
+                            <img src="~/assets/img/toy.png" alt="cap" />
                         </a>
                         <div class="toy-card__footer py-2">
                             <h3 class="px-3">Cap Toy</h3>
@@ -184,7 +314,7 @@
                 <div class="item rounded">
                     <div class="toy-card">
                         <a href="" class="toy-card__body">
-                            <img src="assets/img/cap-logo.png" alt="cap" />
+                            <img src="~/assets/img/cap-logo.png" alt="cap" />
                         </a>
                         <div class="toy-card__footer py-2">
                             <h3 class="px-3">Cap Toy</h3>
@@ -202,7 +332,6 @@
     </div>
 </section>
 <!-- Toys End -->
-
 <!-- Current Series Start -->
 <section id="current">
     <div class="container">
@@ -218,7 +347,7 @@
                     <a class="comic-box">
                         <div class="comic-box__body">
                             <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name/@comic.Category.Cover" class="w-100 h-100" alt="current" />
-                            
+
                         </div>
                         <div class="comic-box__footer">
                             <h5 class="text-white">@comic.Category.Character.HeroName - @comic.Category.Name</h5>

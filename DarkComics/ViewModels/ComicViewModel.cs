@@ -12,7 +12,6 @@ namespace DarkComics.ViewModels
         public List<Comic> OneShot { get; set; }
         public List<Comic> Series { get; set; }
         public List<Category> Categories { get; set; }
-        public int ComicQuantity { get; set; }
         
     }
 }

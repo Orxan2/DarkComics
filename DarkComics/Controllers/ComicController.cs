@@ -20,6 +20,8 @@ namespace DarkComics.Controllers
         }
         public IActionResult Index()
         {
+            int take = 3;
+
             ComicViewModel comicViewModel = new ComicViewModel
             {
                 Books = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
@@ -27,10 +29,15 @@ namespace DarkComics.Controllers
                 OneShot = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
                 Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.SingleCover).ToList(),
                 Categories = _context.Categories.Include(c => c.Comics).Include(c => c.Character).ThenInclude(c => c.CharacterPowers).ThenInclude(c => c.Power).
-                OrderBy(c => c.Id).Take(3).ToList(),
-                ComicQuantity = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
-                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Cover).Count()
+                OrderBy(c => c.Id).Take(take).ToList(),
+                Series = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
+                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Cover).ToList(),
             };
+
+            int count = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
+                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Cover).Count();
+
+            HttpContext.Response.Cookies.Append("ComicQuantity", count.ToString());
 
             return View(comicViewModel);
         }
@@ -40,10 +47,10 @@ namespace DarkComics.Controllers
             ComicViewModel comicViewModel = new ComicViewModel
             {
                 Categories = _context.Categories.Include(c => c.Character).ThenInclude(c => c.CharacterPowers).ThenInclude(c => c.Power).
-                OrderBy(c => c.Id).Skip(skip).Take(take).ToList()
-                
+                OrderBy(c => c.Id).Skip(skip).Take(take).ToList()                
             };           
 
+            
             return View("_LoadMore", comicViewModel);
         }
 

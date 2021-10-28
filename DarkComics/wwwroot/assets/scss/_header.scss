@@ -27,4 +27,25 @@ header{
             margin: 0 .5rem;
         }  
     }
+
+    .icons{
+
+        #login-btn,a.fas{
+            font-size: 2rem;
+            margin-left: 1.5rem;
+            color:white;
+            cursor: pointer;
+
+            &:hover{
+                color:#45f3ff;  
+            }
+        }
+    }
+}
+
+.sticky{
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 100;
 }

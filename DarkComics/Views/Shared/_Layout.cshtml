@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dark Comics</title>
     <link rel="shortcut icon" href="~/assets/img/logo-sm.png" type="image/icon">
-    
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <link rel="stylesheet" href="~/assets/css/bootstrap.css" />
     <script src="https://kit.fontawesome.com/c372b7f0bf.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/assets/plugin/css/owl.carousel.min.css" />
@@ -20,40 +20,36 @@
 <body>
     <!-- Header Start-->
     <header>
-        <div class="container-fluid bg-success">
-            <div class="row justify-content-between">
+        <div class="container">
+            <div class="row py-4 justify-content-between align-items-center">
                 <div class="col-2">
-                    <a href="index.html" class="btn logo-container">
-                        <img src="~/assets/img/logo.png" width="175" alt="logo" />
+                    <a asp-controller="Home" asp-action="Index" class="logo-container overflow-hidden">
+                        <img src="assets/img/logo-2.png" width="75" alt="logo" class="rounded-circle" />
                     </a>
                 </div>
                 <div class="col-6 offset-1 d-none d-md-block">
-                    <div class="row comics-types">
-                        <a class="col-3 btn">
-                            <img src="~/assets/img/image-1.jpg" class="w-100" alt="logo" />
-                        </a>
-                        <a class="col-3 btn">
-                            <img src="~/assets/img/image-2.jpg" class="w-100" alt="logo" />
-                        </a>
-                        <a class="col-3 btn">
-                            <img src="~/assets/img/image-3.jpg" class="w-100" alt="logo" />
-                        </a>
-                        <a class="col-3 btn">
-                            <img src="~/assets/img/image-4.jpg" class="w-100" alt="logo" />
-                        </a>
-                    </div>
+                    <form>
+                        <input type="text" placeholder="Type here" class="form-control" />
+                    </form>
                 </div>
                 <div class="col-2 d-flex justify-content-center align-items-center">
-                    <a class="btn text-white">
-                        <i class="fas fa-bars fa-3x"></i>
-                        <!-- <i class="fas fa-times fa-3x"></i> -->
-                    </a>
+                    <div class="icons">
+                        <!-- <div id="search-btn" class="fas fa-search"></div> -->
+                        <a href="#" class="fas fa-heart"></a>
+                        <a href="#" class="fas fa-shopping-cart"></a>
+                        <div id="login-btn" class="fas fa-user"></div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </header>
+
+    <header class="sticky">
+        <div class="container-fluid bg-dark">
             <div class="row bg-white">
                 <ul class="col-12 d-flex justify-content-around py-3">
-                    <li><a class="menu-text" href="character.html"><i class="fas fa-mask"></i> Characters</a></li>
-                    <li><a class="menu-text" href="comics.html"><i class="fas fa-book"></i> Comics</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" class="menu-text"><i class="fas fa-mask"></i> Characters</a></li>
+                    <li><a asp-controller="Comic" asp-action="Index" class="menu-text"><i class="fas fa-book"></i> Comics</a></li>
                     <li><a class="menu-text" href=""><i class="fas fa-puzzle-piece"></i> Toys</a></li>
                     <li><a class="menu-text" href="reading.html"><i class="fas fa-book-open"></i> Read Comics</a></li>
                 </ul>
@@ -61,10 +57,39 @@
         </div>
     </header>
     <!-- Header End -->
+    <!-- login form Start -->
+    <div class="login-form-container">
+
+        <div id="close-login-btn" class="fas fa-times"></div>
+
+        <form action="">
+            <h3>sign in</h3>
+            <span>username</span>
+            <input type="email" name="" class="box" placeholder="enter your email" id="">
+            <span>password</span>
+            <input type="password" name="" class="box" placeholder="enter your password" id="">
+            <div class="checkbox">
+                <input type="checkbox" name="" id="remember-me">
+                <label for="remember-me"> remember me</label>
+            </div>
+            <input type="submit" value="sign in" class="btn">
+            <p>forget password ? <a href="#">click here</a></p>
+            <p>don't have an account ? <a href="#">create one</a></p>
+        </form>
+
+    </div>
+    <!-- login form End -->
     <!-- Main Start -->
-   <main>
-       @RenderBody()
-   </main>
+    <main>
+        @RenderBody()
+
+        <!--Loader Start-->
+        <div class="loader-container">
+            <img src="~/assets/img/loader-img.gif" alt="">
+        </div>
+        <!--Loader End-->
+
+    </main>
     <!-- Main End -->
     <!-- Footer Start -->
     <footer>
@@ -161,8 +186,9 @@
 
     <script src="~/assets/jquery/jquery.js"></script>
     @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>*@
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>*@
     <script src="~/assets/plugin/js/owl.carousel.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <script src="~/assets/js/main.js"></script>
 
 </body>

@@ -45,46 +45,75 @@ $(document).ready(function () {
             $(valueOfElement.children[0].children[1]).slideToggle();
         });
     });
-    let skip = 3;
-    let take = 3;
-    $('#loadMore').on('click', function () {
-        Load(skip, take);
-        skip += take;
-        let count = $('#loadMore').attr('data-count');
-        if (skip >= count) {
-            $('#loadMore').css('display','none');
-        }
+
+
+    var swiper = new Swiper(".books-slider", {
+        loop: true,
+        centeredSlides: true,
+        autoplay: {
+            delay: 9500,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            //   1024: {
+            //     slidesPerView: 3,
+            //   },
+        },
     });
 
-    $('#search .form-control').on('keyup', () => {
-        //let word = document.querySelector('#search .form-control').valueOfElement;
-        let word = $('#search .form-control').val();
-        console.log(word);
-        $('#addHere .col-12').each(function (index, element) {
-            //console.log(element)
-            $(element).css("display", "none");           
-        });
-        if (word == "") {
-            Load(0, 3);
-        }
-        $.ajax({
-            url: `/Comic/Search?search=${word}`,
-            type: "Get",
-            success: function (response) {
-                $('#addHere').append(response);
-            }
-        })
-    });
-    function Load(skip, take) {
-        //console.log('okay');
-        $.ajax({
-            url: `/Comic/LoadMore?skip=${skip}&take=${take}`,
-            type: "Get",
-            success: function (response) {
-                $('#addHere').append(response);
-            }
-        })
+    let loginForm = document.querySelector('.login-form-container');
+
+    document.querySelector('#login-btn').onclick = () => {
+        loginForm.classList.toggle('active');
     }
 
-    
+    document.querySelector('#close-login-btn').onclick = () => {
+        loginForm.classList.remove('active');
+    }
+
+
+    var swiper = new Swiper(".featured-slider", {
+        spaceBetween: 10,
+        loop: true,
+        centeredSlides: true,
+        autoplay: {
+            delay: 9500,
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        },
+    });
+
+    window.onload = () => {
+        fadeOut();
+    }
+
+    function loader() {
+        document.querySelector('.loader-container').classList.add('active');
+    }
+
+    function fadeOut() {
+        setTimeout(loader, 4000);
+    }
 });
+
