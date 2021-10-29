@@ -40,5 +40,6 @@ namespace DarkComics.Models.Entity
         public Team Team { get; set; }
         public int? TeamId { get; set; }
         public List<ComicCharacter> ComicCharacters { get; set; }
+        public List<ReadingComic> ReadingComics { get; set; }
     }
 }

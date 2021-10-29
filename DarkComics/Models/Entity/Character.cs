@@ -21,6 +21,10 @@ namespace DarkComics.Models.Entity
         [Required, NotMapped]
         public IFormFile FirstPhoto { get; set; }
         [BindNever]
+        public string Logo { get; set; }
+        [Required, NotMapped]
+        public IFormFile LogoPhoto { get; set; }
+        [BindNever]
         public string SecondImage { get; set; }
         [Required, NotMapped]
         public IFormFile SecondPhoto { get; set; }

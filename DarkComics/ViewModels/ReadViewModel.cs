@@ -1,0 +1,14 @@
+﻿using DarkComics.Models.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DarkComics.ViewModels
+{
+    public class ReadViewModel
+    {
+         public Comic Comic { get; set; }
+         //public List<ReadingComic> ReadingComics { get; set; }
+    }
+}

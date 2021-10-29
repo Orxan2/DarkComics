@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211029005929_ReadComicAdded")]
+    partial class ReadComicAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,7 +494,7 @@ namespace DarkComics.Migrations
 
                     b.HasIndex("ComicId");
 
-                    b.ToTable("ReadingComics");
+                    b.ToTable("ReadingComic");
 
                     b.HasData(
                         new
@@ -522,8 +524,8 @@ namespace DarkComics.Migrations
                         new
                         {
                             Id = 5,
-                            ComicId = 1,
-                            Image = "5.jpg"
+                            ComicId = 5,
+                            Image = "1.jpg"
                         },
                         new
                         {
@@ -552,7 +554,7 @@ namespace DarkComics.Migrations
                         new
                         {
                             Id = 10,
-                            ComicId = 1,
+                            ComicId = 5,
                             Image = "10.jpg"
                         });
                 });

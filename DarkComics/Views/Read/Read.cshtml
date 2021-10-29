@@ -1,0 +1,27 @@
+﻿@model ReadViewModel
+@{
+    ViewData["Title"] = "Read";
+}
+
+<!-- Reading Comic Section Start -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 heading">
+                <h1 class="text-center">Read</h1>
+            </div>
+        </div>
+        @foreach (var readingComic in Model.Comic.ReadingComics)
+        {
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <img src="~/assets/img/@Model.Comic.Category.Character.HeroName.ToLower()/comics/@Model.Comic.Category.Name.ToLower().Replace(" ","-")/@Model.Comic.Episode/@readingComic.Image"
+                       class="w-100" alt="@readingComic.Image" />
+                </div>
+            </div>
+        }
+
+    </div>
+    </div>
+</section>
+<!-- Reading Comic Section End -->

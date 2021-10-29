@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211028234711_AddLogoPhoto")]
+    partial class AddLogoPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -475,88 +477,6 @@ namespace DarkComics.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DarkComics.Models.Entity.ReadingComic", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ComicId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComicId");
-
-                    b.ToTable("ReadingComics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ComicId = 1,
-                            Image = "1.jpg"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ComicId = 1,
-                            Image = "2.jpg"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ComicId = 1,
-                            Image = "3.jpg"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ComicId = 1,
-                            Image = "4.jpg"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ComicId = 1,
-                            Image = "5.jpg"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ComicId = 1,
-                            Image = "6.jpg"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ComicId = 1,
-                            Image = "7.jpg"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ComicId = 1,
-                            Image = "8.jpg"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ComicId = 1,
-                            Image = "9.jpg"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ComicId = 1,
-                            Image = "10.jpg"
-                        });
-                });
-
             modelBuilder.Entity("DarkComics.Models.Entity.Team", b =>
                 {
                     b.Property<int?>("Id")
@@ -735,15 +655,6 @@ namespace DarkComics.Migrations
                     b.HasOne("DarkComics.Models.Entity.Comic", "Comic")
                         .WithMany("ComicCharacters")
                         .HasForeignKey("ComicId");
-                });
-
-            modelBuilder.Entity("DarkComics.Models.Entity.ReadingComic", b =>
-                {
-                    b.HasOne("DarkComics.Models.Entity.Comic", "Comic")
-                        .WithMany("ReadingComics")
-                        .HasForeignKey("ComicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DarkComics.Models.Entity.TeamCharacter", b =>

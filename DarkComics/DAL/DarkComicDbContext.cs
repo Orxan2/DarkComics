@@ -24,6 +24,7 @@ namespace DarkComics.DAL
         public DbSet<Power> Powers{ get; set; }
         public DbSet<ToyCharacter> ToyCharacters { get; set; }
         public DbSet<CharacterPower> CharacterPowers { get; set; }
+        public DbSet<ReadingComic> ReadingComics { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -85,6 +86,7 @@ namespace DarkComics.DAL
                     FirstImage = "batman.png",
                     SecondImage = "batman-2.png",
                     Profile = "batman-profile.png",
+                    Logo = "batman-logo.png",
                     IsActive = true
                 },
                 new Character
@@ -98,6 +100,7 @@ namespace DarkComics.DAL
                     FirstImage = "nightwing.png",
                     SecondImage = "nightwing-2.png",
                     Profile = "nightwing-profile.png",
+                    Logo = "nightwing-logo.png",
                     IsActive = true
                     
                 },
@@ -112,6 +115,7 @@ namespace DarkComics.DAL
                     FirstImage = "batman.png",
                     SecondImage = "batman-2.png",
                     Profile = "batman-profile.png",
+                    Logo = "spiderman-logo.png",
                     IsActive = true
                 }
                 ));
@@ -310,6 +314,83 @@ namespace DarkComics.DAL
                   CharacterId = 3,
                   PowerId = 3}
               ));
+            modelBuilder.Entity<ReadingComic>(cc => cc.HasData(
+             new ReadingComic
+             {
+                 Id = 1,
+                ComicId = 1,
+                Image = "1.jpg"
+
+             },
+            new ReadingComic
+            {
+                Id = 2,
+                ComicId = 1,
+                Image = "2.jpg"
+
+            },
+             new ReadingComic
+             {
+                 Id = 3,
+                 ComicId = 1,
+                 Image = "3.jpg"
+
+             },
+            new ReadingComic
+            {
+                Id = 4,
+                ComicId = 1,
+                Image = "4.jpg"
+
+            },
+             new ReadingComic
+             {
+                 Id = 5,
+                 ComicId = 1,
+                 Image = "5.jpg"
+
+             },
+              new ReadingComic
+              {
+                  Id = 6,
+                  ComicId = 1,
+                  Image = "6.jpg"
+
+              },
+            new ReadingComic
+            {
+                Id = 7,
+                ComicId = 1,
+                Image = "7.jpg"
+
+            },
+             new ReadingComic
+             {
+                 Id = 8,
+                 ComicId = 1,
+                 Image = "8.jpg"
+
+             },
+            new ReadingComic
+            {
+                Id = 9,
+                ComicId = 1,
+                Image = "9.jpg"
+
+            },
+             new ReadingComic
+             {
+                 Id = 10,
+                 ComicId = 1,
+                 Image = "10.jpg"
+
+             }
+             ));
+        }
+
+        internal object Include(Func<object, object> p)
+        {
+            throw new NotImplementedException();
         }
     }
 }
