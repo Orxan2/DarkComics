@@ -1,7 +1,79 @@
-﻿
+﻿@model CharacterViewModel
 @{
     ViewData["Title"] = "Index";
+    int count = 0;
 }
 
-<h1>Index</h1>
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading page-title-icon-rounded">
+            <div class="page-title-icon">
+                <i class="pe-7s-id icon-gradient bg-tempting-azure font-weight-bolder">
+                </i>
+            </div>
+            <div>
+                <h1>Comic Characters</h1>
+                <div class="page-title-subheading">
+                    Wide selection of buttons that feature different styles for backgrounds, borders and hover options!
+                </div>
+            </div>
+        </div>      
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-12">
+        <table class="mb-0 table table-dark table-hover table-hover-flip">
+            <thead>
+                <tr>
+                    <th><h3>#</h3></th>
+                    <th><h3>Character</h3></th>
+                    <th><h3>NickName</h3></th>
+                    <th><h3>First Appearance</h3></th>
+                    <th><h3>Status</h3></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var character in Model.Characters)
+                {
+                   { 
+                       count++;
+                   }
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left mr-3">
+                                    <div class="widget-content-left">
+                                        <img width="40" class="rounded-circle" src="~/assets/img/@character.HeroName.ToLower()/@character.Profile" alt="@character.Name" />
+                                    </div>
+                                </div>
+                                <div class="widget-content-left flex2">
+                                    <div class="widget-heading">@character.Name</div>
+                                    <div class="widget-subheading opacity-7">@character.HeroName</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@character.NickName</td>
+                    <td>@character.FirstAppearance</td>
+                    <td>
+                        <button class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></button>
+                        <button class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></button>
+                        <button class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></button>
+                    </td>
+                    @*<td>
+            @foreach (var teamCharacter in character.TeamCharacters)
+            {
+                teamCharacter.Team.Name.ToString();
+            }
+        </td>*@
+
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

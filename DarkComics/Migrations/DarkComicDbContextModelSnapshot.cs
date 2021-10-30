@@ -107,12 +107,14 @@ namespace DarkComics.Migrations
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("FirstAppearance")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HeroName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -123,10 +125,11 @@ namespace DarkComics.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<string>("NickName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Profile")

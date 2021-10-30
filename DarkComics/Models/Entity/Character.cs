@@ -1,6 +1,8 @@
 ﻿using DarkComics.Models.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,26 +14,30 @@ namespace DarkComics.Models.Entity
 {
     public class Character : BaseEntity
     {
-        [Required, StringLength(maximumLength: 100)]
+        [Required(ErrorMessage = "Name was incorrect"), StringLength(maximumLength: 25)]
         public string Name { get; set; }
+        [Required]
         public string HeroName { get; set; }
+        [Required]
         public string FirstAppearance { get; set; }
         [BindNever]
         public string FirstImage { get; set; }
-        [Required, NotMapped]
+        [NotMapped]
         public IFormFile FirstPhoto { get; set; }
         [BindNever]
         public string Logo { get; set; }
-        [Required, NotMapped]
+        [Required, NotMapped,BindProperty]
         public IFormFile LogoPhoto { get; set; }
         [BindNever]
         public string SecondImage { get; set; }
-        [Required, NotMapped]
+        [Required,NotMapped]
         public IFormFile SecondPhoto { get; set; }
+        [BindNever]
         public string Profile { get; set; }
-        [Required, NotMapped]
+        [Required,NotMapped]
         public IFormFile ProfilePhoto { get; set; }
         public bool IsActive { get; set; }
+        [Required]
         public string NickName { get; set; }
         public string AboutCharacter { get; set; }
         public DateTime CreatedDate { get; set; }

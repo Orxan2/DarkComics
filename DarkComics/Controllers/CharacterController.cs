@@ -23,7 +23,7 @@ namespace DarkComics.Controllers
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
                 Characters = _context.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList()
+                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c=>c.IsActive == true).ToList()
             };
 
             return View(characterViewModel);

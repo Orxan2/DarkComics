@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DarkComics.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,14 +13,15 @@ namespace DarkComics.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 100, nullable: false),
-                    HeroName = table.Column<string>(nullable: true),
-                    FirstAppearance = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 25, nullable: false),
+                    HeroName = table.Column<string>(nullable: false),
+                    FirstAppearance = table.Column<string>(nullable: false),
                     FirstImage = table.Column<string>(nullable: true),
+                    Logo = table.Column<string>(nullable: true),
                     SecondImage = table.Column<string>(nullable: true),
+                    Profile = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Powers = table.Column<string>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
+                    NickName = table.Column<string>(nullable: false),
                     AboutCharacter = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
                 },
@@ -239,14 +240,39 @@ namespace DarkComics.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ReadingComics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(nullable: true),
+                    ComicId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReadingComics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReadingComics_Comics_ComicId",
+                        column: x => x.ComicId,
+                        principalTable: "Comics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Backface", "CharacterId", "Cover", "Name" },
+                values: new object[] { 4, "backface.jpg", null, "cover.jpg", "Titans" });
+
             migrationBuilder.InsertData(
                 table: "Characters",
-                columns: new[] { "Id", "AboutCharacter", "FirstAppearance", "FirstImage", "HeroName", "IsActive", "Name", "NickName", "Powers", "SecondImage" },
+                columns: new[] { "Id", "AboutCharacter", "FirstAppearance", "FirstImage", "HeroName", "IsActive", "Logo", "Name", "NickName", "Profile", "SecondImage" },
                 values: new object[,]
                 {
-                    { 1, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Dedective Comics #1", null, "Batman", true, "Bruce Wayne", "Dark Knight", null, null },
-                    { 2, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Dedective Comics #14", "nightwing.png", "Nightwing", true, "Dick  Grayson", "Wonder Boy", null, "nightwing-2.png" },
-                    { 3, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Spiderman #1", null, "Spiderman", true, "Peter Parker", "Spidey", null, null }
+                    { 1, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Dedective Comics #1", "batman.png", "Batman", true, "batman-logo.png", "Bruce Wayne", "Dark Knight", "batman-profile.png", "batman-2.png" },
+                    { 2, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Dedective Comics #14", "nightwing.png", "Nightwing", true, "nightwing-logo.png", "Dick  Grayson", "Wonder Boy", "nightwing-profile.png", "nightwing-2.png" },
+                    { 3, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", "Spiderman #1", "batman.png", "Spiderman", true, "spiderman-logo.png", "Peter Parker", "Spidey", "batman-profile.png", "batman-2.png" }
                 });
 
             migrationBuilder.InsertData(
@@ -317,17 +343,29 @@ namespace DarkComics.Migrations
             migrationBuilder.InsertData(
                 table: "ComicCharacters",
                 columns: new[] { "Id", "CharacterId", "ComicId" },
-                values: new object[] { 1, 1, 3 });
+                values: new object[,]
+                {
+                    { 1, 1, 3 },
+                    { 3, 2, 1 },
+                    { 2, 2, 2 }
+                });
 
             migrationBuilder.InsertData(
-                table: "ComicCharacters",
-                columns: new[] { "Id", "CharacterId", "ComicId" },
-                values: new object[] { 3, 2, 1 });
-
-            migrationBuilder.InsertData(
-                table: "ComicCharacters",
-                columns: new[] { "Id", "CharacterId", "ComicId" },
-                values: new object[] { 2, 2, 2 });
+                table: "ReadingComics",
+                columns: new[] { "Id", "ComicId", "Image" },
+                values: new object[,]
+                {
+                    { 1, 1, "1.jpg" },
+                    { 2, 1, "2.jpg" },
+                    { 3, 1, "3.jpg" },
+                    { 4, 1, "4.jpg" },
+                    { 5, 1, "5.jpg" },
+                    { 6, 1, "6.jpg" },
+                    { 7, 1, "7.jpg" },
+                    { 8, 1, "8.jpg" },
+                    { 9, 1, "9.jpg" },
+                    { 10, 1, "10.jpg" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_CharacterId",
@@ -365,6 +403,11 @@ namespace DarkComics.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReadingComics_ComicId",
+                table: "ReadingComics",
+                column: "ComicId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TeamCharacters_CharacterId",
                 table: "TeamCharacters",
                 column: "CharacterId");
@@ -392,6 +435,9 @@ namespace DarkComics.Migrations
 
             migrationBuilder.DropTable(
                 name: "ComicCharacters");
+
+            migrationBuilder.DropTable(
+                name: "ReadingComics");
 
             migrationBuilder.DropTable(
                 name: "TeamCharacters");
