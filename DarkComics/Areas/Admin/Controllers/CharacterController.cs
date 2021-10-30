@@ -108,7 +108,32 @@ namespace DarkComics.Areas.Admin.Controllers
                 return RedirectToAction("Index", characterVM);
         }
 
-        
+        public ActionResult MakeActiveOrDeactive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Character character = _db.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c=>c.Id == id);
+
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            if (character.IsActive == true)
+                character.IsActive = false;
+            else
+                character.IsActive = true;
+
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
         public string RenderImage(Character character,IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))

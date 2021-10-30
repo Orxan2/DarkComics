@@ -67,7 +67,7 @@
                                 <h1 class="text-center">@character.Name - @character.HeroName</h1>
                                 <div class="card-body">
                                     <p>
-                                        @character.AboutCharacter.ToString()
+                                       @Html.Raw(character.AboutCharacter)
                                     </p>
                                 </div>
                                 <div class="card-footer">

@@ -30,7 +30,7 @@
                     <th><h3>Character</h3></th>
                     <th><h3>NickName</h3></th>
                     <th><h3>First Appearance</h3></th>
-                    <th><h3>Status</h3></th>
+                    <th><h3 class="text-center">Status</h3></th>
                 </tr>
             </thead>
             <tbody>
@@ -58,10 +58,10 @@
                     </td>
                     <td>@character.NickName</td>
                     <td>@character.FirstAppearance</td>
-                    <td>
+                    <td class="text-center">
                         <button class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></button>
                         <button class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></button>
-                        <button class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></button>
+                        <a asp-action="MakeActiveOrDeactive" asp-route-id="@character.Id" class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
                     </td>
                     @*<td>
             @foreach (var teamCharacter in character.TeamCharacters)
