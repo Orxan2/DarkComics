@@ -25,6 +25,7 @@ namespace DarkComics.DAL
         public DbSet<ToyCharacter> ToyCharacters { get; set; }
         public DbSet<CharacterPower> CharacterPowers { get; set; }
         public DbSet<ReadingComic> ReadingComics { get; set; }
+        public DbSet<City> Cities { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,6 +75,23 @@ namespace DarkComics.DAL
                      Name = "Avengers"
                  }
                 ));
+            modelBuilder.Entity<City>(c => c.HasData(
+                new City
+                {
+                    Id = 1,
+                    Name = "Gotham"                    
+                },
+                new City
+                {
+                    Id = 2,
+                    Name = "Metropolis"
+                },
+                new City
+                {
+                    Id = 3,
+                    Name = "New-York"
+                }
+                ));
             modelBuilder.Entity<Character>(c => c.HasData(
                 new Character
                 {
@@ -87,6 +105,8 @@ namespace DarkComics.DAL
                     SecondImage = "batman-2.png",
                     Profile = "batman-profile.png",
                     Logo = "batman-logo.png",
+                    Creator = "Bob Kane and Bill Finger",
+                    CityId = 1,
                     IsActive = true
                 },
                 new Character
@@ -101,6 +121,8 @@ namespace DarkComics.DAL
                     SecondImage = "nightwing-2.png",
                     Profile = "nightwing-profile.png",
                     Logo = "nightwing-logo.png",
+                    CityId = 1,
+                    Creator = "Orxan Ibra",
                     IsActive = true
                     
                 },
@@ -116,6 +138,8 @@ namespace DarkComics.DAL
                     SecondImage = "batman-2.png",
                     Profile = "batman-profile.png",
                     Logo = "spiderman-logo.png",
+                    CityId = 3,
+                    Creator = "Stan Lee",
                     IsActive = true
                 }
                 ));

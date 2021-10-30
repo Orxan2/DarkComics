@@ -29,7 +29,7 @@ namespace DarkComics.Areas.Admin.Controllers
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-                Characters = _db.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                Characters = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
                 Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList()
             };
 
@@ -43,18 +43,26 @@ namespace DarkComics.Areas.Admin.Controllers
             {
                 Powers = _db.Powers.ToList(),
                 PowerList = new List<SelectListItem>(),
-                Characters = _db.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList()
+                CitiesList = new List<SelectListItem>(),
+                Characters = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList(),
+                Cities = _db.Cities.ToList()
 
             };
-            //characterViewModel.Powers = new List<SelectListItem>() { };
             foreach (var power in characterViewModel.Powers)
             {
                 characterViewModel.PowerList.AddRange(new List<SelectListItem>{
-                    new SelectListItem() { Text = power.Name, Value = power.Id.ToString() } });
-                ;
-                //new SelectListItem() { Text = characterPower.Power.Name, Value = characterPower.Power.Id.ToString() };
+                    new SelectListItem() { Text = power.Name, Value = power.Id.ToString() }
+                });
             }
+
+            foreach (var city in characterViewModel.Cities)
+            {
+                characterViewModel.CitiesList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = city.Name, Value = city.Id.ToString() }
+                });
+            }
+
 
             return View(characterViewModel);
         }
@@ -115,7 +123,7 @@ namespace DarkComics.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Character character = _db.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+            Character character = _db.Characters.Include(c=>c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
                   Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c=>c.Id == id);
 
             if (character == null)

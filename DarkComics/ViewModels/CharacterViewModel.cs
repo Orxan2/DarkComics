@@ -13,6 +13,8 @@ namespace DarkComics.ViewModels
         public List<Character> Characters { get; set; }
         public List<Power> Powers { get; set; }
         public List<SelectListItem> PowerList { get; set; }
+        public List<SelectListItem> CitiesList { get; set; }
+        public List<City> Cities { get; set; }
         public List<int?> ChosenPowers { get; set; }
         public Character Character { get; set; }
     }

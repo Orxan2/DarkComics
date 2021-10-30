@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    [Migration("20211030152950_Update")]
-    partial class Update
+    [Migration("20211030192739_RenameCitiestable")]
+    partial class RenameCitiestable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,10 +103,17 @@ namespace DarkComics.Migrations
                     b.Property<string>("AboutCharacter")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("Date")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstAppearance")
                         .IsRequired()
@@ -142,6 +149,8 @@ namespace DarkComics.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("Characters");
 
                     b.HasData(
@@ -149,7 +158,9 @@ namespace DarkComics.Migrations
                         {
                             Id = 1,
                             AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                            CityId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Creator = "Bob Kane and Bill Finger",
                             FirstAppearance = "Dedective Comics #1",
                             FirstImage = "batman.png",
                             HeroName = "Batman",
@@ -164,7 +175,9 @@ namespace DarkComics.Migrations
                         {
                             Id = 2,
                             AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                            CityId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Creator = "Orxan Ibra",
                             FirstAppearance = "Dedective Comics #14",
                             FirstImage = "nightwing.png",
                             HeroName = "Nightwing",
@@ -179,7 +192,9 @@ namespace DarkComics.Migrations
                         {
                             Id = 3,
                             AboutCharacter = "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.",
+                            CityId = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Creator = "Stan Lee",
                             FirstAppearance = "Spiderman #1",
                             FirstImage = "batman.png",
                             HeroName = "Spiderman",
@@ -243,6 +258,50 @@ namespace DarkComics.Migrations
                             Id = 5,
                             CharacterId = 3,
                             PowerId = 3
+                        });
+                });
+
+            modelBuilder.Entity("DarkComics.Models.Entity.City", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = false,
+                            Name = "Gotham"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = false,
+                            Name = "Metropolis"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = false,
+                            Name = "New-York"
                         });
                 });
 
@@ -707,6 +766,13 @@ namespace DarkComics.Migrations
                     b.HasOne("DarkComics.Models.Entity.Character", "Character")
                         .WithMany("Categories")
                         .HasForeignKey("CharacterId");
+                });
+
+            modelBuilder.Entity("DarkComics.Models.Entity.Character", b =>
+                {
+                    b.HasOne("DarkComics.Models.Entity.City", "City")
+                        .WithMany("Characters")
+                        .HasForeignKey("CityId");
                 });
 
             modelBuilder.Entity("DarkComics.Models.Entity.CharacterPower", b =>

@@ -38,7 +38,9 @@ namespace DarkComics.Models.Entity
         public IFormFile ProfilePhoto { get; set; }
         public bool IsActive { get; set; }
         [Required]
-        public string NickName { get; set; }
+        public string NickName { get; set; }       
+        [Required]
+        public string Creator { get; set; }
         public string AboutCharacter { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<Category> Categories { get; set; }
@@ -46,6 +48,7 @@ namespace DarkComics.Models.Entity
         public List<TeamCharacter> TeamCharacters { get; set; }
         public List<ToyCharacter> ToyCharacters { get; set; }
         public List<CharacterPower> CharacterPowers { get; set; }
-
+        public City City { get; set; }
+        public int? CityId { get; set; }
     }
 }

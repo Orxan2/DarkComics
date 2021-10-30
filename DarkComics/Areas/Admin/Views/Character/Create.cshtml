@@ -45,10 +45,16 @@
                     <span asp-validation-for="Character.NickName"></span>
                 </div>
 
-                <div class="col-12 mb-3">
+                <div class="col-md-6 mb-3">
                     <label asp-for="Character.FirstAppearance"></label>
                     <input asp-for="Character.FirstAppearance" class="form-control" placeholder="First name" required>
                     <span asp-validation-for="Character.FirstAppearance"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Character.Creator"></label>
+                    <input asp-for="Character.Creator" class="form-control" placeholder="First name" required>
+                    <span asp-validation-for="Character.Creator"></span>
                 </div>
 
                 <div class="col-md-3 mb-3">
@@ -75,7 +81,7 @@
                     <span asp-validation-for="Character.LogoPhoto"></span>
                 </div>
 
-                <div class="col-12 mb-3">
+                <div class="col-md-6 mb-3">
                     <label asp-for="ChosenPowers"></label>
                     <select asp-for="ChosenPowers" asp-items="@Model.PowerList" class="form-control" multiple>
                         <option value="" disabled>chose</option>
@@ -83,12 +89,23 @@
                     <span asp-validation-for="ChosenPowers"></span>
                 </div>
 
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Character.CityId"></label>
+                    <select asp-for="Character.CityId" asp-items="@Model.CitiesList" class="form-control">
+                        <option value="" disabled>chose</option>
+                    </select>
+                    <span asp-validation-for="Character.CityId"></span>
+                </div>
+
+
 
                 <div class="col-12 mb-3">
                     <label asp-for="Character.AboutCharacter"></label>
-                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"  name="editordata"></textarea>
+                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name" name="editordata"></textarea>
                     <span asp-validation-for="Character.AboutCharacter"></span>
                 </div>
+
+
 
 
 
