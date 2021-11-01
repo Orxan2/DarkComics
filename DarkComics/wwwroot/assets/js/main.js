@@ -1,4 +1,15 @@
-$(document).ready(function () {
+window.onload = () => {
+
+    
+
+    function loader() {
+        document.querySelector('.loader-container').classList.add('active');
+    }
+
+    function fadeOut() {
+        setTimeout(loader, 4000);
+    }
+
     $('.owl-carousel').owlCarousel({
         items: 4,
         loop: true,
@@ -102,18 +113,35 @@ $(document).ready(function () {
                 slidesPerView: 3,
             }
         },
+    });    
+
+    //power skill Ratings
+    var offset = $('#skill').offset();
+    var innerheight = $('#skill').innerHeight();
+
+
+
+    $(".percent #percent").each(function (indexInArray, valueOfElement) {
+
+        let percent = $(valueOfElement).attr('data-degree');
+        let color = $(valueOfElement).attr('data-color');
+        $(valueOfElement).css('stroke-dashoffset', `${(440 - (440 * percent) / 10)}`);
+        $(valueOfElement).css('stroke', color);
+
+
     });
 
-    window.onload = () => {
-        fadeOut();
+    window.onscroll = () => {
+
+        $(".percent #percent").each(function (indexInArray, valueOfElement) {
+            if (window.scrollY >= (offset.top - innerheight)) {
+                $(valueOfElement).css('animation-play-state', 'running');
+            }
+        });
     }
 
-    function loader() {
-        document.querySelector('.loader-container').classList.add('active');
-    }
+    //Loader
+    fadeOut();
 
-    function fadeOut() {
-        setTimeout(loader, 4000);
-    }
-});
+}
 

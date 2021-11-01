@@ -10,17 +10,17 @@
             <div class="owl-carousel owl-theme">
                 @foreach (var character in Model.Characters)
                 {
-                    <div class="item">
+                    <a  asp-action="Details" asp-route-id="@character.Id" class="item">
                         <div class="character-card">
                             <div class="character-card__body">
-                                <img src="~/assets/img/@character.HeroName.ToLower()/@character.FirstImage" class="w-100 h-100" alt="cover" />
-                                <img src="~/assets/img/@character.HeroName.ToLower()/@character.SecondImage" class="w-100 h-100" alt="backface" />
+                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.FirstImage" class="w-100 h-100" alt="cover" />
+                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.SecondImage" class="w-100 h-100" alt="backface" />
                             </div>
                             <div class="character-card__footer">
-                                <img src="~/assets/img/@character.HeroName.ToLower()/@character.Logo" width="75" height="75" alt="backface" />
+                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.Logo" width="75" height="75" alt="backface" />
                             </div>
                         </div>
-                    </div>
+                    </a>
                 }
             </div>
         </div>

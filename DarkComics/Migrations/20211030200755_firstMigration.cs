@@ -8,7 +8,7 @@ namespace DarkComics.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Citys",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,7 +19,7 @@ namespace DarkComics.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Citys", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,6 +83,18 @@ namespace DarkComics.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     NickName = table.Column<string>(nullable: false),
                     Creator = table.Column<string>(nullable: false),
+                    Height = table.Column<string>(maxLength: 20, nullable: false),
+                    Weight = table.Column<int>(nullable: false),
+                    EyeColor = table.Column<string>(maxLength: 20, nullable: false),
+                    HairStyle = table.Column<string>(maxLength: 20, nullable: false),
+                    Education = table.Column<string>(maxLength: 30, nullable: false),
+                    Fighting = table.Column<int>(maxLength: 10, nullable: false),
+                    Durability = table.Column<int>(maxLength: 10, nullable: false),
+                    Energy = table.Column<int>(maxLength: 10, nullable: false),
+                    Strength = table.Column<int>(maxLength: 10, nullable: false),
+                    Speed = table.Column<int>(maxLength: 10, nullable: false),
+                    Intelligence = table.Column<int>(maxLength: 10, nullable: false),
+                    LayoutImage = table.Column<string>(nullable: true),
                     AboutCharacter = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
                     CityId = table.Column<int>(nullable: true)
@@ -91,9 +103,9 @@ namespace DarkComics.Migrations
                 {
                     table.PrimaryKey("PK_Characters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Characters_Citys_CityId",
+                        name: "FK_Characters_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "Citys",
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -289,7 +301,7 @@ namespace DarkComics.Migrations
                 values: new object[] { 4, "backface.jpg", null, "cover.jpg", "Titans" });
 
             migrationBuilder.InsertData(
-                table: "Citys",
+                table: "Cities",
                 columns: new[] { "Id", "CreatedDate", "IsActive", "Name" },
                 values: new object[,]
                 {
@@ -320,18 +332,18 @@ namespace DarkComics.Migrations
 
             migrationBuilder.InsertData(
                 table: "Characters",
-                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "FirstAppearance", "FirstImage", "HeroName", "IsActive", "Logo", "Name", "NickName", "Profile", "SecondImage" },
-                values: new object[] { 1, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 1, "Bob Kane and Bill Finger", "Dedective Comics #1", "batman.png", "Batman", true, "batman-logo.png", "Bruce Wayne", "Dark Knight", "batman-profile.png", "batman-2.png" });
+                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "Durability", "Education", "Energy", "EyeColor", "Fighting", "FirstAppearance", "FirstImage", "HairStyle", "Height", "HeroName", "Intelligence", "IsActive", "LayoutImage", "Logo", "Name", "NickName", "Profile", "SecondImage", "Speed", "Strength", "Weight" },
+                values: new object[] { 1, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 1, "Bob Kane and Bill Finger", 5, "Gotham City School", 8, "Blue", 9, "Dedective Comics #1", "batman.png", "Black", "1.89", "Batman", 7, true, "layout.png", "batman-logo.png", "Bruce Wayne", "Dark Knight", "batman-profile.png", "batman-2.png", 6, 7, 70 });
 
             migrationBuilder.InsertData(
                 table: "Characters",
-                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "FirstAppearance", "FirstImage", "HeroName", "IsActive", "Logo", "Name", "NickName", "Profile", "SecondImage" },
-                values: new object[] { 2, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 1, "Orxan Ibra", "Dedective Comics #14", "nightwing.png", "Nightwing", true, "nightwing-logo.png", "Dick  Grayson", "Wonder Boy", "nightwing-profile.png", "nightwing-2.png" });
+                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "Durability", "Education", "Energy", "EyeColor", "Fighting", "FirstAppearance", "FirstImage", "HairStyle", "Height", "HeroName", "Intelligence", "IsActive", "LayoutImage", "Logo", "Name", "NickName", "Profile", "SecondImage", "Speed", "Strength", "Weight" },
+                values: new object[] { 2, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 1, "Orxan Ibra", 5, "Gotham City School", 8, "Blue", 9, "Dedective Comics #14", "nightwing.png", "Black", "1.89", "Nightwing", 7, true, "layout.png", "nightwing-logo.png", "Dick  Grayson", "Wonder Boy", "nightwing-profile.png", "nightwing-2.png", 6, 7, 70 });
 
             migrationBuilder.InsertData(
                 table: "Characters",
-                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "FirstAppearance", "FirstImage", "HeroName", "IsActive", "Logo", "Name", "NickName", "Profile", "SecondImage" },
-                values: new object[] { 3, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 3, "Stan Lee", "Spiderman #1", "batman.png", "Spiderman", true, "spiderman-logo.png", "Peter Parker", "Spidey", "batman-profile.png", "batman-2.png" });
+                columns: new[] { "Id", "AboutCharacter", "CityId", "Creator", "Durability", "Education", "Energy", "EyeColor", "Fighting", "FirstAppearance", "FirstImage", "HairStyle", "Height", "HeroName", "Intelligence", "IsActive", "LayoutImage", "Logo", "Name", "NickName", "Profile", "SecondImage", "Speed", "Strength", "Weight" },
+                values: new object[] { 3, "Born with a congenital heart condition, Cassie's father, Scott Lang became Ant-man in order to save her. He at first stole the costume, in order to rescue the doctor who could save Cassie's life, but later was given official permission to wear it by Captain America.", 3, "Stan Lee", 5, "Gotham City School", 8, "Blue", 9, "Spiderman #1", "batman.png", "Black", "1.89", "Spiderman", 7, true, "layout.png", "spiderman-logo.png", "Peter Parker", "Spidey", "batman-profile.png", "batman-2.png", 6, 7, 70 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -507,7 +519,7 @@ namespace DarkComics.Migrations
                 name: "Characters");
 
             migrationBuilder.DropTable(
-                name: "Citys");
+                name: "Cities");
         }
     }
 }

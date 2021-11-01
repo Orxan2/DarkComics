@@ -4,6 +4,7 @@ using DarkComics.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,7 +37,7 @@ namespace DarkComics.Areas.Admin.Controllers
             return View(characterViewModel);
         }
 
-        
+
         public ActionResult Create()
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
@@ -80,14 +81,15 @@ namespace DarkComics.Areas.Admin.Controllers
             characterVM.Character.FirstImage = RenderImage(characterVM.Character, characterVM.Character.FirstPhoto);
             characterVM.Character.SecondImage = RenderImage(characterVM.Character, characterVM.Character.SecondPhoto);
             characterVM.Character.Profile = RenderImage(characterVM.Character, characterVM.Character.ProfilePhoto);
+            characterVM.Character.LayoutImage = RenderImage(characterVM.Character, characterVM.Character.LayoutPhoto);
 
             if (string.IsNullOrEmpty(characterVM.Character.Logo) || string.IsNullOrEmpty(characterVM.Character.FirstImage) ||
-                string.IsNullOrEmpty(characterVM.Character.SecondImage) || string.IsNullOrEmpty(characterVM.Character.Profile))
+                string.IsNullOrEmpty(characterVM.Character.SecondImage) || string.IsNullOrEmpty(characterVM.Character.Profile) ||
+                string.IsNullOrEmpty(characterVM.Character.LayoutImage))
             {
-                ModelState.AddModelError("Image","Image was incorrect");
+                ModelState.AddModelError("Image", "Image was incorrect");
                 return View(characterVM);
             }
-           
 
             _db.Characters.Add(characterVM.Character);
             _db.SaveChanges();
@@ -95,26 +97,155 @@ namespace DarkComics.Areas.Admin.Controllers
             int? characterId = _db.Characters.Max(c => c.Id);
             Character character = _db.Characters.Find(characterId);
 
-
-            //_db.Characters.Add(characterVM.Character);
             foreach (var power in characterVM.ChosenPowers)
             {
                 Power pow = _db.Powers.FirstOrDefault(p => p.Id == power);
                 CharacterPower characterPower = new CharacterPower();
 
-
-                //characterPower.Id = _db.CharacterPowers.Max(c => c.Id)+1;
                 characterPower.CharacterId = characterId;
                 characterPower.PowerId = pow.Id;
                 _db.CharacterPowers.Add(characterPower);
                 _db.SaveChanges();
             }
-
-            //characterVM.Characters = _db.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-            //     Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList();
-            
-                return RedirectToAction("Index", characterVM);
+            return RedirectToAction("Index", characterVM);
         }
+
+        // GET: EventController/Edit/5
+        public IActionResult Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            CharacterViewModel characterViewModel = new CharacterViewModel
+            {
+               Character = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id),
+               Cities = _db.Cities.ToList(),
+               Powers = _db.Powers.ToList(),
+               PowerList = new List<SelectListItem>(),
+               CitiesList = new List<SelectListItem>(),
+               
+            };
+            characterViewModel.Logo = characterViewModel.Character.Logo;
+            characterViewModel.Profile = characterViewModel.Character.Profile;
+            characterViewModel.LayoutImage = characterViewModel.Character.LayoutImage;
+            characterViewModel.FirstImage = characterViewModel.Character.FirstImage;
+            characterViewModel.SecondImage = characterViewModel.Character.SecondImage;
+            if (characterViewModel.Character == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var power in characterViewModel.Powers)
+            {
+                characterViewModel.PowerList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = power.Name, Value = power.Id.ToString() }
+                });
+            }
+
+            foreach (var city in characterViewModel.Cities)
+            {
+                characterViewModel.CitiesList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = city.Name, Value = city.Id.ToString() }
+                });
+            }
+            return View(characterViewModel);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(int? id, CharacterViewModel characterVM)
+        {
+            if (id == null || (id != characterVM.Character.Id))
+            {
+                return NotFound();
+            }
+
+           
+            //if user don't choose image program enter here
+            if (characterVM.Character.LogoPhoto == null)
+            {
+                characterVM.Character.Logo = characterVM.Logo;
+                ModelState["Character.LogoPhoto"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                characterVM.Character.Logo = RenderImage(characterVM.Character, characterVM.Character.LogoPhoto,characterVM.Logo);
+
+            if (characterVM.Character.FirstPhoto == null)
+            {
+                characterVM.Character.FirstImage = characterVM.FirstImage;
+                ModelState["Character.FirstPhoto"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                characterVM.Character.FirstImage = RenderImage(characterVM.Character, characterVM.Character.FirstPhoto, characterVM.FirstImage);
+
+            if (characterVM.Character.SecondPhoto == null)
+            {
+                characterVM.Character.SecondImage = characterVM.SecondImage;
+                ModelState["Character.SecondPhoto"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                characterVM.Character.SecondImage = RenderImage(characterVM.Character, characterVM.Character.SecondPhoto, characterVM.SecondImage);
+
+            if (characterVM.Character.LayoutPhoto == null)
+            {
+                characterVM.Character.LayoutImage = characterVM.LayoutImage;
+                ModelState["Character.LayoutPhoto"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                characterVM.Character.LayoutImage = RenderImage(characterVM.Character, characterVM.Character.LayoutPhoto, characterVM.LayoutImage);
+
+            if (characterVM.Character.ProfilePhoto == null)
+            {
+                characterVM.Character.Profile = characterVM.Profile;
+                ModelState["Character.ProfilePhoto"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                characterVM.Character.Profile = RenderImage(characterVM.Character, characterVM.Character.ProfilePhoto, characterVM.Profile);
+
+            if (string.IsNullOrEmpty(characterVM.Character.Logo) || string.IsNullOrEmpty(characterVM.Character.FirstImage) ||
+             string.IsNullOrEmpty(characterVM.Character.SecondImage) || string.IsNullOrEmpty(characterVM.Character.Profile) ||
+             string.IsNullOrEmpty(characterVM.Character.LayoutImage))
+            {
+                ModelState.AddModelError("Image", "Image was incorrect");
+                return View(characterVM);
+            }
+
+            if (!ModelState.IsValid)
+                return View(characterVM.Character);
+
+
+            _db.Characters.Update(characterVM.Character);
+            _db.SaveChanges();
+
+            int? characterId = characterVM.Character.Id;
+            Character character = _db.Characters.Find(characterId);
+
+            foreach (var power in characterVM.ChosenPowers)
+            {
+                Power pow = _db.Powers.FirstOrDefault(p => p.Id == power);
+                CharacterPower characterPower = _db.CharacterPowers.FirstOrDefault(cp => cp.CharacterId == characterId && cp.PowerId == pow.Id);
+                if (characterPower == null)
+                {
+                    characterPower = new CharacterPower();
+                    characterPower.CharacterId = characterId;
+                    characterPower.PowerId = pow.Id;
+                    _db.CharacterPowers.Add(characterPower);
+                }
+                else
+                {
+                    characterPower.CharacterId = characterId;
+                    characterPower.PowerId = pow.Id;
+                    _db.CharacterPowers.Update(characterPower);
+                }                 
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(Index), characterVM);
+
+            }
 
         public ActionResult MakeActiveOrDeactive(int? id)
         {
@@ -123,8 +254,8 @@ namespace DarkComics.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Character character = _db.Characters.Include(c=>c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c=>c.Id == id);
+            Character character = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id);
 
             if (character == null)
             {
@@ -142,8 +273,8 @@ namespace DarkComics.Areas.Admin.Controllers
         }
 
 
-        public string RenderImage(Character character,IFormFile photo)
-        {
+        public string RenderImage(Character character, IFormFile photo)
+            {
             if (!photo.ContentType.Contains("image"))
             {
                 return null;
@@ -161,15 +292,29 @@ namespace DarkComics.Areas.Admin.Controllers
             {
                 Directory.CreateDirectory(newSlider);
             }
-            newSlider = Path.Combine(newSlider,filename);
+            newSlider = Path.Combine(newSlider, filename);
 
             using (FileStream file = new FileStream(newSlider, FileMode.Create))
             {
                 photo.CopyTo(file);
-            }           
-           
+            }
+
             return filename;
 
         }
+
+            public string RenderImage(Character character, IFormFile photo,string oldFilename)
+            {
+            FileInfo oldFile = new FileInfo(oldFilename);
+            if (System.IO.File.Exists(oldFilename))
+            {
+                oldFile.Delete();
+            };
+
+            return RenderImage(character, photo);
+            }
+
+       
+        
     }
 }

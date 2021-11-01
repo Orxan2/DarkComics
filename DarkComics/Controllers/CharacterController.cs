@@ -22,7 +22,7 @@ namespace DarkComics.Controllers
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-                Characters = _context.Characters.Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                Characters = _context.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
                 Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c=>c.IsActive == true).ToList()
             };
 
@@ -30,9 +30,26 @@ namespace DarkComics.Controllers
         }
 
         // GET: CharacterController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            CharacterViewModel characterView = new CharacterViewModel
+            {
+                Character = _context.Characters.Include(c=>c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
+                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).
+                FirstOrDefault(c => c.Id == id)
+            };
+            if (characterView.Character == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(characterView);
         }
 
         // GET: CharacterController/Create

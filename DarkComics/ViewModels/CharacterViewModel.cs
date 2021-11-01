@@ -17,6 +17,12 @@ namespace DarkComics.ViewModels
         public List<City> Cities { get; set; }
         public List<int?> ChosenPowers { get; set; }
         public Character Character { get; set; }
+
+        public string Logo { get; set; }
+        public string Profile { get; set; }
+        public string FirstImage { get; set; }
+        public string SecondImage { get; set; }
+        public string LayoutImage { get; set; }
     }
     }
 

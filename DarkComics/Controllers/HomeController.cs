@@ -29,7 +29,7 @@ namespace DarkComics.Controllers
                 Where(c => c.IsActive == true).ToList(),
                 BestComics = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).
                 Where(c=>c.IsActive == true).OrderByDescending(c=>c.SaleQuantity).Take(3).ToList(),
-                Characters = _context.Characters.Include(c => c.Categories).Include(c => c.CharacterPowers).ThenInclude(c => c.Power).
+                Characters = _context.Characters.Include(c=>c.City).Include(c => c.Categories).Include(c => c.CharacterPowers).ThenInclude(c => c.Power).
                 Include(c => c.ComicCharacters).ThenInclude(cc => cc.Comic).Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).
                 Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).ToList(),
                 FilteringComics = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).

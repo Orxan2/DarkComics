@@ -113,6 +113,31 @@ namespace DarkComics.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Durability")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("Energy")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("EyeColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int?>("Fighting")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
                     b.Property<string>("FirstAppearance")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -120,12 +145,30 @@ namespace DarkComics.Migrations
                     b.Property<string>("FirstImage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("HairStyle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Height")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
                     b.Property<string>("HeroName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Intelligence")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LayoutImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
@@ -145,6 +188,20 @@ namespace DarkComics.Migrations
                     b.Property<string>("SecondImage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Speed")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<int?>("Strength")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasMaxLength(10);
+
+                    b.Property<int?>("Weight")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -159,15 +216,27 @@ namespace DarkComics.Migrations
                             CityId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Creator = "Bob Kane and Bill Finger",
+                            Durability = 5,
+                            Education = "Gotham City School",
+                            Energy = 8,
+                            EyeColor = "Blue",
+                            Fighting = 9,
                             FirstAppearance = "Dedective Comics #1",
                             FirstImage = "batman.png",
+                            HairStyle = "Black",
+                            Height = "1.89",
                             HeroName = "Batman",
+                            Intelligence = 7,
                             IsActive = true,
+                            LayoutImage = "layout.png",
                             Logo = "batman-logo.png",
                             Name = "Bruce Wayne",
                             NickName = "Dark Knight",
                             Profile = "batman-profile.png",
-                            SecondImage = "batman-2.png"
+                            SecondImage = "batman-2.png",
+                            Speed = 6,
+                            Strength = 7,
+                            Weight = 70
                         },
                         new
                         {
@@ -176,15 +245,27 @@ namespace DarkComics.Migrations
                             CityId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Creator = "Orxan Ibra",
+                            Durability = 5,
+                            Education = "Gotham City School",
+                            Energy = 8,
+                            EyeColor = "Blue",
+                            Fighting = 9,
                             FirstAppearance = "Dedective Comics #14",
                             FirstImage = "nightwing.png",
+                            HairStyle = "Black",
+                            Height = "1.89",
                             HeroName = "Nightwing",
+                            Intelligence = 7,
                             IsActive = true,
+                            LayoutImage = "layout.png",
                             Logo = "nightwing-logo.png",
                             Name = "Dick  Grayson",
                             NickName = "Wonder Boy",
                             Profile = "nightwing-profile.png",
-                            SecondImage = "nightwing-2.png"
+                            SecondImage = "nightwing-2.png",
+                            Speed = 6,
+                            Strength = 7,
+                            Weight = 70
                         },
                         new
                         {
@@ -193,15 +274,27 @@ namespace DarkComics.Migrations
                             CityId = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Creator = "Stan Lee",
+                            Durability = 5,
+                            Education = "Gotham City School",
+                            Energy = 8,
+                            EyeColor = "Blue",
+                            Fighting = 9,
                             FirstAppearance = "Spiderman #1",
                             FirstImage = "batman.png",
+                            HairStyle = "Black",
+                            Height = "1.89",
                             HeroName = "Spiderman",
+                            Intelligence = 7,
                             IsActive = true,
+                            LayoutImage = "layout.png",
                             Logo = "spiderman-logo.png",
                             Name = "Peter Parker",
                             NickName = "Spidey",
                             Profile = "batman-profile.png",
-                            SecondImage = "batman-2.png"
+                            SecondImage = "batman-2.png",
+                            Speed = 6,
+                            Strength = 7,
+                            Weight = 70
                         });
                 });
 

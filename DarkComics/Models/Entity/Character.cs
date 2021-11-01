@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DarkComics.Models.Entity
 {
@@ -22,11 +23,11 @@ namespace DarkComics.Models.Entity
         public string FirstAppearance { get; set; }
         [BindNever]
         public string FirstImage { get; set; }
-        [NotMapped]
+        [Required,NotMapped]
         public IFormFile FirstPhoto { get; set; }
         [BindNever]
         public string Logo { get; set; }
-        [Required, NotMapped,BindProperty]
+        [Required, NotMapped]
         public IFormFile LogoPhoto { get; set; }
         [BindNever]
         public string SecondImage { get; set; }
@@ -41,6 +42,32 @@ namespace DarkComics.Models.Entity
         public string NickName { get; set; }       
         [Required]
         public string Creator { get; set; }
+        [Required,StringLength(maximumLength:20)]
+        public string Height { get; set; }
+        [Required]
+        public int? Weight { get; set; }
+        [Required, StringLength(maximumLength: 20)]
+        public string EyeColor { get; set; }
+        [Required, StringLength(maximumLength: 20)]
+        public string HairStyle { get; set; }
+        [Required, StringLength(maximumLength: 30)]
+        public string Education { get; set; }
+        [Required]
+        public int? Fighting { get; set; }
+        [Required]
+        public int? Durability { get; set; }
+        [Required]
+        public int? Energy { get; set; }
+        [Required]
+        public int? Strength { get; set; }
+        [Required]
+        public int? Speed { get; set; }
+        [Required]
+        public int? Intelligence { get; set; }
+        public string LayoutImage { get; set; }
+        [Required, NotMapped]
+        public IFormFile LayoutPhoto { get; set; }
+        [AllowHtml,Required]
         public string AboutCharacter { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<Category> Categories { get; set; }
