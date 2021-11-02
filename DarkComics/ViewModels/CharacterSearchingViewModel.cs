@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DarkComics.ViewModels
 {
-    public class ComicViewModel
+    public class CharacterSearchingViewModel
     {
-        public List<Product> RandomComics { get; set; }
-        public List<Serie> Series { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DarkComics.Helpers.Enums
 {
-    public enum ComicType
+    public enum Category
     {
-        Book = 1,
-        Cover,
-        SingleCover
+        Comic =1,
+        Toy,
+        Game
     }
 }

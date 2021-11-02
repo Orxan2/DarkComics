@@ -8,7 +8,6 @@ namespace DarkComics.ViewModels
 {
     public class ReadViewModel
     {
-         public Comic Comic { get; set; }
-         //public List<ReadingComic> ReadingComics { get; set; }
+        public ComicDetail ComicDetail { get; set; }
     }
 }

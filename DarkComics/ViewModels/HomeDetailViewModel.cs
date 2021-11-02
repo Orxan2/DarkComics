@@ -8,6 +8,6 @@ namespace DarkComics.ViewModels
 {
     public class HomeDetailViewModel
     {
-       public Comic Comic; 
+       //public Comic Comic; 
     }
 }

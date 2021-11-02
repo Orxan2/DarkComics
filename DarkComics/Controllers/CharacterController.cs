@@ -1,4 +1,5 @@
 ﻿using DarkComics.DAL;
+using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,11 @@ namespace DarkComics.Controllers
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-                Characters = _context.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c=>c.IsActive == true).ToList()
+                Characters = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).ToList()
             };
+
 
             return View(characterViewModel);
         }
@@ -39,8 +42,9 @@ namespace DarkComics.Controllers
 
             CharacterViewModel characterView = new CharacterViewModel
             {
-                Character = _context.Characters.Include(c=>c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).
+                Character = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).
                 FirstOrDefault(c => c.Id == id)
             };
             if (characterView.Character == null)
@@ -53,66 +57,32 @@ namespace DarkComics.Controllers
         }
 
         // GET: CharacterController/Create
-        public ActionResult Create()
+        public ActionResult Search(int? id,int pageIndex = 1,int pageSize = 4)
         {
-            return View();
-        }
 
-        // POST: CharacterController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: CharacterController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            Character character = _context.Characters.Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c => c.CharacterPowers).
+                ThenInclude(cp => cp.Power).Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(pc => pc.Product).FirstOrDefault(c => c.Id == id);
+           
+            var products = character.ProductCharacters.OrderByDescending(p => p.ProductId).ToList();
+            if (products == null)
+            {
+                return NotFound();
+            }
 
-        // POST: CharacterController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            PaginationViewModel<ProductCharacter> paginationViewModel = new PaginationViewModel<ProductCharacter>(products, pageSize, pageIndex);
+          
+            //int count = characterViewModel.Character.ProductCharacters.Count();
 
-        // GET: CharacterController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            //HttpContext.Response.Cookies.Append("ComicQuantity", count.ToString());
 
-        // POST: CharacterController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            
+
+            return View(paginationViewModel);
         }
     }
 }

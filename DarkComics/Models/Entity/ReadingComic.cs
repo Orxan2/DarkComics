@@ -16,8 +16,9 @@ namespace DarkComics.Models.Entity
         public IFormFile Photo { get; set; }
         [BindNever]
         public string Image { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        public Comic Comic { get; set; }
-        public int ComicId { get; set; }
+        public ComicDetail ComicDetail { get; set; }
+        public int? ComicDetailId { get; set; }
     }
 }

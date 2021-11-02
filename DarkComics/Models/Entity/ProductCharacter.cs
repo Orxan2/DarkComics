@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DarkComics.Models.Entity
 {
-    public class TeamCharacter : BaseEntity
+    public class ProductCharacter : BaseEntity
     {
-        public Team Team { get; set; }
-        public int? TeamId { get; set; }
+        public Product Product { get; set; }
+        public int? ProductId { get; set; }
         public Character Character { get; set; }
         public int? CharacterId { get; set; }
     }

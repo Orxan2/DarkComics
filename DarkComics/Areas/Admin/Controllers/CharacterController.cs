@@ -30,8 +30,9 @@ namespace DarkComics.Areas.Admin.Controllers
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-                Characters = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList()
+                Characters = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList()
             };
 
             return View(characterViewModel);
@@ -45,8 +46,9 @@ namespace DarkComics.Areas.Admin.Controllers
                 Powers = _db.Powers.ToList(),
                 PowerList = new List<SelectListItem>(),
                 CitiesList = new List<SelectListItem>(),
-                Characters = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList(),
+                Characters = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList(),
                 Cities = _db.Cities.ToList()
 
             };
@@ -120,8 +122,9 @@ namespace DarkComics.Areas.Admin.Controllers
 
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-               Character = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id),
+               Character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id),
                Cities = _db.Cities.ToList(),
                Powers = _db.Powers.ToList(),
                PowerList = new List<SelectListItem>(),
@@ -254,8 +257,9 @@ namespace DarkComics.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Character character = _db.Characters.Include(c => c.City).Include(c => c.Categories).ThenInclude(c => c.Comics).Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).
-                  Include(c => c.TeamCharacters).ThenInclude(tc => tc.Team).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id);
+            Character character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == id);
 
             if (character == null)
             {

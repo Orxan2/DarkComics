@@ -1,4 +1,5 @@
 ﻿using DarkComics.DAL;
+using DarkComics.Helpers.Enums;
 using DarkComics.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,38 +20,32 @@ namespace DarkComics.Controllers
             _context = context;
         }
         public IActionResult Index()
-        {
-            int take = 3;
+        {         
 
             ComicViewModel comicViewModel = new ComicViewModel
             {
-                Books = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
-                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Book).ToList(),
-                OneShot = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
-                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.SingleCover).ToList(),
-                Categories = _context.Categories.Include(c => c.Comics).Include(c => c.Character).ThenInclude(c => c.CharacterPowers).ThenInclude(c => c.Power).
-                OrderBy(c => c.Id).Take(take).ToList(),
-                Series = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
-                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Cover).ToList(),
+               Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(s=>s.IsDeleted == false).ToList(),
+                RandomComics = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true).ToList()
             };
 
-            int count = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).ThenInclude(c => c.Character).
-                Where(c => c.IsActive == true && c.ComicType == Helpers.Enums.ComicType.Cover).Count();
+            int count = comicViewModel.Series.Count();
 
             HttpContext.Response.Cookies.Append("ComicQuantity", count.ToString());
 
             return View(comicViewModel);
         }
 
-        public IActionResult LoadMore(int skip,int take)
+        public IActionResult LoadMore(int skip, int take)
         {
             ComicViewModel comicViewModel = new ComicViewModel
             {
-                Categories = _context.Categories.Include(c => c.Character).ThenInclude(c => c.CharacterPowers).ThenInclude(c => c.Power).
-                OrderBy(c => c.Id).Skip(skip).Take(take).ToList()                
-            };           
+                Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).OrderBy(s => s.Id).Skip(skip).Take(take).ToList()
+            };
 
-            
+
             return View("_LoadMore", comicViewModel);
         }
 
@@ -58,8 +53,9 @@ namespace DarkComics.Controllers
         {
             ComicViewModel comicViewModel = new ComicViewModel
             {
-                Categories = _context.Categories.Include(c => c.Character).ThenInclude(c => c.CharacterPowers).ThenInclude(c => c.Power).
-                OrderBy(c => c.Id).Where(c=>(c.Character.HeroName + c.Name).Contains(search)).ToList()            };
+                Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).OrderBy(c => c.Id).Where(s=>s.Name.Contains(search)).ToList()
+            };
 
             return View("_LoadMore", comicViewModel);
         }

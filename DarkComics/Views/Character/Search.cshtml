@@ -1,0 +1,40 @@
+﻿@model PaginationViewModel<ProductCharacter>
+@{
+    ViewData["Title"] = "Search";
+}
+<section>
+    <div class="container">
+        <div class="row">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="volume my-5">
+                        <a href="#" class="volume__body">
+                            <img src="~/assets/img/@product.Product.Image" class="w-100 h-100" alt="volume" />
+                        </a>
+                        <div class="volume__footer">
+                            <h5 class="text-center fw-bold my-3">@product.Product.Name</h5>
+                            <a href="" class="volume__btn">Go Volume</a>
+                        </div>
+                    </div>
+                </div>
+            }       
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <nav class="" aria-label="Page navigation example">
+                    @Html.Raw(@Model.Getpagination(Url, "Search"))
+                    @*<ul class="pagination">
+                    <li class="page-item"><a class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                    <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                    <li class="page-item active"><a class="page-link">2</a></li>
+                    <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                    <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                </ul>*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

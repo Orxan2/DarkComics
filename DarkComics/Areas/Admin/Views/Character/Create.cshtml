@@ -3,6 +3,11 @@
     ViewData["Title"] = "Create";
 }
 
+<label>ASP .NET Core MVC Editor Example</label>
+<br />
+<br />
+<jqx-editor theme="@ViewData["Theme"]" width="800" height="400"></jqx-editor>
+
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading page-title-icon-rounded">
@@ -202,7 +207,16 @@
         $(document).ready(function () {
             $('#Character_AboutCharacter').summernote({
                 placeholder: 'Hello stand alone ui',
-                height: 250
+                height: 250,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
             }
             );
         });

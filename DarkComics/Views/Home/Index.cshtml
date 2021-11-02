@@ -5,7 +5,7 @@
 
 
 <!-- Last Week Added Comics End -->
-<section id="LastPost">
+<!--<section id="LastPost">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -15,19 +15,19 @@
         <div class="row py-5">
             <div class="col-12">
                 <div class="owl-carousel owl-theme">
-                    @foreach (var filteredComic in Model.FilteringComics)
+                    foreach (var filteredComic in Model.FilteringComics)
                     {
                         <div class="item rounded">
                             <div class="recommendation">
                                 <a href="#" class="recommendation__body">
-                                    <img src="~/assets/img/@filteredComic.Category.Character.HeroName.ToLower()/comics/@filteredComic.Category.Name.ToLower()/@filteredComic.Episode/@filteredComic.Image"
+                                    <img src="~/assets/img/filteredComic.Category.Character.HeroName.ToLower()/comics/filteredComic.Category.Name.ToLower()/filteredComic.Episode/filteredComic.Image"
                                          class="w-100 h-100" alt="volume">
                                 </a>
                                 <div class="recommendation__footer w-100 d-flex flex-column">
-                                    <a href="">@filteredComic.Category.Character.HeroName @filteredComic.Category.Name #@filteredComic.Episode</a>
+                                    <a href="">filteredComic.Category.Character.HeroName filteredComic.Category.Name #filteredComic.Episode</a>
                                     <a href="">Orxan Ibrahimov</a>
-                                    <a href="">@filteredComic.ComicType</a>
-                                    <a href="" class="text-danger">$@filteredComic.Price.ToString(".00")</a>
+                                    <a href="">filteredComic.ComicType</a>
+                                    <a href="" class="text-danger">$filteredComic.Price.ToString(".00")</a>
                                 </div>
                             </div>
 
@@ -37,11 +37,11 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- Last Week Added Comics Start-->
 
 <!-- Characters Section Start -->
-<section id="characters" class="py-5">
+<!--<section id="characters" class="py-5">
     <div class="container">
         <div class="row">
             <div class="col-12 heading position-relative py-5">
@@ -81,10 +81,10 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- Characters Section End -->
 <!-- featured section starts  -->
-<section class="featured" id="featured">
+<!--<section class="featured" id="featured">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -181,49 +181,49 @@
         </div>
     </div>
 
-</section>
+</section>-->
 <!-- featured section ends -->
 <!-- Comics Start -->
-<section id="bestComics">
+<!--<section id="bestComics">
     <div class="container">
         <div class="row">
             <div class="col-12 position-relative">
-                <span class="heading px-4">The Best 3 Comics</span>
+                <span class="heading px-4">The Best 3 Comics</span>-->
                 <!-- <div class="d-none d-lg-flex justify-content-between w-100">
                     <img src="~/~/assets/img/cap-logo.png" width="250" alt="hero-read-comic" />
                     <img src="~/~/assets/img/batman.png" width="250" alt="hero-read-comic" />
                     <img src="~/~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
                 </div> -->
-                <div id="hero-background" class="d-none d-lg-flex justify-content-between w-100">
+                <!--<div id="hero-background" class="d-none d-lg-flex justify-content-between w-100">
                     <img src="~/~/assets/img/cap-logo.png" width="300" alt="hero-read-comic" />
                     <img src="~/~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
                 </div>
             </div>
         </div>
         <div class="row py-5 my-5">
-            @foreach (var comic in Model.BestComics)
+            foreach (var comic in Model.BestComics)
             {
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="cover my-5">
                         <div class="comics">
                             <figure class="front">
-                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower()/@comic.Category.Cover" class="w-100 h-100"
+                                <img src="~/assets/img/comic.Category.Character.HeroName.ToLower()/comics/comic.Category.Name.ToLower()/comic.Category.Cover" class="w-100 h-100"
                                      alt="cover" />
                             </figure>
                             <figure class="back">
-                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower()/@comic.Category.Backface"
+                                <img src="~/assets/img/comic.Category.Character.HeroName.ToLower()/comics/comic.Category.Name.ToLower()/comic.Category.Backface"
                                      class="w-100 h-100" alt="backface" />
                             </figure>
                         </div>
                         <div class="cover__info text-white px-3">
-                            <h5>@comic.Category.Character.HeroName @comic.Category.Name #@comic.Episode</h5>
-                            <p><strong>Type : </strong>@comic.ComicType.ToString()</p>
-                            <p><strong>Price : </strong>$@comic.Price.ToString("0.00")</p>
+                            <h5>comic.Category.Character.HeroName comic.Category.Name #comic.Episode</h5>
+                            <p><strong>Type : </strong>comic.ComicType.ToString()</p>
+                            <p><strong>Price : </strong>$comic.Price.ToString("0.00")</p>
                             <p><strong>Art By : </strong>Orxan Ibra</p>
-                            <p><strong>Written By : </strong>Orxan Ibra</p>
+                            <p><strong>Written By : </strong>Orxan Ibra</p>-->
                             <!-- <p><strong>Page Count : </strong>13</p> -->
-                            <p><strong>Category : </strong>@comic.Category.Name</p>
-                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@comic.Id" class="cover__btn">Go Detail</a>
+                            <!--<p><strong>Category : </strong>comic.Category.Name</p>
+                            <a asp-controller="Home" asp-action="Detail" asp-route-id="comic.Id" class="cover__btn">Go Detail</a>
                         </div>
                     </div>
                 </div>
@@ -231,10 +231,10 @@
         </div>
 
     </div>
-</section>
+</section>-->
 <!-- Comics End -->
 <!-- Toys Start -->
-<section id="toys">
+<!--<section id="toys">
     <div class="container">
         <div class="row my-5">
             <div class="col-12 position-relative">
@@ -298,10 +298,10 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- Toys End -->
 <!-- Current Series Start -->
-<section id="current">
+<!--<section id="current">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -309,21 +309,21 @@
             </div>
         </div>
         <div class="row">
-            @foreach (var comic in Model.Comics)
+            foreach (var comic in Model.Comics)
             {
                 <div class="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <a class="comic-box">
                         <div class="comic-box__body">
-                            <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name/@comic.Category.Cover" class="w-100 h-100" alt="current" />
+                            <img src="~/assets/img/comic.Category.Character.HeroName.ToLower()/comics/comic.Category.Name/comic.Category.Cover" class="w-100 h-100" alt="current" />
 
                         </div>
                         <div class="comic-box__footer">
-                            <h5 class="text-white">@comic.Category.Character.HeroName - @comic.Category.Name</h5>
+                            <h5 class="text-white">comic.Category.Character.HeroName - comic.Category.Name</h5>
                         </div>
                     </a>
                 </div>
             }
         </div>
     </div>
-</section>
+</section>-->
 <!-- Current Series End -->

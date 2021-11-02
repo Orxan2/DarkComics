@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace DarkComics.Models.Entity
 {
-    public class Category : BaseEntity
+    public class Serie : BaseEntity
     {
-        [Required, StringLength(maximumLength: 100)]
-        public string Name { get; set; }
-        [Required, StringLength(maximumLength: 50)]
+        public string Name { get; set; }        
         public string Cover { get; set; }
         [Required, NotMapped]
-        public IFormFile FirstPhoto { get; set; }
+        public IFormFile CoverPhoto { get; set; }
         public string Backface { get; set; }
         [Required, NotMapped]
-        public IFormFile SecondPhoto { get; set; }
+        public IFormFile BackfacePhoto { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Character Character { get; set; }
-        public int? CharacterId { get; set; }
-        public List<Comic> Comics { get; set; }
-        //public int TeamId { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public bool IsTeam { get; set; }
+        public int Discount { get; set; }
+        public bool IsDeleted { get; set; }
+        public List<ComicDetail> ComicDetails { get; set; }
+
     }
 }

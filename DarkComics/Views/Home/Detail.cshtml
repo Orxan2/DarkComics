@@ -5,7 +5,7 @@
 
 
 <!-- Comics Detail Start -->
-<section id="detail" class="bg-warning">
+<!--<section id="detail" class="bg-warning">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-4">
@@ -15,18 +15,18 @@
             <div class="col-12 col-lg-8 position-relative">
                 <h1 class="text-center">Details</h1>
                 <ul class="details list-group">
-                    <li class="list-group-item border-0 bg-transparent"><h3>@(Model.Comic.IsTeam? @Model.Comic.Team.Name.ToString() : Model.Comic.Category.Character.Name.ToString()) @Model.Comic.Category.Name #@Model.Comic.Episode</h3></li>
-                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Published :</strong>@Model.Comic.CreatedDate.ToString("dd/MM/yyyy")</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3>(Model.Comic.IsTeam? Model.Comic.Team.Name.ToString() : Model.Comic.Category.Character.Name.ToString()) Model.Comic.Category.Name #Model.Comic.Episode</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Published :</strong>Model.Comic.CreatedDate.ToString("dd/MM/yyyy")</h3></li>
                     <li class="list-group-item border-0 bg-transparent"><h3><strong>Written By : </strong>Orxan Ibrahimov</h3></li>
                     <li class="list-group-item border-0 bg-transparent"><h3><strong>Art By : </strong>Orxan Ibrahimov</h3></li>
-                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Price : </strong>$@Model.Comic.Price.ToString("0.00")</h3></li>
-                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Type : </strong>@Model.Comic.ComicType</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Price : </strong>$Model.Comic.Price.ToString("0.00")</h3></li>
+                    <li class="list-group-item border-0 bg-transparent"><h3><strong>Type : </strong>Model.Comic.ComicType</h3></li>
                     <li class="list-group-item border-0 bg-transparent">
                         <h3>
                             <strong>Heroes : </strong>
-                            @foreach (var comicCharacter in Model.Comic.ComicCharacters)
+                            foreach (var comicCharacter in Model.Comic.ComicCharacters)
                             {
-                                <img src="~/assets/img/@comicCharacter.Character.HeroName.ToLower()/@comicCharacter.Character.Profile" width="50" height="50" class="rounded-circle" alt="@comicCharacter.Character.HeroName" title="@comicCharacter.Character.HeroName - @comicCharacter.Character.Name" />
+                                <img src="~/assets/img/comicCharacter.Character.HeroName.ToLower()/comicCharacter.Character.Profile" width="50" height="50" class="rounded-circle" alt="comicCharacter.Character.HeroName" title="comicCharacter.Character.HeroName - comicCharacter.Character.Name" />
                             }
                             
                         </h3>
@@ -53,11 +53,11 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- Comics Detail End -->
 
 <!-- More Than This Series End -->
-<section id="similar">
+<!--<section id="similar">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -116,11 +116,11 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- More Than This Series Start-->
 
 <!-- May be You Also Like Start -->
-<section id="recommendation">
+<!--<section id="recommendation">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -224,5 +224,5 @@
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!-- May be You Also Like End -->

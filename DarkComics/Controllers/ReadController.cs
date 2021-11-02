@@ -1,4 +1,5 @@
 ﻿using DarkComics.DAL;
+using DarkComics.Helpers.Enums;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -23,8 +24,8 @@ namespace DarkComics.Controllers
         {
             ReadComicViewModel readComicViewModel = new ReadComicViewModel
             {
-                Comics = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).
-                Where(c => c.IsActive == true).ToList()
+               Comics = _context.Products.Include(p=>p.ComicDetail).ThenInclude(cd=>cd.Serie).Include(p=>p.ProductCharacters).
+               ThenInclude(pc=>pc.Character).Where(p=>p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true).ToList()
             };
             return View(readComicViewModel);
         }
@@ -36,18 +37,18 @@ namespace DarkComics.Controllers
             {
                 return NotFound();
             }
+            ComicDetail comicDetail = _context.ComicDetails.Include(cd => cd.ReadingComics).Include(cd => cd.Serie).Include(cd => cd.Products).
+                ThenInclude(p => p.ProductCharacters).ThenInclude(p => p.Character).FirstOrDefault(cd => cd.Id == id);
+         
 
-            Comic comic = _context.Comics.Include(c => c.ComicCharacters).ThenInclude(c => c.Character).Include(c => c.Category).Include(c=>c.ReadingComics).
-                Where(c => c.IsActive == true).FirstOrDefault(c=>c.Id == id);
-
-            if (comic == null)
+            if (comicDetail == null)
             {
                 return NotFound();
             }
 
             ReadViewModel readViewModel = new ReadViewModel
             {
-                Comic = comic
+                ComicDetail = comicDetail
             };
             return View(readViewModel);
         }

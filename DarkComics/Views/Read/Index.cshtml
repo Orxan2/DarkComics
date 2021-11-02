@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<!-- home section starts  -->
+<!-- home section starts -->
 <section class="home" id="home">
     <div class="container">
         <div class="row">
@@ -25,7 +25,7 @@
                         @foreach (var comic in Model.Comics)
                         {
                             <a asp-action="Read" asp-route-id="@comic.Id" class="swiper-slide my-4">
-                                <img src="~/assets/img/@comic.Category.Character.HeroName.ToLower()/comics/@comic.Category.Name.ToLower().Replace(" ","-")/@comic.Episode/@comic.Image" alt="@comic.Episode/@comic.Image">
+                                <img src="~/assets/img/products/@comic.Image" alt="@comic.Image" />
                             </a>
                         }
                     </div>
@@ -35,4 +35,4 @@
         </div>
     </div>
 </section>
-<!-- home section end  -->
+<!-- home section end -->  
