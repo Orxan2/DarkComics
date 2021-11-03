@@ -16,10 +16,9 @@ namespace DarkComics.Models.Entity
         [Required,NotMapped]
         public IFormFile BackfacePhoto { get; set; }
         public bool IsCover { get; set; }
-        public int? PageCount { get; set; }
-        //public Product Product { get; set; }
-        //public int? ProductId { get; set; }
+        public int? PageCount { get; set; }       
         public int? SerieId { get; set; }
+        //public int? IsActive { get; set; }
         public Serie Serie { get; set; }
         public List<ReadingComic> ReadingComics { get; set; }
         public List<Product> Products { get; set; }

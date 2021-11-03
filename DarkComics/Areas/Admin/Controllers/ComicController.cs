@@ -1,0 +1,194 @@
+﻿using DarkComics.DAL;
+using DarkComics.Helpers.Enums;
+using DarkComics.Models.Entity;
+using DarkComics.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DarkComics.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class ComicController : Controller
+    {
+        private readonly DarkComicDbContext _db;
+        private readonly IWebHostEnvironment _env;
+        public ComicController(DarkComicDbContext db, IWebHostEnvironment env)
+        {
+            _db = db;
+            _env = env;
+        }
+        // GET: ComicController
+        public ActionResult Index()
+        {
+            ComicViewModel comicViewModel = new ComicViewModel
+            {
+                Series = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).ToList()
+            };
+
+            return View(comicViewModel);
+        }
+
+        // GET: ComicController/Details/5
+        public ActionResult ComicIndex(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Serie serie = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).FirstOrDefault(s => s.Id == id);
+            if (serie == null)
+            {
+                return NotFound();
+            }
+
+            SerieViewModel serieViewModel = new SerieViewModel
+            {
+                Serie = serie
+            };
+
+            return View(serieViewModel);
+        }
+
+        public ActionResult CreateComic(int? id)
+        {
+           
+            ComicViewModel comicViewModel = new ComicViewModel
+            {
+                Serie = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).FirstOrDefault(s => s.Id == id),
+                CharacterList = new List<SelectListItem>(),
+                Characters = _db.Characters.ToList()
+
+        };
+
+           
+            foreach (var character in comicViewModel.Characters)
+            {
+                comicViewModel.CharacterList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = character.Name, Value = character.Id.ToString() }
+                });
+            }
+            return View(comicViewModel);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public ActionResult CreateComic(int? id, ComicViewModel comicView)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Serie serie = _db.Series.FirstOrDefault(s => s.Id == id);
+
+            if (serie == null)
+            {
+                return NotFound();
+            }
+
+            comicView.Comic.Category = Category.Comic;           
+            comicView.Comic.ComicDetail.Serie = serie;
+
+
+            if (!ModelState.IsValid)
+            {
+                return View(comicView);
+            }
+            comicView.Comic.Image = RenderImage(comicView, comicView.Comic.Photo);           
+
+            if (string.IsNullOrEmpty(comicView.Comic.Image))
+            {
+                ModelState.AddModelError("Image", "Image was incorrect");
+                return View(comicView);
+            }
+           
+            _db.Products.Add(comicView.Comic);
+            _db.SaveChanges();
+
+            // Create ProductCharacter
+            int? productId = _db.Products.Max(c => c.Id);
+            Product product = _db.Products.Find(productId);
+
+            foreach (var chosencharacter in comicView.ChosenCharacters)
+            {
+                Character character = _db.Characters.FirstOrDefault(p => p.Id == chosencharacter);
+                ProductCharacter productCharacter = new ProductCharacter();
+
+                productCharacter.ProductId = productId;
+                productCharacter.CharacterId = character.Id;
+                _db.ProductCharacters.Add(productCharacter);
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // GET: ComicController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: ComicController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: ComicController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        
+        public string RenderImage(ComicViewModel comicVM, IFormFile photo)
+        {
+            if (!photo.ContentType.Contains("image"))
+            {
+                return null;
+            }
+            if (photo.Length / 1024 > 10000)
+            {
+                return null;
+            }
+
+            string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
+            string environment = _env.WebRootPath;
+            string newSlider = Path.Combine(environment, "assets", "img","comics", comicVM.Comic.ComicDetail.Serie.Name.Replace(" ", "-").ToLower(),comicVM.Comic.ComicDetail.Id.ToString());
+
+            if (!Directory.Exists(newSlider))
+            {
+                Directory.CreateDirectory(newSlider);
+            }
+            newSlider = Path.Combine(newSlider, filename);
+
+            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            {
+                photo.CopyTo(file);
+            }
+
+            return filename;
+
+        }
+    }
+}

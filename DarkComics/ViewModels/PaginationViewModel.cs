@@ -34,7 +34,7 @@ namespace DarkComics.ViewModels
                 return "";
 
             StringBuilder pag = new StringBuilder();
-            pag.Append("<ul class='pagination'>");
+            pag.Append("<ul class='pagination justify-content-center'>");
 
            
 

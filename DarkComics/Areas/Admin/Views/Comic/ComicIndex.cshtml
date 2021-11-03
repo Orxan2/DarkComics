@@ -1,0 +1,61 @@
+﻿@model SerieViewModel
+@{
+    ViewData["Title"] = "ComicIndex";
+}
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading page-title-icon-rounded">
+            <div class="page-title-icon">
+                <i class="pe-7s-id icon-gradient bg-tempting-azure font-weight-bolder">
+                </i>
+            </div>
+            <div>
+                <h1>Comics</h1>
+                <div class="page-title-subheading">
+                    Wide selection of buttons that feature different styles for backgrounds, borders and hover options!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- featured section starts  -->
+<section class="featured" id="featured">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="heading"> <span>featured books</span> </h1>
+                <div class="swiper featured-slider">
+                    <div class="swiper-wrapper">
+                        @foreach (var comicDetail in Model.Serie.ComicDetails)
+                        {
+                            <div class="swiper-slide box">
+                                <div class="icons">
+                                    <a href="#" class="pe-7s-look pe-lg"></a>
+                                    <a href="#" class="pe-7s-pen pe-lg"></a>
+                                    <a href="#" class="pe-7s-delete-user"></a>
+                                </div>
+                                <div class="image">
+                                    <img src="~/assets/img/comics/@comicDetail.Serie.Name.Replace(" ","-").ToLower()/@comicDetail.Id/@comicDetail.Products.FirstOrDefault().Image" alt="book-1" />
+                                </div>
+                                <div class="content">
+                                    <h3>@comicDetail.Products.FirstOrDefault().Name</h3>
+                                    <div class="price">$@comicDetail.Products.FirstOrDefault().Price <span>$@(comicDetail.Products.FirstOrDefault().Price - (comicDetail.Products.FirstOrDefault().Price * comicDetail.Serie.Discount))</span></div>
+                                    <a href="#" class="btn">add to cart</a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- featured section ends -->

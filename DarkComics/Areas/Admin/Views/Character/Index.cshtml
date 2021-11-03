@@ -59,7 +59,7 @@
                     <td>@character.NickName</td>
                     <td>@character.FirstAppearance</td>
                     <td class="text-center">
-                        <button class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></button>
+                        <button asp-action="Detail" asp-route-id="@character.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></button>
                         <a asp-action="Update" asp-route-id="@character.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
                         <a asp-action="MakeActiveOrDeactive" asp-route-id="@character.Id" class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
                     </td>

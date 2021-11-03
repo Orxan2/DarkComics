@@ -160,7 +160,7 @@ window.onload = () => {
             $(element).css("display", "none");
         });
         if (word == "") {
-            Load2(0, 3);
+            Load(0, 3);
         }
         $.ajax({
             url: `/Comic/Search?search=${word}`,
@@ -180,16 +180,7 @@ window.onload = () => {
             }
         })
     }
-    function Load2(skip, take) {
-        //console.log('okay');
-        $.ajax({
-            url: `/Comic/LoadProducts?skip=${skip}&take=${take}`,
-            type: "Get",
-            success: function (response) {
-                $('#addHere').append(response);
-            }
-        })
-    }
+    
     //Loader
     fadeOut();
 

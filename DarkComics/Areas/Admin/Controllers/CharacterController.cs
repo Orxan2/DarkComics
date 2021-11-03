@@ -38,6 +38,25 @@ namespace DarkComics.Areas.Admin.Controllers
             return View(characterViewModel);
         }
 
+        public IActionResult Detail(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            Character character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+               Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+               Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c=>c.Id == id);
+
+            if (character == null)
+                return NotFound();
+
+            CharacterViewModel characterViewModel = new CharacterViewModel
+            {
+                Character = character
+            };
+
+            return View(characterViewModel);
+        }
 
         public ActionResult Create()
         {
@@ -276,7 +295,38 @@ namespace DarkComics.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult DeletePower(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+            CharacterPower characterPower = _db.CharacterPowers.FirstOrDefault(c => c.Id == id);
+            if (characterPower == null)
+            {
+                return NotFound();
+            }
 
+
+
+            Character character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+               Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
+               Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == characterPower.CharacterId);
+
+            if (character == null)
+                return NotFound();
+
+            //CharacterViewModel characterViewModel = new CharacterViewModel
+            //{
+            //    Character = character
+            //};
+
+            _db.CharacterPowers.Remove(characterPower);
+            _db.SaveChanges();
+
+            return RedirectToAction("Detail",character.Id);
+        }
         public string RenderImage(Character character, IFormFile photo)
             {
             if (!photo.ContentType.Contains("image"))
@@ -307,8 +357,8 @@ namespace DarkComics.Areas.Admin.Controllers
 
         }
 
-            public string RenderImage(Character character, IFormFile photo,string oldFilename)
-            {
+        public string RenderImage(Character character, IFormFile photo, string oldFilename)
+        {
             FileInfo oldFile = new FileInfo(oldFilename);
             if (System.IO.File.Exists(oldFilename))
             {
@@ -316,9 +366,8 @@ namespace DarkComics.Areas.Admin.Controllers
             };
 
             return RenderImage(character, photo);
-            }
+        }      
 
-       
         
     }
 }
