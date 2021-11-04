@@ -44,19 +44,15 @@ namespace DarkComics.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Serie serie = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).FirstOrDefault(s => s.Id == id);
-            if (serie == null)
+            List<Product> products = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.SerieId == id).ToList();
+                        
+            ComicViewModel comicView = new ComicViewModel
             {
-                return NotFound();
-            }
-
-            SerieViewModel serieViewModel = new SerieViewModel
-            {
-                Serie = serie
+                RandomComics = products
             };
 
-            return View(serieViewModel);
+            return View(comicView);
         }
 
         public ActionResult CreateComic(int? id)
@@ -98,6 +94,7 @@ namespace DarkComics.Areas.Admin.Controllers
 
             comicView.Comic.Category = Category.Comic;           
             comicView.Comic.ComicDetail.Serie = serie;
+            comicView.Comic.ComicDetail.IsCover = true;
 
 
             if (!ModelState.IsValid)
@@ -105,6 +102,7 @@ namespace DarkComics.Areas.Admin.Controllers
                 return View(comicView);
             }
             comicView.Comic.Image = RenderImage(comicView, comicView.Comic.Photo);           
+            comicView.Comic.ComicDetail.Backface = RenderImage(comicView, comicView.Comic.ComicDetail.BackfacePhoto);
 
             if (string.IsNullOrEmpty(comicView.Comic.Image))
             {
@@ -154,13 +152,32 @@ namespace DarkComics.Areas.Admin.Controllers
             }
         }
 
-        // GET: ComicController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult MakeActiveOrDeactive(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Product product = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic).ToList().FirstOrDefault(c => c.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (product.IsActive == true)
+                product.IsActive = false;
+            else
+                product.IsActive = true;
+
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
-        
+
         public string RenderImage(ComicViewModel comicVM, IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))

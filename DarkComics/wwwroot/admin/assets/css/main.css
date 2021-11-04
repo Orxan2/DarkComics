@@ -20700,3 +20700,7 @@ a.fc-more:hover {
         background: #444;
         color: #000;
     }
+.buton-outline-danger:hover {
+    background-color: red !important;
+    color: white;
+}
