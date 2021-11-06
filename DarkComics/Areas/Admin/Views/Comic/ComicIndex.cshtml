@@ -34,10 +34,10 @@
                                 <div class="icons">
                                     <a href="#" class="pe-7s-look pe-lg"></a>
                                     <a href="#" class="pe-7s-pen pe-lg"></a>
-                                    <a asp-controller="Comic" asp-action="ComicIndex" asp-route-id="@comic.ComicDetail.Id" class="@(comic.IsActive?"pe-7s-close-circle buton-outline-danger":"pe-7s-refresh-2")"></a>
+                                    <a asp-controller="Comic" asp-action="MakeActiveOrDeactive" asp-route-id="@comic.Id" class="@(comic.IsActive?"pe-7s-close-circle buton-outline-danger":"pe-7s-refresh-2")"></a>
                                 </div>
                                 <div class="image">
-                                    <img src="~/assets/img/comics/@comic.ComicDetail.Serie.Name.Replace(" ","-").ToLower()/@comic.Image" alt="book-1" />
+                                    <img src="~/assets/img/comics/product-@comic.Id/@comic.Image" alt="product" />
                                 </div>
                                 <div class="content">
                                     <h3>@comic.Name</h3>

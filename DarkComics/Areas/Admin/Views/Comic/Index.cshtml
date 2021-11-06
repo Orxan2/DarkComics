@@ -46,7 +46,7 @@
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left mr-3">
                                         <div class="widget-content-left">
-                                            <img width="40" class="rounded-circle" src="~/assets/img/comics/@serie.Name.Replace(" ","-").ToLower()/@serie.Cover" alt="@serie.Name" />
+                                            <img width="40" class="rounded-circle" src="~/assets/img/comics/serie-@serie.Id/@serie.Cover" alt="@serie.Name" />
                                         </div>
                                     </div>
                                     <div class="widget-content-left flex2">
@@ -60,7 +60,7 @@
                         <td>@serie.CreatedDate</td>
                         <td class="text-center">
                             <a asp-action="ComicIndex" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
-                            <a asp-action="Update" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
+                            <a asp-action="UpdateSerie" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
                             <a asp-action="MakeActiveOrDeactive" asp-route-id="@serie.Id" class="mb-2 mr-2 btn @(serie.IsDeleted?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(serie.IsDeleted?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
                         </td>                      
 

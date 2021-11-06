@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    [Migration("20211102164127_AddedDatas")]
-    partial class AddedDatas
+    [Migration("20211106180428_first-Migration")]
+    partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,6 @@ namespace DarkComics.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AboutCharacter")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CityId")

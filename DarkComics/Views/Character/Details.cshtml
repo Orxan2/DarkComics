@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="layout">
-                    <img src="~/assets/img/@Model.Character.HeroName.ToLower().Replace(" ","-")/@Model.Character.LayoutImage" 
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.LayoutImage" 
                          class="w-100 h-100 position-absolute top-0 start-0" alt="layout" />
                     <div class="info-container">
                         <div class="box">
-                            <img src="~/assets/img/@Model.Character.HeroName.ToLower().Replace(" ","-")/@Model.Character.Profile" width="160" height="160" alt="profile" />
+                            <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.Profile" width="160" height="160" alt="profile" />
                             <div class="info mx-5">
                                 <p class="mb-0 text-capitalize">@Model.Character.NickName</p>
                                 <h1>@Model.Character.HeroName.ToUpper()</h1>

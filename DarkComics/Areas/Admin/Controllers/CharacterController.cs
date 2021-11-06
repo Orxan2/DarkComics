@@ -340,7 +340,11 @@ namespace DarkComics.Areas.Admin.Controllers
 
             string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
             string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "assets", "img", character.HeroName.Replace(" ", "-").ToLower());
+            string newSlider = Path.Combine(environment, "assets", "img", $"character-{character.Id}");
+            if (character.Id == null)
+                newSlider = Path.Combine(environment, "assets", "img", $"character-{_db.Characters.Max(c => c.Id + 1)}");
+
+
 
             if (!Directory.Exists(newSlider))
             {
@@ -359,6 +363,7 @@ namespace DarkComics.Areas.Admin.Controllers
 
         public string RenderImage(Character character, IFormFile photo, string oldFilename)
         {
+            oldFilename = Path.Combine(_env.WebRootPath, "assets", "img", $"character-{character.Id}", oldFilename);
             FileInfo oldFile = new FileInfo(oldFilename);
             if (System.IO.File.Exists(oldFilename))
             {

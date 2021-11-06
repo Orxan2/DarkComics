@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DarkComics.Migrations
 {
-    public partial class AddedDatas : Migration
+    public partial class firstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -102,7 +102,7 @@ namespace DarkComics.Migrations
                     Speed = table.Column<int>(nullable: false),
                     Intelligence = table.Column<int>(nullable: false),
                     LayoutImage = table.Column<string>(nullable: true),
-                    AboutCharacter = table.Column<string>(nullable: false),
+                    AboutCharacter = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
                     CityId = table.Column<int>(nullable: true)
                 },

@@ -96,28 +96,28 @@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.ProfilePhoto">Profile</label>
-                    <img src="~/assets/img/@Model.Character.HeroName.Replace(" ", "-").ToLower()/@Model.Character.Profile" width="300" />
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.Profile" width="300" />
                     <input asp-for="Character.ProfilePhoto" class="form-control" accept="image/*" />
                     <span asp-validation-for="Character.ProfilePhoto"></span>
                 </div>
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.FirstPhoto"></label>
-                    <img src="~/assets/img/@Model.Character.HeroName.Replace(" ", "-").ToLower()/@Model.Character.FirstImage" width="300" />
+                    <img src="~/assets/img/character-id/@Model.Character.FirstImage" width="300" />
                     <input asp-for="Character.FirstPhoto" accept="image/*" class="form-control" />
                     <span asp-validation-for="Character.FirstPhoto"></span>
                 </div>
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.SecondPhoto">Image</label>
-                    <img src="~/assets/img/@Model.Character.HeroName.Replace(" ", "-").ToLower()/@Model.Character.SecondImage" width="300" />
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.SecondImage" width="300" />
                     <input asp-for="Character.SecondPhoto" accept="image/*" class="form-control" />
                     <span asp-validation-for="Character.SecondPhoto"></span>
                 </div>
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.LayoutPhoto">Layout</label>
-                    <img src="~/assets/img/@Model.Character.HeroName.Replace(" ", "-").ToLower()/@Model.Character.LayoutImage" width="300" />
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.LayoutImage" width="300" />
                     <input asp-for="Character.LayoutPhoto" accept="image/*" class="form-control" />
                     <span asp-validation-for="Character.LayoutPhoto"></span>
                 </div>
@@ -148,7 +148,7 @@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.LogoPhoto">Logo</label>
-                    <img src="~/assets/img/@Model.Character.HeroName.Replace(" ", "-").ToLower()/@Model.Logo" width="300" />
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Logo" width="300" />
                     <input asp-for="Character.LogoPhoto" class="form-control" accept="image/*" />
                     <span asp-validation-for="Character.LogoPhoto"></span>
                 </div>

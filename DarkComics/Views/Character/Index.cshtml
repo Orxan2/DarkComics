@@ -13,11 +13,11 @@
                     <a  asp-action="Details" asp-route-id="@character.Id" class="item">
                         <div class="character-card">
                             <div class="character-card__body">
-                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.FirstImage" class="w-100 h-100" alt="cover" />
-                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.SecondImage" class="w-100 h-100" alt="backface" />
+                                <img src="~/assets/img/character-@character.Id/@character.FirstImage" class="w-100 h-100" alt="cover" />
+                                <img src="~/assets/img/character-@character.Id/@character.SecondImage" class="w-100 h-100" alt="backface" />
                             </div>
                             <div class="character-card__footer">
-                                <img src="~/assets/img/@character.HeroName.ToLower().Replace(" ","-")/@character.Logo" width="75" height="75" alt="backface" />
+                                <img src="~/assets/img/character-@character.Id/@character.Logo" width="75" height="75" alt="backface" />
                             </div>
                         </div>
                     </a>
@@ -42,7 +42,7 @@
                 <div class="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <a asp-action="Search" asp-route-id="@character.Id" class="comic-box">
                         <div class="comic-box__body">
-                            <img src="~/assets/img/@character.HeroName.ToLower()/@character.Profile" class="w-100 h-100" alt="@character.Name" />
+                            <img src="~/assets/img/character-@character.Id/@character.Profile" class="w-100 h-100" alt="@character.Name" />
                         </div>
                         <div class="comic-box__footer">
                             <h5 class="text-white">@character.HeroName - @character.Name</h5>
