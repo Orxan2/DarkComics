@@ -55,6 +55,52 @@ namespace DarkComics.Areas.Admin.Controllers
             return View(comicView);
         }
 
+        public ActionResult CreateSerie()
+        {
+            ComicViewModel comicViewModel = new ComicViewModel
+            {               
+                CharacterList = new List<SelectListItem>(),
+                TeamOrNot = new List<SelectListItem>(),
+                Characters = _db.Characters.ToList()
+
+            };
+
+
+            foreach (var character in comicViewModel.Characters)
+            {
+                comicViewModel.CharacterList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = character.Name, Value = character.Id.ToString() }
+                });
+            }
+          
+
+            return View(comicViewModel);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public ActionResult CreateSerie(ComicViewModel comicViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(comicViewModel);
+            }
+
+            comicViewModel.Serie.Cover = RenderSerieImage(comicViewModel, comicViewModel.Serie.CoverPhoto);
+            comicViewModel.Serie.Backface = RenderSerieImage(comicViewModel, comicViewModel.Serie.BackfacePhoto);
+
+
+            if (string.IsNullOrEmpty(comicViewModel.Serie.Cover) || string.IsNullOrEmpty(comicViewModel.Serie.Backface))
+            {
+                ModelState.AddModelError("Image", "Image was incorrect");
+                return View(comicViewModel);
+            }
+
+            _db.Series.Add(comicViewModel.Serie);
+            _db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
         public ActionResult CreateComic(int? id)
         {
            
@@ -192,6 +238,35 @@ namespace DarkComics.Areas.Admin.Controllers
             string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "assets", "img","comics", comicVM.Comic.ComicDetail.Serie.Name.Replace(" ", "-").ToLower(),comicVM.Comic.ComicDetail.Id.ToString());
+
+            if (!Directory.Exists(newSlider))
+            {
+                Directory.CreateDirectory(newSlider);
+            }
+            newSlider = Path.Combine(newSlider, filename);
+
+            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            {
+                photo.CopyTo(file);
+            }
+
+            return filename;
+
+        }
+        public string RenderSerieImage(ComicViewModel comicVM, IFormFile photo)
+        {
+            if (!photo.ContentType.Contains("image"))
+            {
+                return null;
+            }
+            if (photo.Length / 1024 > 10000)
+            {
+                return null;
+            }
+
+            string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
+            string environment = _env.WebRootPath;
+            string newSlider = Path.Combine(environment, "assets", "img", "comics", comicVM.Serie.Name.Replace(" ", "-").ToLower());
 
             if (!Directory.Exists(newSlider))
             {

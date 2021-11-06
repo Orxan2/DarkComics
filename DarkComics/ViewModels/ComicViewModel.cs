@@ -18,6 +18,7 @@ namespace DarkComics.ViewModels
         public Serie Serie { get; set; }
         public List<Character> Characters { get; set; }
         public List<SelectListItem> CharacterList { get; set; }
+        public List<SelectListItem> TeamOrNot { get; set; }
         public List<int?> ChosenCharacters { get; set; }
        
 
