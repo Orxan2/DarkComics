@@ -268,7 +268,7 @@ namespace DarkComics.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index), characterVM);
 
             }
-
+       
         public ActionResult MakeActiveOrDeactive(int? id)
         {
             if (id == null)

@@ -237,28 +237,122 @@ namespace DarkComics.Areas.Admin.Controllers
 
         }
 
-
-        // GET: ComicController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: EventController/Edit/5
+        public IActionResult UpdateComic(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+           ComicViewModel comicViewModel = new ComicViewModel
+            {
+                Comic = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.IsActive == true).FirstOrDefault(c=>c.Id == id),
+               CharacterList = new List<SelectListItem>(),
+               Characters = _db.Characters.ToList(),
+               Series = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).ToList(),
+               SerieList = new List<SelectListItem>()
+
+           };
+            comicViewModel.Cover = comicViewModel.Comic.Image;
+            comicViewModel.Backface = comicViewModel.Comic.ComicDetail.Backface;
+           
+            if (comicViewModel.Comic == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var character in comicViewModel.Characters)
+            {
+                comicViewModel.CharacterList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = character.Name, Value = character.Id.ToString() }
+                });
+            }
+
+            foreach (var serie in comicViewModel.Series)
+            {
+                comicViewModel.SerieList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = serie.Name, Value = serie.Id.ToString() }
+                });
+            }
+            return View(comicViewModel);
         }
 
-        // POST: ComicController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+        [AutoValidateAntiforgeryToken]
+        public IActionResult UpdateComic(int? id, ComicViewModel comicViewModel)
+         {
+            if (id == null || comicViewModel.Comic.Id != id)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
-        }
 
+            
+
+            //if user don't choose image program enter here
+            if (comicViewModel.Comic.Photo == null)
+            {
+                comicViewModel.Comic.Image = comicViewModel.Cover;
+                ModelState["Comic.Photo"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                comicViewModel.Comic.Image = RenderImage(comicViewModel, comicViewModel.Comic.Photo, comicViewModel.Cover);
+
+            if (comicViewModel.Comic.ComicDetail.BackfacePhoto == null)
+            {
+                comicViewModel.Comic.ComicDetail.Backface = comicViewModel.Backface;
+                ModelState["Comic.ComicDetail.Backface"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                comicViewModel.Comic.ComicDetail.Backface = RenderImage(comicViewModel, comicViewModel.Comic.ComicDetail.BackfacePhoto, comicViewModel.Backface);
+                      
+            if (string.IsNullOrEmpty(comicViewModel.Comic.ComicDetail.Backface) || string.IsNullOrEmpty(comicViewModel.Comic.Image))
+            {
+                ModelState.AddModelError("Image", "Image was incorrect");
+                return View(comicViewModel);
+            }
+
+            if (!ModelState.IsValid)
+                return View(comicViewModel);
+
+            comicViewModel.Comic.ComicDetailId = comicViewModel.Comic.ComicDetail.Id;
+            comicViewModel.Comic.IsActive = true;
+            comicViewModel.Comic.Category = Category.Comic;
+
+            //_db.ComicDetails.Update(comicViewModel.Comic.ComicDetail);
+            _db.Products.Update(comicViewModel.Comic);
+
+            _db.SaveChanges();
+
+            // Create ProductCharacter
+            int? productId = comicViewModel.Comic.Id;
+            Product product = _db.Products.Find(productId);
+
+            foreach (var chosencharacter in comicViewModel.ChosenCharacters)
+            {
+                Character characterDb = _db.Characters.FirstOrDefault(p => p.Id == chosencharacter);
+                ProductCharacter productCharacter = _db.ProductCharacters.FirstOrDefault(pc => pc.ProductId == productId && pc.CharacterId == characterDb.Id);
+                if (productCharacter == null)
+                {
+                    productCharacter = new ProductCharacter();
+                    productCharacter.CharacterId = characterDb.Id;
+                    productCharacter.ProductId = productId;
+                    _db.ProductCharacters.Add(productCharacter);
+                }
+                else
+                {
+                    productCharacter.CharacterId = characterDb.Id;
+                    productCharacter.ProductId = productId;
+                    _db.ProductCharacters.Update(productCharacter);
+                }
+                _db.SaveChanges();
+ }
+                return RedirectToAction(nameof(Index), comicViewModel);
+           
+        }
+        
         public ActionResult MakeActiveOrDeactive(int? id)
         {
             if (id == null)
@@ -284,7 +378,6 @@ namespace DarkComics.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         public string RenderImage(ComicViewModel comicVM, IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))
@@ -298,9 +391,9 @@ namespace DarkComics.Areas.Admin.Controllers
 
             string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
             string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "assets", "img","comics",$"product-{comicVM.Comic.Id}");
+            string newSlider = Path.Combine(environment, "assets", "img", $"product-{comicVM.Comic.Id}");
             if (comicVM.Comic.Id == null)
-              newSlider = Path.Combine(environment, "assets", "img", "comics", $"product-{_db.Products.Max(c => c.Id + 1)}");
+              newSlider = Path.Combine(environment, "assets", "img",  $"product-{_db.Products.Max(c => c.Id + 1)}");
 
 
             if (!Directory.Exists(newSlider))
@@ -316,6 +409,17 @@ namespace DarkComics.Areas.Admin.Controllers
 
             return filename;
 
+        }
+        public string RenderImage(ComicViewModel comicVM, IFormFile photo, string oldFilename)
+        {
+            oldFilename = Path.Combine(_env.WebRootPath, "assets", "img", $"product-{comicVM.Comic.Id}", oldFilename);
+            FileInfo oldFile = new FileInfo(oldFilename);
+            if (System.IO.File.Exists(oldFilename))
+            {
+                oldFile.Delete();
+            };
+
+            return RenderImage(comicVM, photo);
         }
         public string RenderSerieImage(ComicViewModel comicVM, IFormFile photo)
         {
