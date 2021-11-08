@@ -69,6 +69,25 @@ namespace DarkComics.Areas.Admin.Controllers
             return View(comicViewModel);
         }
 
+
+        public IActionResult ComicDetail(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+          Product comic = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic).FirstOrDefault(c=>c.Id == id);
+
+            if (comic == null)
+                return NotFound();
+
+            ComicViewModel comicViewModel = new ComicViewModel
+            {
+                Comic = comic
+            };
+
+            return View(comicViewModel);
+        }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public ActionResult CreateSerie(ComicViewModel comicViewModel)
