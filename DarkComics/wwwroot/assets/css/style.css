@@ -75,7 +75,7 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
   .loader-container.active {
     display: none; }
 
-.login-form-container {
+.login-form-box {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +87,7 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
   height: 100%;
   width: 100%;
   transition: right 0.4s linear; }
-  .login-form-container form {
+  .login-form-box form {
     background: #fff;
     border: var(--border);
     width: 40rem;
@@ -95,16 +95,16 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
     box-shadow: var(--box-shadow);
     border-radius: 0.5rem;
     margin: 2rem; }
-    .login-form-container form h3 {
+    .login-form-box form h3 {
       font-size: 2.5rem;
       text-transform: uppercase;
       color: var(--black);
       text-align: center; }
-    .login-form-container form span {
+    .login-form-box form span {
       display: block;
       font-size: 1.5rem;
       padding-top: 1rem; }
-    .login-form-container form .box {
+    .login-form-box form .box {
       width: 100%;
       margin: 0.7rem 0;
       font-size: 1.6rem;
@@ -113,34 +113,34 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
       padding: 1rem 1.2rem;
       color: var(--black);
       text-transform: none; }
-    .login-form-container form .checkbox {
+    .login-form-box form .checkbox {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       padding: 1rem 0; }
-      .login-form-container form .checkbox label {
+      .login-form-box form .checkbox label {
         font-size: 1.5rem;
         color: var(--light-color);
         cursor: pointer; }
-    .login-form-container form .btn {
+    .login-form-box form .btn {
       text-align: center;
       width: 100%;
       margin: 1.5rem 0; }
-    .login-form-container form p {
+    .login-form-box form p {
       padding-top: 0.8rem;
       color: var(--light-color);
       font-size: 1.5rem; }
-      .login-form-container form p a {
+      .login-form-box form p a {
         color: var(--green);
         text-decoration: underline; }
-  .login-form-container #close-login-btn {
+  .login-form-box #close-login-btn {
     position: absolute;
     top: 1.5rem;
     right: 2.5rem;
     font-size: 5rem;
     color: var(--black);
     cursor: pointer; }
-  .login-form-container.active {
+  .login-form-box.active {
     right: 0; }
 
 header {

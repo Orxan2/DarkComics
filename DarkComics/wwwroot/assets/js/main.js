@@ -1,7 +1,5 @@
 window.onload = () => {
 
-
-
     function loader() {
         document.querySelector('.loader-container').classList.add('active');
     }
@@ -79,17 +77,19 @@ window.onload = () => {
         },
     });
 
-    let loginForm = document.querySelector('.login-form-container');
+    let loginForm = document.querySelector('.login-form-box');
 
-    //document.querySelector('#login-btn').onclick = () => {
-    //    loginForm.classList.toggle('active');
-    //}
-    $('#login-btn').onclick = () => {
+   
+
+if ($('#login-btn').length > 0) {
+    document.querySelector('#login-btn').onclick = () => {
         loginForm.classList.toggle('active');
     }
-
-    $('#close-login-btn').onclick = () => {
-        loginForm.classList.remove('active');
+    }
+    if ($('#close-login-btn').length > 0) {
+        document.querySelector('#close-login-btn').onclick = () => {
+            loginForm.classList.remove('active');
+        }
     }
 
 
@@ -211,7 +211,7 @@ window.onload = () => {
     //Loader
     fadeOut();
 
-};
+}
 // It works after ajax complete
 $(document).ajaxComplete(function () {
     //Delete Product

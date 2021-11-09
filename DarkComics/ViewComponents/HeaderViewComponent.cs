@@ -1,6 +1,7 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels.Basket;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,12 @@ namespace DarkComics.ViewComponents
     public class HeaderViewComponent : ViewComponent
     {
         private readonly DarkComicDbContext _context;
-        public HeaderViewComponent(DarkComicDbContext context)
+        public UserManager<AppUser> _userManager { get; }
+
+        public HeaderViewComponent(DarkComicDbContext context, UserManager<AppUser> user)
         {
             _context = context;
+            _userManager = user;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
@@ -23,9 +27,10 @@ namespace DarkComics.ViewComponents
             {
                 TotalCount = 0,
                 TotalPrice = 0,
-                ProductDetails = new List<BasketItemViewModel>()
+                ProductDetails = new List<BasketItemViewModel>(),
+                User = _userManager
+                
             };
-          
             var cookie = HttpContext.Request.Cookies["basket"];
 
             if (cookie != null)

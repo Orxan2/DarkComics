@@ -1,5 +1,7 @@
 ﻿using DarkComics.Helpers.Enums;
 using DarkComics.Models.Entity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DarkComics.DAL
 {
-    public class DarkComicDbContext : DbContext
+    public class DarkComicDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
         public DarkComicDbContext(DbContextOptions<DarkComicDbContext> options):base(options)
         {

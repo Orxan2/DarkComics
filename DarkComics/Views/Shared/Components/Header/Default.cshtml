@@ -21,7 +21,15 @@
                     <!-- <div id="search-btn" class="fas fa-search"></div> -->
                     <a href="#" class="fas fa-heart"></a>
                     <a href="#" class="fas fa-shopping-cart"></a>
-                    <div id="login-btn" class="fas fa-user"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Account" asp-action="LogOut" id="login-out" class="fas fa-sign-out-alt"></a>
+                    }
+                    else
+                    {
+                        <div id="login-btn" class="fas fa-user"></div>
+                    }
+              
                 </div>
             </div>
         </div>
@@ -41,28 +49,8 @@
     </div>
 </header>
 <!-- Header End -->
-<!-- login form Start -->
-<div class="login-form-container">
 
-    <div id="close-login-btn" class="fas fa-times"></div>
-
-    <form action="">
-        <h3>sign in</h3>
-        <span>username</span>
-        <input type="email" name="" class="box" placeholder="enter your email" id="">
-        <span>password</span>
-        <input type="password" name="" class="box" placeholder="enter your password" id="">
-        <div class="checkbox">
-            <input type="checkbox" name="" id="remember-me">
-            <label for="remember-me"> remember me</label>
-        </div>
-        <input type="submit" value="sign in" class="btn">
-        <p>forget password ? <a href="#">click here</a></p>
-        <p>don't have an account ? <a href="#">create one</a></p>
-    </form>
-
-</div>
-<!-- login form End -->
+@await Component.InvokeAsync("Login");
 
 <section>
     <div class="row">
@@ -77,7 +65,7 @@
                             </button>
                         </div>
                         <div id="basket-items" class="modal-body">
-                            <partial name="_Basket" />                           
+                            <partial name="_Basket" />
                         </div>
 
                         <div class="modal-footer">
