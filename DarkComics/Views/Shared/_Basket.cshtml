@@ -1,0 +1,40 @@
+﻿@model BasketViewModel
+@{
+    Layout = null;
+}
+@if (Model.ProductDetails == null)
+{
+    <h1>Nothing</h1>
+}
+else
+{
+    foreach (var product in Model.ProductDetails)
+    {
+        <div class="row align-items-center">
+            <div class="col-2">
+                <img src="~/assets/img/comics/batman-rebirth/batman-rebirth-vol1-cover.jpg" class="w-100 p-3" />
+            </div>
+            <div class="col-5">
+                <p>Orxan Ibrahimov</p>
+            </div>
+            <div class="col-2">
+                <div class="row">
+                    <a class="col-3">-</a>
+                    <input class="col-6" disabled value="1" />
+                    <a class="col-3">+</a>
+                </div>
+            </div>
+            <div class="col-auto">
+                <p class="my-0">90 $</p>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-danger"><i class="fas fa-trash fa-2x"></i></a>
+            </div>
+        </div>
+    }
+    <div class="row py-4">
+        <div class="col-12">
+            <h3 class="text-end">Summary : 500$</h3>
+        </div>
+    </div>
+}

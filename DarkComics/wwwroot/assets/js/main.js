@@ -81,11 +81,14 @@ window.onload = () => {
 
     let loginForm = document.querySelector('.login-form-container');
 
-    document.querySelector('#login-btn').onclick = () => {
+    //document.querySelector('#login-btn').onclick = () => {
+    //    loginForm.classList.toggle('active');
+    //}
+    $('#login-btn').onclick = () => {
         loginForm.classList.toggle('active');
     }
 
-    document.querySelector('#close-login-btn').onclick = () => {
+    $('#close-login-btn').onclick = () => {
         loginForm.classList.remove('active');
     }
 
@@ -180,7 +183,31 @@ window.onload = () => {
             }
         })
     }
-    
+
+    // Basket
+    $('.basket').each(function (basketIndex, basketElement) {
+        console.log('yes');
+        console.log(basketElement);
+        $(basketElement).on('click', function() {
+            console.log('okay');
+            let id = $(basketElement).attr('data-id');
+            console.log(id);
+
+            $('#basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Comic/AddBasket?id=${id}`,
+                type: "Get",
+                success: function (response) {
+                    $('#basket-items').append(response);
+                }
+            })
+        });
+
+    });
+   
     //Loader
     fadeOut();
 
