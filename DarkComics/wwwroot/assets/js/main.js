@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    
+
 
     function loader() {
         document.querySelector('.loader-container').classList.add('active');
@@ -116,7 +116,7 @@ window.onload = () => {
                 slidesPerView: 3,
             }
         },
-    });    
+    });
 
     //power skill Ratings
     var offset = $('#skill').offset();
@@ -186,12 +186,11 @@ window.onload = () => {
 
     // Basket
     $('.basket').each(function (basketIndex, basketElement) {
-        console.log('yes');
-        console.log(basketElement);
-        $(basketElement).on('click', function() {
-            console.log('okay');
+
+        $(basketElement).on('click', function () {
+            //console.log('okay');
             let id = $(basketElement).attr('data-id');
-            console.log(id);
+            //console.log(id);
 
             $('#basket-items .row').each(function (index, element) {
                 $(element).css("display", "none");
@@ -201,15 +200,40 @@ window.onload = () => {
                 url: `/Comic/AddBasket?id=${id}`,
                 type: "Get",
                 success: function (response) {
+                    console.log(response);
+                    $('#basket-items').append(response);
+                }
+            });
+
+        });
+
+    });
+    //Loader
+    fadeOut();
+
+};
+// It works after ajax complete
+$(document).ajaxComplete(function () {
+    $('.remove').each(function (basketIndex, basketElement) {
+        console.log('yes');
+        console.log(basketElement);
+        $(basketElement).on('click', function () {
+
+            let id = $(basketElement).parent().parent().attr('data-id');
+            console.log(id);
+
+            $('#basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Comic/DeleteBasket?id=${id}`,
+                type: "Get",
+                success: function (response) {
                     $('#basket-items').append(response);
                 }
             })
         });
 
     });
-   
-    //Loader
-    fadeOut();
-
-}
-
+});

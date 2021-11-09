@@ -18,11 +18,11 @@
 </head>
 
 <body>
-   @await Component.InvokeAsync("Header");
+    @await Component.InvokeAsync("Header");
     <!-- Main Start -->
     <main>
-        @RenderBody()        
-       
+        @RenderBody()
+
         <!--Loader Start-->
         <div class="loader-container">
             <img src="~/assets/img/loader-img.gif" alt="">
@@ -131,7 +131,7 @@
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <script src="~/assets/scripts/main.js"></script>
     <script src="~/assets/js/main.js"></script>
-
+    @RenderSection("basket", false);
 </body>
 
 </html>

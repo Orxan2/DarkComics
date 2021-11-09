@@ -1,5 +1,6 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Helpers.Enums;
+using DarkComics.Helpers.Methods;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
 using DarkComics.ViewModels.Basket;
@@ -49,78 +50,78 @@ namespace DarkComics.Controllers
 
             List<BasketProduct> temporaryList = new List<BasketProduct>();
             var myCookie = Request.Cookies["basket"];
-            if (string.IsNullOrEmpty(myCookie))
-            {
-                BasketProduct temporaryProduct = new BasketProduct
-                {
-                    Id = id,
-                    Count = 1
-                };
-                temporaryList.Add(temporaryProduct);
-
-            }
-            else
-            {
-                temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(myCookie);
-                var temporaryProduct = temporaryList.FirstOrDefault(tp => tp.Id == id);
-
-                if (temporaryProduct == null)
-                {
-                    temporaryProduct = new BasketProduct
-                    {
-                        Id = id,
-                        Count = 1
-                    };
-                    temporaryList.Add(temporaryProduct);
-                }
-                else
-                {
-                    temporaryProduct.Count++;
-                }
-
-
-
-            }
-
-            Response.Cookies.Append("basket", JsonSerializer.Serialize<List<BasketProduct>>(temporaryList));
-
+            temporaryList = BasketMethod.AddBasket(dbProduct,myCookie);
+            myCookie = JsonSerializer.Serialize(temporaryList);
+            Response.Cookies.Append("basket", myCookie);
+            
+           
             // Show Cookie
 
-            BasketViewModel basketVM = new BasketViewModel
-            {                
-                TotalCount = 0,
-                TotalPrice = 0,
-                ProductDetails = new List<BasketItemViewModel>()
-            };
+            List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+               ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
 
-            var cookie = HttpContext.Request.Cookies["basket"];
+            BasketViewModel basketView = BasketMethod.ShowBasket(products,myCookie);
+            //BasketViewModel basketVM = new BasketViewModel
+            //{                
+            //    TotalCount = 0,
+            //    TotalPrice = 0,
+            //    ProductDetails = new List<BasketItemViewModel>()
+            //};
 
-            if (cookie != null)
+            //var cookie = HttpContext.Request.Cookies["basket"];
+
+            //if (cookie != null)
+            //{
+            //    var tempList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+
+            //    if (tempList.FirstOrDefault() != null)
+            //    {
+            //        foreach (var temporaryProduct in tempList)
+            //        {
+            //            if (temporaryProduct != null)
+            //            {
+            //                var basketItem = _context.Products.FirstOrDefault(p => p.Id == temporaryProduct.Id && p.IsActive == true);
+
+            //                BasketItemViewModel basketItemViewModel = new BasketItemViewModel
+            //                {
+
+            //                    Product = basketItem,
+            //                    Count = temporaryProduct.Count
+            //                };
+            //                basketVM.ProductDetails.Add(basketItemViewModel);
+            //                basketVM.TotalCount++;
+            //                basketVM.TotalPrice += Convert.ToDecimal(basketItem.Price * basketItemViewModel.Count);
+            //            }
+            //        }
+            //    }
+            //}
+            return View("_Basket", basketView);
+
+        }
+
+        public IActionResult DeleteBasket(int id)
+        {
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.Id == id && b.IsActive == true);
+            if (dbProduct == null)
             {
-                var tempList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
-
-                if (tempList.FirstOrDefault() != null)
-                {
-                    foreach (var temporaryProduct in tempList)
-                    {
-                        if (temporaryProduct != null)
-                        {
-                            var basketItem = _context.Products.FirstOrDefault(p => p.Id == temporaryProduct.Id && p.IsActive == true);
-
-                            BasketItemViewModel basketItemViewModel = new BasketItemViewModel
-                            {
-
-                                Product = basketItem,
-                                Count = temporaryProduct.Count
-                            };
-                            basketVM.ProductDetails.Add(basketItemViewModel);
-                            basketVM.TotalCount++;
-                            basketVM.TotalPrice += Convert.ToDecimal(basketItem.Price * basketItemViewModel.Count);
-                        }
-                    }
-                }
+                return NotFound();
             }
-            return View("_Basket", basketVM);
+            string cookie = Request.Cookies["basket"];
+            var temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+            var product = temporaryList.FirstOrDefault(p => p.Id == id);
+            if (product != null)
+            {
+                temporaryList.Remove(product);
+            }
+           
+            Response.Cookies.Append("basket", JsonSerializer.Serialize<List<BasketProduct>>(temporaryList));
+
+            List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+             ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
+            cookie = JsonSerializer.Serialize(temporaryList);
+            BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);
+
+            return View("_Basket", basketView);
 
         }
 
