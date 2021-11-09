@@ -59,47 +59,13 @@ namespace DarkComics.Controllers
 
             List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
                ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
-
-            BasketViewModel basketView = BasketMethod.ShowBasket(products,myCookie);
-            //BasketViewModel basketVM = new BasketViewModel
-            //{                
-            //    TotalCount = 0,
-            //    TotalPrice = 0,
-            //    ProductDetails = new List<BasketItemViewModel>()
-            //};
-
-            //var cookie = HttpContext.Request.Cookies["basket"];
-
-            //if (cookie != null)
-            //{
-            //    var tempList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
-
-            //    if (tempList.FirstOrDefault() != null)
-            //    {
-            //        foreach (var temporaryProduct in tempList)
-            //        {
-            //            if (temporaryProduct != null)
-            //            {
-            //                var basketItem = _context.Products.FirstOrDefault(p => p.Id == temporaryProduct.Id && p.IsActive == true);
-
-            //                BasketItemViewModel basketItemViewModel = new BasketItemViewModel
-            //                {
-
-            //                    Product = basketItem,
-            //                    Count = temporaryProduct.Count
-            //                };
-            //                basketVM.ProductDetails.Add(basketItemViewModel);
-            //                basketVM.TotalCount++;
-            //                basketVM.TotalPrice += Convert.ToDecimal(basketItem.Price * basketItemViewModel.Count);
-            //            }
-            //        }
-            //    }
-            //}
+            BasketViewModel basketView = BasketMethod.ShowBasket(products,myCookie);         
+           
             return View("_Basket", basketView);
 
         }
 
-        public IActionResult DeleteBasket(int id)
+        public IActionResult DeleteProduct(int id)
         {
             var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.Id == id && b.IsActive == true);
             if (dbProduct == null)
@@ -119,6 +85,72 @@ namespace DarkComics.Controllers
             List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
              ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
             cookie = JsonSerializer.Serialize(temporaryList);
+            BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);
+
+            return View("_Basket", basketView);
+
+        }
+
+        public IActionResult DecreaseProduct(int id)
+        {
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.Id == id && b.IsActive == true);
+            if (dbProduct == null)
+            {
+                return NotFound();
+            }
+            var cookie = Request.Cookies["basket"];
+            var temporaryList = new List<BasketProduct>();
+
+            if (!string.IsNullOrEmpty(cookie))
+            {
+                temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+                if (temporaryList != null)
+                {
+                    var product = temporaryList.FirstOrDefault(p => p.Id == id);
+                    if (product != null && product.Count > 0)
+                    {
+                        product.Count--;
+                        Response.Cookies.Append("basket", JsonSerializer.Serialize(temporaryList));                        
+                    }
+                }
+
+            }
+            cookie = JsonSerializer.Serialize(temporaryList);
+            List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+              ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
+            BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);
+
+            return View("_Basket",basketView);
+
+        }
+
+        public IActionResult IncreaseProduct(int id)
+        {
+            var dbProduct = _context.Products.ToList().FirstOrDefault(b => b.Id == id && b.IsActive == true);
+            if (dbProduct == null)
+            {
+                return NotFound();
+            }
+            var cookie = Request.Cookies["basket"];
+            var temporaryList = new List<BasketProduct>();
+
+            if (!string.IsNullOrEmpty(cookie))
+            {
+                temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+                if (temporaryList != null)
+                {
+                    var product = temporaryList.FirstOrDefault(p => p.Id == id);
+                    if (product != null)
+                    {
+                        product.Count++;
+                        Response.Cookies.Append("basket", JsonSerializer.Serialize(temporaryList));
+                    }
+                }
+
+            }
+            cookie = JsonSerializer.Serialize(temporaryList);
+            List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+              ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
             BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);
 
             return View("_Basket", basketView);

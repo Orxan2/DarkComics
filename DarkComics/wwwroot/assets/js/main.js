@@ -214,20 +214,58 @@ window.onload = () => {
 };
 // It works after ajax complete
 $(document).ajaxComplete(function () {
-    $('.remove').each(function (basketIndex, basketElement) {
-        console.log('yes');
-        console.log(basketElement);
+    //Delete Product
+    $('.remove').each(function (basketIndex, basketElement) {      
         $(basketElement).on('click', function () {
 
             let id = $(basketElement).parent().parent().attr('data-id');
-            console.log(id);
+            $('#basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Comic/DeleteProduct?id=${id}`,
+                type: "Get",
+                success: function (response) {
+                    $('#basket-items').append(response);
+                }
+            })
+        });
+
+    });
+    //Decrease Product
+
+    $('.minus').each(function (basketIndex, basketElement) {
+      
+        $(basketElement).on('click', function () {
+            let id = $(basketElement).parent().parent().parent().attr('data-id');
 
             $('#basket-items .row').each(function (index, element) {
                 $(element).css("display", "none");
             });
 
             $.ajax({
-                url: `/Comic/DeleteBasket?id=${id}`,
+                url: `/Comic/DecreaseProduct?id=${id}`,
+                type: "Get",
+                success: function (response) {
+                    $('#basket-items').append(response);
+                }
+            })
+        });
+
+    });
+
+    //Increase Product
+    $('.plus').each(function (basketIndex, basketElement) {
+      $(basketElement).on('click', function () {
+            let id = $(basketElement).parent().parent().parent().attr('data-id');
+
+            $('#basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Comic/IncreaseProduct?id=${id}`,
                 type: "Get",
                 success: function (response) {
                     $('#basket-items').append(response);
