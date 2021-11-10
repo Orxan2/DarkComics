@@ -192,7 +192,7 @@ if ($('#login-btn').length > 0) {
             let id = $(basketElement).attr('data-id');
             //console.log(id);
 
-            $('#basket-items .row').each(function (index, element) {
+            $('.basket-items .row').each(function (index, element) {
                 $(element).css("display", "none");
             });
 
@@ -201,7 +201,7 @@ if ($('#login-btn').length > 0) {
                 type: "Get",
                 success: function (response) {
                     console.log(response);
-                    $('#basket-items').append(response);
+                    $('.basket-items').append(response);
                 }
             });
 
@@ -209,60 +209,36 @@ if ($('#login-btn').length > 0) {
 
     });
 
-    
+    //Delete Product
+    RemoveProduct();
+    //Decrease Product
+    DecreaseProduct();
+
+    //Increase Product
+    IncreaseProduct();
+
     //Loader
     fadeOut();
 
 }
-// It works after ajax complete
+ //It works after ajax complete
 $(document).ajaxComplete(function () {
     //Delete Product
-    $('.remove').each(function (basketIndex, basketElement) {      
-        $(basketElement).on('click', function () {
-
-            let id = $(basketElement).parent().parent().attr('data-id');
-            $('#basket-items .row').each(function (index, element) {
-                $(element).css("display", "none");
-            });
-
-            $.ajax({
-                url: `/Basket/DeleteProduct?id=${id}`,
-                type: "Get",
-                success: function (response) {
-                    $('#basket-items').append(response);
-                }
-            })
-        });
-
-    });
+    RemoveProduct();
     //Decrease Product
-
-    $('.minus').each(function (basketIndex, basketElement) {
-      
-        $(basketElement).on('click', function () {
-            let id = $(basketElement).parent().parent().parent().attr('data-id');
-
-            $('#basket-items .row').each(function (index, element) {
-                $(element).css("display", "none");
-            });
-
-            $.ajax({
-                url: `/Basket/DecreaseProduct?id=${id}`,
-                type: "Get",
-                success: function (response) {
-                    $('#basket-items').append(response);
-                }
-            })
-        });
-
-    });
+    DecreaseProduct();
 
     //Increase Product
+    IncreaseProduct();
+});
+
+
+function IncreaseProduct() {
     $('.plus').each(function (basketIndex, basketElement) {
-      $(basketElement).on('click', function () {
+        $(basketElement).on('click', function () {
             let id = $(basketElement).parent().parent().parent().attr('data-id');
 
-            $('#basket-items .row').each(function (index, element) {
+            $('.basket-items .row').each(function (index, element) {
                 $(element).css("display", "none");
             });
 
@@ -270,10 +246,54 @@ $(document).ajaxComplete(function () {
                 url: `/Basket/IncreaseProduct?id=${id}`,
                 type: "Get",
                 success: function (response) {
-                    $('#basket-items').append(response);
+                    $('.basket-items').each(function (index, element) {
+                        $(element).append(response);
+                    });
                 }
             })
         });
 
     });
-});
+}
+function DecreaseProduct() {
+
+    $('.minus').each(function (basketIndex, basketElement) {
+
+        $(basketElement).on('click', function () {
+            let id = $(basketElement).parent().parent().parent().attr('data-id');
+
+            $('.basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Basket/DecreaseProduct?id=${id}`,
+                type: "Get",
+                success: function (response) {
+                    $('.basket-items').append(response);
+                }
+            })
+        });
+
+    });
+}
+function RemoveProduct() {
+    $('.remove').each(function (basketIndex, basketElement) {
+        $(basketElement).on('click', function () {
+
+            let id = $(basketElement).parent().parent().attr('data-id');
+            $('.basket-items .row').each(function (index, element) {
+                $(element).css("display", "none");
+            });
+
+            $.ajax({
+                url: `/Basket/DeleteProduct?id=${id}`,
+                type: "Get",
+                success: function (response) {
+                    $('.basket-items').append(response);
+                }
+            })
+        });
+
+    });
+}
