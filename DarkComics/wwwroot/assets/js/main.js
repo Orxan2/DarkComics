@@ -197,7 +197,7 @@ if ($('#login-btn').length > 0) {
             });
 
             $.ajax({
-                url: `/Comic/AddBasket?id=${id}`,
+                url: `/Basket/AddBasket?id=${id}`,
                 type: "Get",
                 success: function (response) {
                     console.log(response);
@@ -208,6 +208,8 @@ if ($('#login-btn').length > 0) {
         });
 
     });
+
+    
     //Loader
     fadeOut();
 
@@ -224,7 +226,7 @@ $(document).ajaxComplete(function () {
             });
 
             $.ajax({
-                url: `/Comic/DeleteProduct?id=${id}`,
+                url: `/Basket/DeleteProduct?id=${id}`,
                 type: "Get",
                 success: function (response) {
                     $('#basket-items').append(response);
@@ -245,7 +247,7 @@ $(document).ajaxComplete(function () {
             });
 
             $.ajax({
-                url: `/Comic/DecreaseProduct?id=${id}`,
+                url: `/Basket/DecreaseProduct?id=${id}`,
                 type: "Get",
                 success: function (response) {
                     $('#basket-items').append(response);
@@ -265,7 +267,7 @@ $(document).ajaxComplete(function () {
             });
 
             $.ajax({
-                url: `/Comic/IncreaseProduct?id=${id}`,
+                url: `/Basket/IncreaseProduct?id=${id}`,
                 type: "Get",
                 success: function (response) {
                     $('#basket-items').append(response);

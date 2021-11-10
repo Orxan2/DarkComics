@@ -11,16 +11,12 @@
                     <img src="assets/img/logo-2.png" width="75" alt="logo" class="rounded-circle" />
                 </a>
             </div>
-            <div class="col-6 offset-1 d-none d-md-block">
-                <form>
-                    <input type="text" placeholder="Type here" class="form-control" />
-                </form>
-            </div>
+           @await Component.InvokeAsync("Search")
             <div class="col-2 d-flex justify-content-center align-items-center">
                 <div class="icons">
                     <!-- <div id="search-btn" class="fas fa-search"></div> -->
                     <a href="#" class="fas fa-heart"></a>
-                    <a href="#" class="fas fa-shopping-cart"></a>
+                    <a asp-controller="Basket" asp-action="Index" class="fas fa-shopping-cart"></a>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <a asp-controller="Account" asp-action="LogOut" id="login-out" class="fas fa-sign-out-alt"></a>
@@ -52,7 +48,7 @@
 
 @await Component.InvokeAsync("Login");
 
-<section>
+<section class="m-0">
     <div class="row">
         <div class="col-12">
             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
