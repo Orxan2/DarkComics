@@ -3,11 +3,6 @@
     ViewData["Title"] = "Create";
 }
 
-<label>ASP .NET Core MVC Editor Example</label>
-<br />
-<br />
-<jqx-editor theme="@ViewData["Theme"]" width="800" height="400"></jqx-editor>
-
 <div class="app-page-title">
     <div class="page-title-wrapper">
         <div class="page-title-heading page-title-icon-rounded">
@@ -174,25 +169,41 @@
                     <span asp-validation-for="Character.CityId"></span>
                 </div>
 
-
-
                 <div class="col-12 mb-3">
                     <label asp-for="Character.AboutCharacter"></label>
-                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name" name="editordata"></textarea>
+                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"></textarea>
                     <span asp-validation-for="Character.AboutCharacter"></span>
                 </div>
 
-
-
-
-
             </div>
 
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button id="sub" class="btn btn-primary" type="submit">Submit form</button>
         </form>
     </div>
 </div>
 
+
+@*@section summernote{
+
+        <script src="~/admin/assets/ckeditor5-build-classic/ckeditor.js"></script>
+
+        <script>
+
+
+            ClassicEditor
+                .create(document.querySelector('#Character_AboutCharacter'), {
+                    // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+
+                }).then(editor => {
+                    window.editor = editor;
+                })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+
+
+        </script>
+    }*@
 
 @section summernote{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
@@ -208,17 +219,8 @@
             $('#Character_AboutCharacter').summernote({
                 placeholder: 'Hello stand alone ui',
                 height: 250,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            }
-            );
-        });
+            });
+        })
+
     </script>
 }

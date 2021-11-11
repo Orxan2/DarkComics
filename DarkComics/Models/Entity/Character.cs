@@ -68,7 +68,7 @@ namespace DarkComics.Models.Entity
         public string LayoutImage { get; set; }
         [Required, NotMapped]
         public IFormFile LayoutPhoto { get; set; }
-        [AllowHtml]
+        [AllowHtml,Required]
         public string AboutCharacter { get; set; }
         public DateTime CreatedDate { get; set; }
         //public List<Product> Products { get; set; }

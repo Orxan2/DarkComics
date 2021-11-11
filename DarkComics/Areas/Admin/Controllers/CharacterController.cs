@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,13 @@ namespace DarkComics.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
+            //if (edit != null)
+            //{
+            //    Models.CKEditor ckEditor = new Models.CKEditor();
+            //    ckEditor.name = ((MyStruct)Session["MySession"]).name;
+            //    ckEditor.description = ((MyStruct)Session["MySession"]).description;
+            //    return View(ckEditor);
+            //}
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
                 Powers = _db.Powers.ToList(),
@@ -69,8 +77,9 @@ namespace DarkComics.Areas.Admin.Controllers
                 Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
                 Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).ToList(),
                 Cities = _db.Cities.ToList()
-
+                
             };
+
             foreach (var power in characterViewModel.Powers)
             {
                 characterViewModel.PowerList.AddRange(new List<SelectListItem>{
@@ -90,9 +99,10 @@ namespace DarkComics.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [AutoValidateAntiforgeryToken]        
         public ActionResult Create(CharacterViewModel characterVM)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(characterVM);
@@ -325,7 +335,7 @@ namespace DarkComics.Areas.Admin.Controllers
             _db.CharacterPowers.Remove(characterPower);
             _db.SaveChanges();
 
-            return RedirectToAction("Detail",character.Id);
+            return View("Detail",character.Id);
         }
         public string RenderImage(Character character, IFormFile photo)
             {

@@ -175,11 +175,9 @@
                     <span asp-validation-for="Character.CityId"></span>
                 </div>
 
-
-
                 <div class="col-12 mb-3">
                     <label asp-for="Character.AboutCharacter"></label>
-                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name" name="editordata"></textarea>
+                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"></textarea>
                     <span asp-validation-for="Character.AboutCharacter"></span>
                 </div>
             </div>
@@ -203,9 +201,9 @@
         $(document).ready(function () {
             $('#Character_AboutCharacter').summernote({
                 placeholder: 'Hello stand alone ui',
-                height: 250
-            }
-            );
-        });
+                height: 250,           
+            });           
+        })
+       
     </script>
 }

@@ -56,6 +56,9 @@
         <h2><strong>City :</strong> <i>@Model.Character.City.Name</i></h2>
     </div>
     <div class="col-12 m-3">
+        <h2><strong>Description :</strong> <i>@Html.Raw(Model.Character.AboutCharacter.ToString())</i></h2>
+    </div>
+    <div class="col-12 m-3">
         <h2><strong>Status :</strong> <i>@(Model.Character.IsActive?"Active":"DeActive")</i></h2>
     </div>
 
@@ -77,13 +80,12 @@
                             <tr>
                                 <th scope="row">@(i + 1)</th>
                                 <td>@Model.Character.CharacterPowers[i].Power.Name</td>
-                                <td><a asp-action="DeletePower" asp-route-id="@Model.Character.CharacterPowers[i].Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg " pe-7s-trash"></i></a></td>
+                                <td><a asp-action="DeletePower" asp-route-id="@Model.Character.CharacterPowers[i].Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg pe-7s-trash"></i></a></td>
                             </tr>
-                        }                        
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
-        <h2><strong>Status :</strong> <i>@Model.Character.CharacterPowers?</i></h2>
     </div>
 </div>
