@@ -38,6 +38,8 @@ namespace DarkComics.DAL
              Property(c => c.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<Character>().
              Property(c => c.CreatedDate).HasColumnType("Date");
+            modelBuilder.Entity<Character>().
+           Property(c => c.AboutCharacter).HasColumnType("Text");
             modelBuilder.Entity<Serie>().
              Property(s => s.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<ReadingComic>().

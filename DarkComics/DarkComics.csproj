@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20211109200642_AppUserAddedAgain.cs" />
     <Compile Remove="Migrations\20211109200642_AppUserAddedAgain.Designer.cs" />
+    <Compile Remove="Migrations\20211111221928_UpdateDescription.cs" />
+    <Compile Remove="Migrations\20211111221928_UpdateDescription.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20704,3 +20704,6 @@ a.fc-more:hover {
     background-color: red !important;
     color: white;
 }
+.modal-backdrop.in{
+    display:none !important;
+}

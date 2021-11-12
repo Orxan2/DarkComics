@@ -144,6 +144,11 @@
                    @Html.Raw(Model.Character.AboutCharacter)
                 </div>
             </div>
+            <div class="col-4">
+                <div class="news-card">
+
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -156,19 +161,18 @@
                 <h1 class="fw-bolder text-center my-5">Character Facts</h1>
             </div>
         </div>
-        </div>
         <div class="row">
             <div class="col-12 col-lg-5 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bold">Power: </p>
+                        <p class="text-dark text-center fw-bold">Power: </p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>
-                           @foreach (var characterPower in Model.Character.CharacterPowers)
-                           {
-                               @(characterPower.Power.Name + " ");
-                           }
+                            @foreach (var characterPower in Model.Character.CharacterPowers)
+                            {
+                                @(characterPower.Power.Name + " ");
+                            }
                         </i>
                     </div>
                 </div>
@@ -176,7 +180,7 @@
             <div class="col-12 col-lg-5 offset-lg-2 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bold">HomeLand: </p>
+                        <p class="text-dark text-center fw-bold">HomeLand: </p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.City.Name</i>
@@ -189,7 +193,7 @@
             <div class="col-12 col-lg-5 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">Weight: </p>
+                        <p class="text-dark text-center fw-bolder">Weight: </p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.Weight</i>
@@ -199,7 +203,7 @@
             <div class="col-12 col-lg-5 offset-lg-2 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">Height: </p>
+                        <p class="text-dark text-center fw-bolder">Height: </p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.Height</i>
@@ -212,7 +216,7 @@
             <div class="col-12 col-lg-5 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">Hair</p>
+                        <p class="text-dark text-center fw-bolder">Hair</p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.HairStyle</i>
@@ -222,7 +226,7 @@
             <div class="col-12 col-lg-5 offset-lg-2 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">Education</p>
+                        <p class="text-dark text-center fw-bolder">Education</p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.Education</i>
@@ -235,7 +239,7 @@
             <div class="col-12 col-lg-5 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">Eyse</p>
+                        <p class="text-dark text-center fw-bolder">Eyse</p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.EyeColor</i>
@@ -245,7 +249,7 @@
             <div class="col-12 col-lg-5 offset-lg-2 border-top">
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <p class="text-dark fw-bolder">First Appearance</p>
+                        <p class="text-dark text-center fw-bolder">First Appearance</p>
                     </div>
                     <div class="col-12 col-md-8 my-1">
                         <i>@Model.Character.FirstAppearance</i>
@@ -254,6 +258,8 @@
 
             </div>
         </div>
+    </div>
+        
 
 </section>
 <!-- Fact Section End -->

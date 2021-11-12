@@ -55,8 +55,16 @@
     <div class="col-12 m-3">
         <h2><strong>City :</strong> <i>@Model.Character.City.Name</i></h2>
     </div>
-    <div class="col-12 m-3">
-        <h2><strong>Description :</strong> <i>@Html.Raw(Model.Character.AboutCharacter.ToString())</i></h2>
+    @*<div class="col-12 m-3">
+        <h2><strong>Description :</strong> </i></h2>
+    </div>*@
+    <div class="row">
+        <div class="col-12 my-3">
+            <h1 class="fw-bold">Description :</h1>
+        </div>
+        <div class="col-12">
+            <i>@Html.Raw(Model.Character.AboutCharacter.ToString())</i>
+        </div>
     </div>
     <div class="col-12 m-3">
         <h2><strong>Status :</strong> <i>@(Model.Character.IsActive?"Active":"DeActive")</i></h2>
