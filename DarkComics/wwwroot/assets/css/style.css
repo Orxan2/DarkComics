@@ -28,7 +28,7 @@ section#fact {
   --border-hover:.1rem solid var(--black);
   --box-shadow:0 .5rem 1rem rgba(0,0,0,.1); }
 
-header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, .volume__btn, section#similar .item .similar-comic__btn, .cube-container .cube__btn, section#toys .toy-card__btn {
+header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, section#biography .news-card__btn, .volume__btn, section#similar .item .similar-comic__btn, .cube-container .cube__btn, section#toys .toy-card__btn {
   text-align: center;
   position: relative;
   display: inline-block;
@@ -42,7 +42,7 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
   position: relative;
   left: 50%;
   transform: translateX(-50%); }
-  header .menu-text::after, section#characters .cards .card .card-footer a::after, .cover__btn::after, .volume__btn::after, section#similar .item .similar-comic__btn::after, .cube-container .cube__btn::after, section#toys .toy-card__btn::after {
+  header .menu-text::after, section#characters .cards .card .card-footer a::after, .cover__btn::after, section#biography .news-card__btn::after, .volume__btn::after, section#similar .item .similar-comic__btn::after, .cube-container .cube__btn::after, section#toys .toy-card__btn::after {
     content: "";
     position: absolute;
     height: 100%;
@@ -53,10 +53,10 @@ header .menu-text, section#characters .cards .card .card-footer a, .cover__btn, 
     background-color: black;
     z-index: -1;
     transition: width 0.4s linear; }
-  header .menu-text:hover, section#characters .cards .card .card-footer a:hover, .cover__btn:hover, .volume__btn:hover, section#similar .item .similar-comic__btn:hover, .cube-container .cube__btn:hover, section#toys .toy-card__btn:hover {
+  header .menu-text:hover, section#characters .cards .card .card-footer a:hover, .cover__btn:hover, section#biography .news-card__btn:hover, .volume__btn:hover, section#similar .item .similar-comic__btn:hover, .cube-container .cube__btn:hover, section#toys .toy-card__btn:hover {
     color: #45f3ff;
     border: none; }
-    header .menu-text:hover::after, section#characters .cards .card .card-footer a:hover::after, .cover__btn:hover::after, .volume__btn:hover::after, section#similar .item .similar-comic__btn:hover::after, .cube-container .cube__btn:hover::after, section#toys .toy-card__btn:hover::after {
+    header .menu-text:hover::after, section#characters .cards .card .card-footer a:hover::after, .cover__btn:hover::after, section#biography .news-card__btn:hover::after, .volume__btn:hover::after, section#similar .item .similar-comic__btn:hover::after, .cube-container .cube__btn:hover::after, section#toys .toy-card__btn:hover::after {
       width: 100%; }
 
 .loader-container {
@@ -470,6 +470,76 @@ section#bestComics {
     left: 50%;
     transform: translate(-50%, -50%); }
 
+section#biography {
+  background-color: #000; }
+  section#biography .news-card {
+    position: relative;
+    background: #fff;
+    transition: 0.3s linear;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    margin: 30px 10px;
+    height: 150px;
+    box-shadow: 0 0 20px 5px #fff;
+    text-shadow: -4px -4px 8px #000; }
+    section#biography .news-card:hover {
+      height: 100%;
+      box-shadow: none; }
+      section#biography .news-card:hover .content {
+        margin-top: -40px;
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0.3s; }
+      section#biography .news-card:hover .image-box {
+        top: -100px;
+        box-shadow: 0 0 15px 10px #222; }
+        section#biography .news-card:hover .image-box img {
+          transform: scale(1.3); }
+    section#biography .news-card .image-box {
+      position: relative;
+      height: 150px;
+      min-height: 150px;
+      max-height: 260px;
+      transition: 0.3s linear;
+      top: -50px;
+      z-index: 1;
+      border-radius: 0.25rem;
+      overflow: hidden; }
+      section#biography .news-card .image-box img {
+        transition: 0.3s all linear;
+        position: absolute;
+        z-index: -1; }
+      section#biography .news-card .image-box .date {
+        position: absolute;
+        bottom: 0;
+        padding: 0 1rem; }
+    section#biography .news-card .content {
+      position: relative;
+      margin-top: -140px;
+      padding: 0 15px;
+      text-align: center;
+      color: #222;
+      transition: 0.3s linear;
+      opacity: 0;
+      visibility: hidden; }
+    section#biography .news-card__btn {
+      left: 0;
+      transform: translate(0);
+      text-shadow: none; }
+    section#biography .news-card .comment,
+    section#biography .news-card .like {
+      font-size: 20px;
+      padding: 4px;
+      color: #222;
+      transition: 0.3s linear;
+      border-radius: 50%;
+      text-shadow: none;
+      display: inline-block; }
+      section#biography .news-card .comment:hover,
+      section#biography .news-card .like:hover {
+        transform: scale(1.5); }
+
 section#current {
   background-color: black;
   position: relative;
@@ -728,28 +798,23 @@ section#toys {
   display: none; }
 
 .modal-open {
-    overflow: hidden;
-    background-blend-mode: color-burn;
-    background-color: #22222277;
-}
+  overflow: hidden;
+  background-blend-mode: color-burn;
+  background-color: #22222277; }
 
 .modal-open .modal {
   overflow-x: hidden;
   overflow-y: auto; }
 
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1050;
-   /* display: flex;
-    justify-content: center;
-    align-items: center;*/
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    outline: 0;
-}
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0; }
 
 .modal-dialog {
   position: relative;
@@ -823,12 +888,9 @@ section#toys {
   line-height: 1.5; }
 
 .modal-body {
-    position: relative;
-    flex: 1 1 auto;
-    padding: 1rem;
-    max-height: 400px;
-    overflow-y: auto;
-}
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem; }
 
 .modal-footer {
   display: flex;
