@@ -75,6 +75,7 @@ namespace DarkComics.Models.Entity
         public List<ToyCharacter> ToyCharacters { get; set; }
         public List<CharacterPower> CharacterPowers { get; set; }
         public List<ProductCharacter> ProductCharacters { get; set; }
+        public List<CharacterNews> CharacterNews { get; set; }
         public City City { get; set; }
         public int? CityId { get; set; }
     }

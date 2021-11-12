@@ -131,7 +131,7 @@
 </section>
 <!-- Skill Section End -->
 <!-- Biography Section Start -->
-<section id="biography" class="py-5">
+<section id="biography" class="py-5 my-0">
     <div class="container">
         <div class="row py-5">
             <div class="col-12 col-lg-8">
@@ -146,81 +146,32 @@
             </div>
             <div class="col-12 col-lg-4">
                 <div class="row">
-                    <div class="col-6 col-lg-12 my-5">
-                        <div class="news-card rounded">
-                            <div class="image-box">
-                                <img src="assets/img/batman-reading.jpg" class="w-100 h-100 rounded" alt="">
-                                <div class="date">
-                                    <h2 class="text-white">2022</h2>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2>Card One</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quasi laboriosam
-                                    illum aspernatur eaque quaerat consequatur numquam officiis deleniti labore, itaque
-                                    error earum odit suscipit modi quod repellat fugit sed?
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <a class="comment mx-1" href=""><i class="far fa-comment"> 8</i></a>
-                                        <a class="like mx-1" href=""><i class="far fa-heart"></i> 5</a>
+                    @foreach (var characterNews in Model.Character.CharacterNews)
+                    {
+                        <div class="col-6 col-lg-12 my-5">
+                            <div class="news-card rounded">
+                                <div class="image-box">
+                                    <img src="~/assets/img/news/news-@characterNews.Id/@characterNews.News.Image" class="w-100 h-100 rounded" alt="">
+                                    <div class="date">
+                                        <h2 class="text-white">@characterNews.News.CreatedDate.GetValueOrDefault().ToString("MMM dd")</h2>
                                     </div>
-                                    <a href="detail.html" class="news-card__btn">Go Detail...</a>
+                                </div>
+                                <div class="content">
+                                    <h2>@characterNews.News.Title</h2>                                   
+                                <div class="my-3">
+                                    @Html.Raw(characterNews.News.ShortDescription)
+                                </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <a class="comment mx-1" href=""><i class="far fa-comment"> 8</i></a>
+                                            <a class="like mx-1" href=""><i class="far fa-heart"></i> 5</a>
+                                        </div>
+                                        <a href="detail.html" class="news-card__btn">Go Detail...</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-lg-12 my-5">
-                        <div class="news-card rounded">
-                            <div class="image-box">
-                                <img src="assets/img/batman-reading.jpg" class="w-100 h-100 rounded" alt="">
-                                <div class="date">
-                                    <h2 class="text-white">2022</h2>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2>Card One</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quasi laboriosam
-                                    illum aspernatur eaque quaerat consequatur numquam officiis deleniti labore, itaque
-                                    error earum odit suscipit modi quod repellat fugit sed?
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <a class="comment mx-1" href=""><i class="far fa-comment"> 8</i></a>
-                                        <a class="like mx-1" href=""><i class="far fa-heart"></i> 5</a>
-                                    </div>
-                                    <a href="detail.html" class="news-card__btn">Go Detail...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-12 my-5">
-                        <div class="news-card rounded">
-                            <div class="image-box">
-                                <img src="assets/img/batman-reading.jpg" class="w-100 h-100 rounded" alt="">
-                                <div class="date">
-                                    <h2 class="text-white">2022</h2>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <h2>Card One</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quasi laboriosam
-                                    illum aspernatur eaque quaerat consequatur numquam officiis deleniti labore, itaque
-                                    error earum odit suscipit modi quod repellat fugit sed?
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <a class="comment mx-1" href=""><i class="far fa-comment"> 8</i></a>
-                                        <a class="like mx-1" href=""><i class="far fa-heart"></i> 5</a>
-                                    </div>
-                                    <a href="detail.html" class="news-card__btn">Go Detail...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -228,7 +179,7 @@
 </section>
 <!-- Biography Section End -->
 <!-- Fact Section Start -->
-<section id="fact" class="py-5">
+<section id="fact" class="py-5 my-0">
     <div class="container">
         <div class="row">
             <div class="col-12">

@@ -25,7 +25,7 @@ namespace DarkComics.Controllers
             {
                 Characters = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
                 Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
-                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).ToList()
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c=>c.CharacterNews).ThenInclude(cn=>cn.News).Where(c => c.IsActive == true).ToList()
             };
 
 
@@ -44,7 +44,7 @@ namespace DarkComics.Controllers
             {
                 Character = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
                 Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
-                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Where(c => c.IsActive == true).
+                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c => c.CharacterNews).ThenInclude(cn => cn.News).Where(c => c.IsActive == true).
                 FirstOrDefault(c => c.Id == id)
             };
             if (characterView.Character == null)
@@ -66,7 +66,8 @@ namespace DarkComics.Controllers
             }
 
             Character character = _context.Characters.Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c => c.CharacterPowers).
-                ThenInclude(cp => cp.Power).Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(pc => pc.Product).FirstOrDefault(c => c.Id == id);
+                ThenInclude(cp => cp.Power).Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(pc => pc.Product).
+                Include(c => c.CharacterNews).ThenInclude(cn => cn.News).FirstOrDefault(c => c.Id == id);
            
             var products = character.ProductCharacters.OrderByDescending(p => p.ProductId).ToList();
             if (products == null)

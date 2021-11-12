@@ -27,6 +27,10 @@ namespace DarkComics.DAL
         public DbSet<CharacterPower> CharacterPowers { get; set; }
         public DbSet<ReadingComic> ReadingComics { get; set; }
         public DbSet<Serie> Series { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<CharacterNews> CharacterNews { get; set; }
+        public DbSet<TagNews> TagNews { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +44,8 @@ namespace DarkComics.DAL
              Property(c => c.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<Character>().
            Property(c => c.AboutCharacter).HasColumnType("Text");
+            modelBuilder.Entity<News>().
+                 Property(c => c.Text).HasColumnType("Text");
             modelBuilder.Entity<Serie>().
              Property(s => s.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<ReadingComic>().
@@ -48,13 +54,17 @@ namespace DarkComics.DAL
               Property(p => p.DeActivatedDate).HasColumnType("Date");
             modelBuilder.Entity<City>().
              Property(c => c.CreatedDate).HasColumnType("Date");
-           
+            modelBuilder.Entity<News>().
+            Property(n => n.CreatedDate).HasColumnType("Date");
+
             modelBuilder.Entity<Toy>().
              Property(c => c.DeactivatedDate).HasColumnType("Date");
 
 
             modelBuilder.Entity<Product>().
                 Property(p => p.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            modelBuilder.Entity<News>().
+                Property(n => n.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Toy>().
                 Property(p => p.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<ReadingComic>().
@@ -849,12 +859,6 @@ namespace DarkComics.DAL
                          CharacterId = 1,
                          ProductId = 33,
                      }
-
-
-
-
-
-
                 ));
 
             modelBuilder.Entity<Power>(cc => cc.HasData(
@@ -905,6 +909,94 @@ namespace DarkComics.DAL
                   CharacterId = 3,
                   PowerId = 3}
               ));
+
+            modelBuilder.Entity<News>(c => c.HasData(
+              new News
+              {
+                  Id = 1,
+                  Title = "Batman and Superman Return to Animation with Two Thrilling New Series",
+                  Image = "cover.jpg",
+                  Blogger = "Tim Beedle",
+                  CreatedDate = DateTime.Now,
+                  ShortDescription = "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...",
+                  Text = "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >"
+              },
+              new News
+              {
+                  Id = 2,
+                  Title = "Batman and Superman Return to Animation with Two Thrilling New Series",
+                  Image = "cover.jpg",
+                  Blogger = "Tim Beedle",
+                  ShortDescription = "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...",
+                  Text = "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >"
+              },
+               new News
+               {
+                   Id = 3,
+                   Title = "Batman and Superman Return to Animation with Two Thrilling New Series",
+                   Image = "cover.jpg",
+                   Blogger = "Tim Beedle",
+                   ShortDescription = "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...",
+                   Text = "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >"
+               }
+              )) ; 
+            modelBuilder.Entity<Tag>(c => c.HasData(
+             new Tag
+             {
+                 Id = 1,
+                 Title = "Batman"                
+             },
+             new Tag
+             {
+                 Id = 2,
+                 Title = "Nightwing"
+             },
+             new Tag
+             {
+                 Id = 3,
+                 Title = "Spider-man"
+             }
+             ));
+            modelBuilder.Entity<CharacterNews>(c => c.HasData(
+             new CharacterNews
+             {
+                 Id = 1,
+                 CharacterId = 1,
+                 NewsId = 1
+             },
+            new CharacterNews
+            {
+                Id = 2,
+                CharacterId = 2,
+                NewsId = 2
+            },
+             new CharacterNews
+             {
+                 Id = 3,
+                 CharacterId = 3,
+                 NewsId = 3
+             }
+             ));
+            modelBuilder.Entity<TagNews>(c => c.HasData(
+            new TagNews
+            {
+                Id = 1,
+                TagId = 1,
+                NewsId = 1
+            },
+           new TagNews
+           {
+               Id = 2,
+               TagId = 2,
+               NewsId = 2
+           },
+            new TagNews
+            {
+                Id = 3,
+                TagId = 3,
+                NewsId = 3
+            }
+            ));
             modelBuilder.Entity<ReadingComic>(cc => cc.HasData(
              new ReadingComic
              {
