@@ -134,13 +134,13 @@
 <section id="biography" class="py-5 my-0">
     <div class="container">
         <div class="row py-5">
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-8 bg-white">
                 <div class="row">
                     <div class="col-12 position-relative">
-                        <h1 class="heading text-white">Biography</h1>
+                        <h1 class="heading">Biography</h1>
                     </div>
                 </div>
-                <div class="biography text-white px-5">
+                <div class="biography px-5">
                     @Html.Raw(Model.Character.AboutCharacter)
                 </div>
             </div>
@@ -148,7 +148,7 @@
                 <div class="row">
                     @foreach (var characterNews in Model.Character.CharacterNews)
                     {
-                        <div class="col-6 col-lg-12 my-5">
+                        <div class="col-12 col-md-6 col-lg-12 my-5">
                             <div class="news-card rounded">
                                 <div class="image-box">
                                     <img src="~/assets/img/news/news-@characterNews.Id/@characterNews.News.Image" class="w-100 h-100 rounded" alt="">

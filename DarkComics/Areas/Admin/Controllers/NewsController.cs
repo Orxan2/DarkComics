@@ -113,6 +113,127 @@ namespace DarkComics.Areas.Admin.Controllers
             return RedirectToAction("Index", newsViewModel);
         }
 
+        // GET: EventController/Edit/5
+        public IActionResult Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsViewModel newsViewModel = new NewsViewModel
+            {
+                News= _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).FirstOrDefault(n=>n.Id == id),
+                Tags = _db.Tags.ToList(),
+                TagList = new List<SelectListItem>(),
+                Characters = _db.Characters.ToList(),
+                CharacterList = new List<SelectListItem>()
+
+            };
+            newsViewModel.Image = newsViewModel.News.Image;
+           
+            if (newsViewModel.News == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var tag in newsViewModel.Tags)
+            {
+                newsViewModel.TagList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = tag.Title, Value = tag.Id.ToString() }
+                });
+            }
+
+            foreach (var character in newsViewModel.Characters)
+            {
+                newsViewModel.CharacterList.AddRange(new List<SelectListItem>{
+                    new SelectListItem() { Text = character.Name, Value = character.Id.ToString() }
+                });
+            }
+
+            return View(newsViewModel);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(int? id, NewsViewModel newsViewModel)
+        {
+            if (id == null || (id != newsViewModel.News.Id))
+            {
+                return NotFound();
+            }
+
+
+            //if user don't choose image program enter here
+            if (newsViewModel.News.Photo == null)
+            {
+                newsViewModel.News.Image = newsViewModel.Image;
+                ModelState["News.Photo"].ValidationState = ModelValidationState.Valid;
+            }
+            else
+                newsViewModel.News.Image = RenderImage(newsViewModel.News, newsViewModel.News.Photo, newsViewModel.Image);
+
+            if (string.IsNullOrEmpty(newsViewModel.News.Image))
+            {
+                ModelState.AddModelError("Image", "Image was incorrect");
+                return View(newsViewModel);
+            }
+
+            if (!ModelState.IsValid)
+                return View(newsViewModel.News);
+
+
+            List<TagNews> tagNews = _db.TagNews.Where(tn => tn.NewsId == newsViewModel.News.Id).ToList();
+            List<CharacterNews> characterNews = _db.CharacterNews.Where(cn => cn.NewsId == newsViewModel.News.Id).ToList();
+
+            foreach (var oldCharacterNews in characterNews)            {
+
+                if (!newsViewModel.ChosenCharacters.Contains(oldCharacterNews.CharacterId))
+                    _db.CharacterNews.Remove(oldCharacterNews);
+            }
+
+            foreach (var chosenCharacterNews in newsViewModel.ChosenCharacters)
+            {
+
+                if (!characterNews.Exists(cn=>cn.CharacterId == chosenCharacterNews))
+                {
+                    CharacterNews newCharacterNews = new CharacterNews
+                    {
+                        NewsId = newsViewModel.News.Id,
+                        CharacterId = chosenCharacterNews
+                    };
+                    _db.CharacterNews.Add(newCharacterNews);                    
+                }
+            }
+
+
+            foreach (var oldTagNews in tagNews)
+            {
+                if (!newsViewModel.ChosenTags.Contains(oldTagNews.TagId))
+                    _db.TagNews.Remove(oldTagNews);
+            }
+
+            foreach (var chosenTagNews in newsViewModel.ChosenTags)
+            {
+
+                if (!tagNews.Exists(tn => tn.TagId == chosenTagNews))
+                {
+                    TagNews newTagNews = new TagNews
+                    {
+                        NewsId = newsViewModel.News.Id,
+                        TagId = chosenTagNews
+                    };
+                    _db.TagNews.Add(newTagNews);
+                }
+            }
+
+
+            _db.News.Update(newsViewModel.News);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index), newsViewModel);
+
+        }
+
         public string RenderImage(News news, IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))
@@ -128,7 +249,7 @@ namespace DarkComics.Areas.Admin.Controllers
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "assets", "img","news", $"news-{news.Id}");
             if (news.Id == null)
-                newSlider = Path.Combine(environment, "assets", "img", "news", $"news-{_db.Characters.Max(c => c.Id + 1)}");
+                newSlider = Path.Combine(environment, "assets", "img", "news", $"news-{_db.News.Max(c => c.Id + 1)}");
 
 
 

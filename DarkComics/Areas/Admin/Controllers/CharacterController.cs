@@ -242,33 +242,34 @@ namespace DarkComics.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(characterVM.Character);
 
+            //Get Old Powers of current Character from Db
+            List<CharacterPower> characterPowers = _db.CharacterPowers.Where(tn => tn.CharacterId == characterVM.Character.Id).ToList();
+
+            //remove if power don't choose
+            foreach (var oldCharacterpower in characterPowers)
+            {
+                if (!characterVM.ChosenPowers.Contains(oldCharacterpower.PowerId))
+                    _db.CharacterPowers.Remove(oldCharacterpower);
+            }
+
+            // add if there is not in old powers
+            foreach (var chosenPower in characterVM.ChosenPowers)
+            {
+
+                if (!characterPowers.Exists(cp => cp.PowerId == chosenPower))
+                {
+                    CharacterPower characterPower = new CharacterPower
+                    {
+                        PowerId = chosenPower,
+                        CharacterId = characterVM.Character.Id
+                    };
+                    _db.CharacterPowers.Add(characterPower);
+                }
+            }          
 
             _db.Characters.Update(characterVM.Character);
             _db.SaveChanges();
-
-            int? characterId = characterVM.Character.Id;
-            Character character = _db.Characters.Find(characterId);
-
-            foreach (var power in characterVM.ChosenPowers)
-            {
-                Power pow = _db.Powers.FirstOrDefault(p => p.Id == power);
-                CharacterPower characterPower = _db.CharacterPowers.FirstOrDefault(cp => cp.CharacterId == characterId && cp.PowerId == pow.Id);
-                if (characterPower == null)
-                {
-                    characterPower = new CharacterPower();
-                    characterPower.CharacterId = characterId;
-                    characterPower.PowerId = pow.Id;
-                    _db.CharacterPowers.Add(characterPower);
-                }
-                else
-                {
-                    characterPower.CharacterId = characterId;
-                    characterPower.PowerId = pow.Id;
-                    _db.CharacterPowers.Update(characterPower);
-                }                 
-                _db.SaveChanges();
-            }
-
+            
             return RedirectToAction(nameof(Index), characterVM);
 
             }
