@@ -8,9 +8,9 @@ namespace DarkComics.Models.Entity
 {
     public class TagNews : BaseEntity
     {
-        public int TagId { get; set; }
+        public int? TagId { get; set; }
         public Tag Tag { get; set; }
-        public int NewsId { get; set; }
+        public int? NewsId { get; set; }
         public News News { get; set; }
     }
 }

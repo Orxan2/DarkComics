@@ -61,13 +61,7 @@ namespace DarkComics.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            //if (edit != null)
-            //{
-            //    Models.CKEditor ckEditor = new Models.CKEditor();
-            //    ckEditor.name = ((MyStruct)Session["MySession"]).name;
-            //    ckEditor.description = ((MyStruct)Session["MySession"]).description;
-            //    return View(ckEditor);
-            //}
+          
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
                 Powers = _db.Powers.ToList(),
