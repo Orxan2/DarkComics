@@ -24,6 +24,7 @@ namespace DarkComics.ViewComponents
               ThenInclude(tn => tn.Tag).ToList()
             };
 
+           
             return View(await Task.FromResult(newsViewModel));
         }
     }

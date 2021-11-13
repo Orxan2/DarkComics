@@ -30,7 +30,7 @@
                 <h3 class="fw-bold">Tags</h3>
                 @foreach (var tagNews in Model.News.TagNews)
                 {
-                    <a class="btn btn-outline-dark">@tagNews.Tag.Title</a>
+                    <a class="btn btn-outline-dark" asp-controller="Search" asp-action="SearchNews" asp-route-id="@tagNews.Tag.Id">@tagNews.Tag.Title</a>
                 }
             </div>
         </div>
