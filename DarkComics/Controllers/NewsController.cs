@@ -17,15 +17,21 @@ namespace DarkComics.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? id, int pageIndex = 1, int pageSize = 4)
         {
-            NewsViewModel newsViewModel = new NewsViewModel
-            {
-                NewsList = _context.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
-             ThenInclude(tn => tn.Tag).ToList()
-            };
+            List<News> news = _context.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
+             ThenInclude(tn => tn.Tag).OrderByDescending(n => n.Id).ToList();
 
-            return View(newsViewModel);
+
+            if (news == null)
+            {
+                return NotFound();
+            }
+
+            PaginationViewModel<News> paginationViewModel = new PaginationViewModel<News>(news, pageSize, pageIndex);
+
+
+            return View(paginationViewModel);
         }
 
         public IActionResult Details(int? id)
