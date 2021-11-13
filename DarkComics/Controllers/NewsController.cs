@@ -19,7 +19,13 @@ namespace DarkComics.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            NewsViewModel newsViewModel = new NewsViewModel
+            {
+                NewsList = _context.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
+             ThenInclude(tn => tn.Tag).ToList()
+            };
+
+            return View(newsViewModel);
         }
 
         public IActionResult Details(int? id)
