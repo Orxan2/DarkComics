@@ -8,10 +8,11 @@ namespace DarkComics.ViewModels
 {
     public class HomeViewModel
     {
-        //public List<Comic> Comics { get; set; }
-        //public List<Comic> FilteringComics { get; set; }
-        //public List<Comic> BestComics { get; set; }
+        public List<Product> Comics { get; set; }
+        public List<Product> FilteringComics { get; set; }
+        public List<Product> BestComics { get; set; }
         public List<Character> Characters { get; set; }
+        public List<Serie> Series { get; set; }
 
     }
 }
