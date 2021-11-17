@@ -208,6 +208,21 @@ if ($('#login-btn').length > 0) {
         });
 
     });
+    // Send Message    
+        $('#SendMessage').on('click', function () {
+            let id = $('#News_Id').val();
+            let message = $('#Comment_Message').val();
+            console.log(`id = ${id} => Message = ${message}`);
+            $.ajax({
+                url: `/News/MessageSend?id=${id}&message=${message}`,
+                type: "Get",
+                success: function (response) {
+                    $('#addHere').append(response);
+                    $('#Comment_Message').val("");
+                }
+            });
+
+        });
 
     //Delete Product
     RemoveProduct();

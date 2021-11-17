@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211117165229_AddedComments")]
+    partial class AddedComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -25,5 +25,7 @@ namespace DarkComics.Models.Entity
         public Nullable<DateTime> CreatedDate { get; set; }
         public List<CharacterNews> CharacterNews { get; set; }
         public List<TagNews> TagNews { get; set; }
+        public List<PostComment> PostComments { get; set; }
+
     }
 }

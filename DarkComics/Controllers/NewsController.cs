@@ -1,6 +1,7 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,7 @@ namespace DarkComics.Controllers
         public IActionResult Index(int? id, int pageIndex = 1, int pageSize = 4)
         {
             List<News> news = _context.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
-             ThenInclude(tn => tn.Tag).OrderByDescending(n => n.Id).ToList();
+             ThenInclude(tn => tn.Tag).Include(n => n.PostComments).ThenInclude(pc => pc.Comment).ThenInclude(c => c.User).OrderByDescending(n => n.Id).ToList();
 
 
             if (news == null)
@@ -42,7 +43,7 @@ namespace DarkComics.Controllers
             }
 
             News news = _context.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
-                ThenInclude(tn => tn.Tag).FirstOrDefault(n=>n.Id == id);
+                ThenInclude(tn => tn.Tag).Include(n=>n.PostComments).ThenInclude(pc=>pc.Comment).ThenInclude(c => c.User).FirstOrDefault(n=>n.Id == id);
 
             if (news == null)
             {
@@ -51,9 +52,38 @@ namespace DarkComics.Controllers
 
             NewsViewModel newsViewModel = new NewsViewModel
             {
-                News = news
+                News = news,
+                AppUser = _context.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name)
             };
             return View(newsViewModel);
+        }
+
+        public IActionResult MessageSend(int? id, string message)
+        {
+            if (id == null || string.IsNullOrEmpty(message))
+            {
+                return View();
+            }
+
+            Comment comment = new Comment();
+            comment.Message = message;
+            comment.User = _context.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name);  
+
+            _context.Comments.Add(comment);
+
+            PostComment postComment = new PostComment
+            {
+                CommentId = _context.Comments.Max(c => c.Id) + 1,
+                NewsId = id
+            };
+            _context.PostComments.Add(postComment);
+            _context.SaveChanges();
+
+            NewsViewModel news = new NewsViewModel
+            {               
+                PostComment = postComment
+            };
+            return PartialView("_MessageSend", news);
         }
 
     }

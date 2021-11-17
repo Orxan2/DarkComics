@@ -31,6 +31,8 @@ namespace DarkComics.DAL
         public DbSet<News> News { get; set; }
         public DbSet<CharacterNews> CharacterNews { get; set; }
         public DbSet<TagNews> TagNews { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<PostComment> PostComments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

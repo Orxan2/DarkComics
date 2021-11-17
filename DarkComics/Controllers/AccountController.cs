@@ -40,7 +40,7 @@ namespace DarkComics.Controllers
             {
                 Fullname = register.FullName,
                 UserName = register.Username,
-                Email = register.Email,
+                Image = "default.jpg"
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, register.Password);
@@ -59,12 +59,7 @@ namespace DarkComics.Controllers
 
             return RedirectToAction("Index","Comic");
         }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
+       
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(LoginViewModel login)

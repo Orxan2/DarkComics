@@ -25,6 +25,7 @@ namespace DarkComics.Areas.Admin.Controllers
         }
         public IActionResult Register()
         {
+            //await CreateAsync();
             AdminRegisterViewModel admin = new AdminRegisterViewModel();
             admin.Roles = new List<RoleViewModel>();
 
@@ -56,7 +57,8 @@ namespace DarkComics.Areas.Admin.Controllers
             AppUser user = new AppUser
             {
                 Fullname = register.FullName,
-                UserName = register.Username
+                UserName = register.Username,
+                Image = "default.jpg"
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, register.Password);
@@ -76,12 +78,12 @@ namespace DarkComics.Areas.Admin.Controllers
             return View(nameof(Login));
         }
 
-        //public async Task CreateAsync()
-        //{
-        //    await _userRole.CreateAsync(new IdentityRole(Role.SuperAdmin.ToString()));
-        //    await _userRole.CreateAsync(new IdentityRole(Role.Admin.ToString()));
-        //    await _userRole.CreateAsync(new IdentityRole(Role.User.ToString()));
-        //}
+        public async Task CreateAsync()
+        {
+            await _userRole.CreateAsync(new IdentityRole(Role.SuperAdmin.ToString()));
+            await _userRole.CreateAsync(new IdentityRole(Role.Admin.ToString()));
+            await _userRole.CreateAsync(new IdentityRole(Role.User.ToString()));
+        }
         public IActionResult Login()
         {
             return View();
