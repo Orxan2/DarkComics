@@ -1,5 +1,6 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Helpers.Enums;
+using DarkComics.Helpers.Methods;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DarkComics.Controllers
@@ -29,13 +31,48 @@ namespace DarkComics.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel register)
+        public IActionResult Register(RegisterViewModel register)
         {
             if (!ModelState.IsValid)
             {
                 return View(register);
+            }                  
+
+            Random rand = new Random(); 
+            register.SecurityCode = rand.Next(99999,1000000).ToString();
+
+            string data = JsonSerializer.Serialize(register);
+            HttpContext.Response.Cookies.Append("user", data);
+
+            MailOpertions.SendMessage(register.Email,register.SecurityCode);            
+
+            return View("CompleteRegister");
+        }
+
+        public IActionResult CompleteRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> CompleteRegister(SecurityCodeVM security)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(security);
             }
-            
+
+            RegisterViewModel register = JsonSerializer.Deserialize<RegisterViewModel>(Request.Cookies["user"]);            
+
+            HttpContext.Response.Cookies.Delete("user");
+
+            if (register == null)
+                return NotFound();
+
+            if (security.Code != register.SecurityCode)
+                return BadRequest();
+
             AppUser user = new AppUser
             {
                 Fullname = register.FullName,
@@ -44,7 +81,7 @@ namespace DarkComics.Controllers
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, register.Password);
-           
+
 
             if (!result.Succeeded)
             {
@@ -57,7 +94,7 @@ namespace DarkComics.Controllers
             }
             await _userManager.AddToRoleAsync(user, Role.User.ToString());
 
-            return RedirectToAction("Index","Comic");
+            return RedirectToAction("Index", "Home");
         }
        
         [HttpPost]

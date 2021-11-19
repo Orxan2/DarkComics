@@ -18,5 +18,6 @@ namespace DarkComics.ViewModels.Account
         public string Password { get; set; }
         [Required(ErrorMessage = "Confirm Password mustn't be empty"), DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+        public string SecurityCode { get; set; }
     }
 }
