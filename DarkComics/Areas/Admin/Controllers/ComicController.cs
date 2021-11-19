@@ -306,9 +306,7 @@ namespace DarkComics.Areas.Admin.Controllers
             if (id == null || comicViewModel.Comic.Id != id)
             {
                 return NotFound();
-            }
-
-            
+            }            
 
             //if user don't choose image program enter here
             if (comicViewModel.Comic.Photo == null)
@@ -322,7 +320,7 @@ namespace DarkComics.Areas.Admin.Controllers
             if (comicViewModel.Comic.ComicDetail.BackfacePhoto == null)
             {
                 comicViewModel.Comic.ComicDetail.Backface = comicViewModel.Backface;
-                ModelState["Comic.ComicDetail.Backface"].ValidationState = ModelValidationState.Valid;
+                ModelState["Comic.ComicDetail.BackfacePhoto"].ValidationState = ModelValidationState.Valid;
             }
             else
                 comicViewModel.Comic.ComicDetail.Backface = RenderImage(comicViewModel, comicViewModel.Comic.ComicDetail.BackfacePhoto, comicViewModel.Backface);
@@ -340,35 +338,37 @@ namespace DarkComics.Areas.Admin.Controllers
             comicViewModel.Comic.IsActive = true;
             comicViewModel.Comic.Category = Category.Comic;
 
-            //_db.ComicDetails.Update(comicViewModel.Comic.ComicDetail);
+            ////_db.ComicDetails.Update(comicViewModel.Comic.ComicDetail);
             _db.Products.Update(comicViewModel.Comic);
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
             // Create ProductCharacter
-            int? productId = comicViewModel.Comic.Id;
-            Product product = _db.Products.Find(productId);
+            List<ProductCharacter> productCharacters = _db.ProductCharacters.Where(pc=>pc.ProductId == comicViewModel.Comic.Id).ToList();
 
-            foreach (var chosencharacter in comicViewModel.ChosenCharacters)
+            foreach (var productCharacter in productCharacters)
             {
-                Character characterDb = _db.Characters.FirstOrDefault(p => p.Id == chosencharacter);
-                ProductCharacter productCharacter = _db.ProductCharacters.FirstOrDefault(pc => pc.ProductId == productId && pc.CharacterId == characterDb.Id);
-                if (productCharacter == null)
+
+                if (!comicViewModel.ChosenCharacters.Contains(productCharacter.CharacterId))
+                    _db.ProductCharacters.Remove(productCharacter);
+            }
+
+            foreach (var chosenCharacter in comicViewModel.ChosenCharacters)
+            {
+
+                if (!productCharacters.Exists(cn => cn.CharacterId == chosenCharacter))
                 {
-                    productCharacter = new ProductCharacter();
-                    productCharacter.CharacterId = characterDb.Id;
-                    productCharacter.ProductId = productId;
+                    ProductCharacter productCharacter = new ProductCharacter
+                    {
+                        ProductId = comicViewModel.Comic.Id,
+                        CharacterId = chosenCharacter
+                    };
                     _db.ProductCharacters.Add(productCharacter);
                 }
-                else
-                {
-                    productCharacter.CharacterId = characterDb.Id;
-                    productCharacter.ProductId = productId;
-                    _db.ProductCharacters.Update(productCharacter);
-                }
-                _db.SaveChanges();
- }
-                return RedirectToAction(nameof(Index), comicViewModel);
+            }
+
+            _db.SaveChanges();                
+            return RedirectToAction(nameof(Index), comicViewModel);
            
         }
         

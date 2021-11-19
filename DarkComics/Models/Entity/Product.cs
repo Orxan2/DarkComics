@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DarkComics.Models.Entity
 {
@@ -30,6 +31,7 @@ namespace DarkComics.Models.Entity
         [Required]
         public int? Quantity { get; set; }
         public DateTime CreatedDate { get; set; }
+        [AllowHtml, DataType("text")]
         public string Description { get; set; }
         public DateTime DeActivatedDate { get; set; }
         public ComicDetail ComicDetail { get; set; }

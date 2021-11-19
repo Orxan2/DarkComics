@@ -65,7 +65,8 @@
         <h2><strong>Status :</strong> <i>@(Model.Comic.IsActive?"Active":"DeActive")</i></h2>
     </div>
 
-    <div class="col-12 m-3">
-        <h2><strong>Description :</strong> <i>@Model.Comic.Description</i></h2>
+    <div class="col-12 m-3 bg-white">
+        <h2 class="my-4"><strong>Description :</strong></h2>
+        @Html.Raw(Model.Comic.Description)
     </div>
 </div>

@@ -320,12 +320,7 @@ namespace DarkComics.Areas.Admin.Controllers
                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == characterPower.CharacterId);
 
             if (character == null)
-                return NotFound();
-
-            //CharacterViewModel characterViewModel = new CharacterViewModel
-            //{
-            //    Character = character
-            //};
+                return NotFound();           
 
             _db.CharacterPowers.Remove(characterPower);
             _db.SaveChanges();
