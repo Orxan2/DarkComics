@@ -77,8 +77,8 @@ namespace DarkComics.DAL
                 Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<City>().
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            
 
-           
             modelBuilder.Entity<Serie>(c => c.HasData(
                new Serie
                {

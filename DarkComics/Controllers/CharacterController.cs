@@ -23,11 +23,12 @@ namespace DarkComics.Controllers
         {
             CharacterViewModel characterViewModel = new CharacterViewModel
             {
-                Characters = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
-                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
-                Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c=>c.CharacterNews).ThenInclude(cn=>cn.News).Where(c => c.IsActive == true).ToList()
-            };
+                Characters = _context.Characters.Include(c => c.City).Where(c => c.IsActive == true).ToList()
+        };
 
+            int count = characterViewModel.Characters.Count();
+
+            HttpContext.Response.Cookies.Append("characters", count.ToString());
 
             return View(characterViewModel);
         }
@@ -77,13 +78,18 @@ namespace DarkComics.Controllers
 
             PaginationViewModel<ProductCharacter> paginationViewModel = new PaginationViewModel<ProductCharacter>(products, pageSize, pageIndex);
           
-            //int count = characterViewModel.Character.ProductCharacters.Count();
-
-            //HttpContext.Response.Cookies.Append("ComicQuantity", count.ToString());
-
-            
-
             return View(paginationViewModel);
+        }
+
+        public IActionResult LoadCharacters(int skip, int take)
+        {
+            CharacterViewModel characterViewModel = new CharacterViewModel
+            {
+                Characters = _context.Characters.Where(c => c.IsActive == true).OrderBy(c => c.Id).Skip(skip).Take(take).ToList()
+            };
+
+
+            return View("_LoadCharacters", characterViewModel);
         }
     }
 }

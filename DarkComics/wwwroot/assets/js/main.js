@@ -143,17 +143,48 @@ if ($('#login-btn').length > 0) {
         });
     }
 
-    let skip = 3;
-    let take = 3;
-    $('#loadMore').on('click', function () {
-        Load(skip, take);
-        skip += take;
-        let count = $('#loadMore').attr('data-count');
-        if (skip >= count) {
+    let comicSkip = 0;
+    let comicTake = 3;
+    if ($('#loadMore').length > 0) {
+        loadComics(comicTake);
+    }
+    
+  
+    $('#loadMore').on('click', function () {       
+        let take = 3;
+        loadComics(take);
+    });
+    function loadComics(take) {
+       
+        Load(comicSkip, take, "/Comic/LoadMore");
+        comicSkip += take;
+        let count = JSON.parse(document.cookie.split(`comics=`).pop().split(';').shift());
+        if (comicSkip >= count) {
             $('#loadMore').css('display', 'none');
         }
-    });
+        
+    }
 
+    // load characters
+    let characterSkip = 0;
+    let characterTake = 2;
+    if ($('#loadCharacters').length > 0) {
+        loadCharacters(characterTake);
+    }
+    function loadCharacters(take) {
+        Load(characterSkip, take, "/Character/LoadCharacters");
+        characterSkip += take;
+        let count = JSON.parse(document.cookie.split(`characters=`).pop().split(';').shift());
+
+        if (characterSkip >= count) {
+            $('#loadCharacters').css('display', 'none');
+        }
+    }
+    $('#loadCharacters').on('click', function () {
+        let take = 3;
+        loadCharacters(take);
+    });
+   
     $('#search .form-control').on('keyup', () => {
         //let word = document.querySelector('#search .form-control').valueOfElement;
         let word = $('#search .form-control').val();
@@ -173,10 +204,10 @@ if ($('#login-btn').length > 0) {
             }
         })
     });
-    function Load(skip, take) {
+    function Load(skip, take,url) {
         //console.log('okay');
         $.ajax({
-            url: `/Comic/LoadMore?skip=${skip}&take=${take}`,
+            url: `${url}?skip=${skip}&take=${take}`,
             type: "Get",
             success: function (response) {
                 $('#addHere').append(response);
@@ -184,6 +215,9 @@ if ($('#login-btn').length > 0) {
         })
     }
 
+    $('#profile-btn').on('click', function () {
+        $('#profile').slideToggle();
+    });
     // Basket
     $('.basket').each(function (basketIndex, basketElement) {
 

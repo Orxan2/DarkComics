@@ -27,22 +27,19 @@ namespace DarkComics.Controllers
         {         
 
             ComicViewModel comicViewModel = new ComicViewModel
-            {
-               Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(s=>s.IsDeleted == false).ToList(),
+            {              
                 RandomComics = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
                ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true).ToList()
             };
 
-            int count = comicViewModel.Series.Count();
-
-            HttpContext.Response.Cookies.Append("ComicQuantity", count.ToString());
+            int count = _context.Series.Count();
+            HttpContext.Response.Cookies.Append("comics", count.ToString());
 
             return View(comicViewModel);
         }
            
 
-        public IActionResult LoadMore(int skip, int take)
+        public IActionResult LoadMore(int skip = 0, int take = 2)
         {
             ComicViewModel comicViewModel = new ComicViewModel
             {

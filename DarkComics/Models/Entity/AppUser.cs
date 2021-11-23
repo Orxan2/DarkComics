@@ -15,6 +15,7 @@ namespace DarkComics.Models.Entity
         public string Fullname { get; set; }
         [Required]
         public bool IsAgree { get; set; }
+        public bool IsSubscriber { get; set; }
         [NotMapped]
         public IFormFile Photo { get; set; }
         public string Image { get; set; }

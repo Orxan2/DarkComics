@@ -23,9 +23,9 @@ namespace DarkComics.Areas.Admin.Controllers
             _signInManager = signInManager;
             //_db = db;
         }
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
-            //await CreateAsync();
+            await CreateAsync();
             AdminRegisterViewModel admin = new AdminRegisterViewModel();
             admin.Roles = new List<RoleViewModel>();
 

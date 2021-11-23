@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Default";
 }
+
+
 <!-- Header Start-->
 <header>
     <div class="container">
@@ -11,23 +13,10 @@
                     <img src="assets/img/logo-2.png" width="75" alt="logo" class="rounded-circle" />
                 </a>
             </div>
-           @await Component.InvokeAsync("Search")
-            <div class="col-2 d-flex justify-content-center align-items-center">
-                <div class="icons">
-                    <!-- <div id="search-btn" class="fas fa-search"></div> -->
-                    <a href="#" class="fas fa-heart"></a>
-                    <a asp-controller="Basket" asp-action="Index" class="fas fa-shopping-cart"></a>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a asp-controller="Account" asp-action="LogOut" id="login-out" class="fas fa-sign-out-alt"></a>
-                    }
-                    else
-                    {
-                        <div id="login-btn" class="fas fa-user"></div>
-                    }
-              
-                </div>
-            </div>
+            @await Component.InvokeAsync("Search")
+            
+            @await Component.InvokeAsync("User");
+
         </div>
     </div>
 </header>

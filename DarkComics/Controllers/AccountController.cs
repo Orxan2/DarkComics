@@ -124,7 +124,7 @@ namespace DarkComics.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Comic");
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult ChangePassword()
         {
@@ -136,7 +136,21 @@ namespace DarkComics.Controllers
         {
             AppUser user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             IdentityResult result = await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
-            return RedirectToAction("Index", "Comic");
-        }       
+            return RedirectToAction("Index", "Home");
+        }
+        public IActionResult Subscribe()
+        {
+
+            AppUser user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (user.IsSubscriber)
+                user.IsSubscriber = false;
+            else
+                user.IsSubscriber = true;
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
