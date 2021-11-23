@@ -29,10 +29,25 @@ namespace DarkComics.Areas.Admin.Controllers
         {
             NewsViewModel newsViewModel = new NewsViewModel
             {
-                NewsList = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).ToList(),
-                
+                NewsList = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).ToList() 
             };
             return View(newsViewModel);
+        }
+
+        public IActionResult Detail(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            NewsDetailViewModel newsDetailViewModel = new NewsDetailViewModel
+            {
+                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).FirstOrDefault(n=>n.Id == id)
+            };
+
+            if (newsDetailViewModel.News == null)
+                return NotFound();           
+
+            return View(newsDetailViewModel);
         }
 
         public ActionResult Create()
@@ -234,6 +249,59 @@ namespace DarkComics.Areas.Admin.Controllers
 
         }
 
+        public ActionResult DeleteCharacter(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            CharacterNews characterNews = _db.CharacterNews.FirstOrDefault(c => c.CharacterId == id);
+            if (characterNews == null)
+            {
+                return NotFound();
+            }
+
+            NewsDetailViewModel newsDetailViewModel = new NewsDetailViewModel
+            {
+                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).FirstOrDefault(n => n.Id == characterNews.NewsId)
+            };
+                      
+            if (newsDetailViewModel.News == null)
+                return NotFound();
+
+            _db.CharacterNews.Remove(characterNews);
+            _db.SaveChanges();
+
+            return View(nameof(Detail), newsDetailViewModel);
+        }
+
+        public ActionResult DeleteTag(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }           
+
+            TagNews tagNews = _db.TagNews.FirstOrDefault(c => c.TagId == id);
+            if (tagNews == null)
+            {
+                return NotFound();
+            }
+
+            NewsDetailViewModel newsDetailViewModel = new NewsDetailViewModel
+            {
+                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).FirstOrDefault(n => n.Id == tagNews.NewsId)
+            };
+
+            if (newsDetailViewModel.News == null)
+                return NotFound();
+
+            _db.TagNews.Remove(tagNews);
+            _db.SaveChanges();
+
+            return View(nameof(Detail), newsDetailViewModel);
+        }
         public string RenderImage(News news, IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))

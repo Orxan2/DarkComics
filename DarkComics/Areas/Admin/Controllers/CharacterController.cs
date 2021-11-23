@@ -313,19 +313,22 @@ namespace DarkComics.Areas.Admin.Controllers
                 return NotFound();
             }
 
-
-
-            Character character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
+            CharacterViewModel characterViewModel = new CharacterViewModel
+            {
+                Character = _db.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
                Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
-               Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == characterPower.CharacterId);
+               Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).FirstOrDefault(c => c.Id == characterPower.CharacterId)
+        };
 
-            if (character == null)
+            
+
+            if (characterViewModel.Character == null)
                 return NotFound();           
 
             _db.CharacterPowers.Remove(characterPower);
             _db.SaveChanges();
 
-            return View("Detail",character.Id);
+            return View("Detail", characterViewModel);
         }
         public string RenderImage(Character character, IFormFile photo)
             {
