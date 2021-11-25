@@ -77,6 +77,7 @@ namespace DarkComics.Controllers
             {
                 Fullname = register.FullName,
                 UserName = register.Username,
+                Email = register.Email,
                 Image = "default.jpg"
             };
 

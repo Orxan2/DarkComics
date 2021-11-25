@@ -61,14 +61,12 @@
                     <td class="text-center">
                         <a asp-action="Detail" asp-route-id="@character.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
                         <a asp-action="Update" asp-route-id="@character.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
-                        <a asp-action="MakeActiveOrDeactive" asp-route-id="@character.Id" class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
+                        @if (User.IsInRole(Role.SuperAdmin.ToString()))
+                        {
+                            <a asp-action="MakeActiveOrDeactive" asp-route-id="@character.Id" class="mb-2 mr-2 btn @(character.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(character.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
+                        }
                     </td>
-                    @*<td>
-            @foreach (var teamCharacter in character.TeamCharacters)
-            {
-                teamCharacter.Team.Name.ToString();
-            }
-        </td>*@
+                   
 
                 </tr>
                 }

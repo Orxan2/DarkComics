@@ -23,9 +23,9 @@ namespace DarkComics.Areas.Admin.Controllers
             _signInManager = signInManager;
             //_db = db;
         }
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
-            await CreateAsync();
+            //await CreateAsync();
             AdminRegisterViewModel admin = new AdminRegisterViewModel();
             admin.Roles = new List<RoleViewModel>();
 
@@ -34,7 +34,7 @@ namespace DarkComics.Areas.Admin.Controllers
                 admin.Roles.Add(new RoleViewModel { Name = role });
             };
 
-            return View();
+            return View(admin);
         }
 
         [HttpPost]
@@ -114,7 +114,7 @@ namespace DarkComics.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Username or Password is not correct");
                     return View(adminLogin);
                 }
-                return RedirectToAction("Index", "post");
+                return RedirectToAction(nameof(Index), "Character");
             }
             else
             {
@@ -125,7 +125,7 @@ namespace DarkComics.Areas.Admin.Controllers
         public async Task<IActionResult> LogOutAsync()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(Index), "post");
+            return RedirectToAction(nameof(Index), "Character");
         }
     }
 }

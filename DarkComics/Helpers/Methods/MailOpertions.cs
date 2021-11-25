@@ -8,7 +8,7 @@ namespace DarkComics.Helpers.Methods
 {
     public static class MailOpertions
     {
-        public static void SendMessage(string mail,string message)
+        public static void SendMessage(string mail,string message,bool isHtml = false)
         {
 
             var client = new SmtpClient();
@@ -24,6 +24,7 @@ namespace DarkComics.Helpers.Methods
             mailMessage.Body = message;
             mailMessage.Priority = MailPriority.High;
             mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess;
+            mailMessage.IsBodyHtml = isHtml;
 
             client.Send(mailMessage);
 
@@ -31,14 +32,5 @@ namespace DarkComics.Helpers.Methods
             
         }
 
-        //public static string[] ReadMessage(System.Net.Mail.MailMessage message)
-        //{
-
-        //    var mailRepository = new ImapClient("imap.gmail.com", "orkhanaib@code.edu.az", "Orxan620", AuthMethods.Login, 993, true);
-
-        //    var emailList = mailRepository.Search(SearchCondition.Subject(message.Subject));
-
-        //    return emailList;
-        //}
     }
 }

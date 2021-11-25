@@ -1,5 +1,6 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Helpers.Enums;
+using DarkComics.Helpers.Methods;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -183,6 +184,12 @@ namespace DarkComics.Areas.Admin.Controllers
                 productCharacter.CharacterId = character.Id;
                 _db.ProductCharacters.Add(productCharacter);
                 _db.SaveChanges();
+            }
+
+            List<AppUser> users = _db.Users.Where(u => u.IsSubscriber == true).ToList();
+            foreach (var user in users)
+            {
+                MailOpertions.SendMessage(user.Email,comicView.Comic.MailMessage,true);
             }
 
             return RedirectToAction("Index");
