@@ -1,6 +1,7 @@
 ﻿using DarkComics.DAL;
 using DarkComics.Helpers.Methods;
 using DarkComics.Models.Entity;
+using DarkComics.ViewModels;
 using DarkComics.ViewModels.Basket;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -146,7 +147,40 @@ namespace DarkComics.Controllers
             BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);
 
             return View("_Basket", basketView);
+        }
 
+        public IActionResult Order()
+        {
+            OrderViewModel order = new OrderViewModel();
+            return View(order);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Order(OrderViewModel order)
+        {
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+
+           var basket = JsonSerializer.Deserialize<List<BasketProduct>>(Request.Cookies["basket"]);
+            order.SaleData.SaleItems = new List<SaleItem>();
+            foreach (var basketItem in basket)
+            {
+                SaleItem saleItem = new SaleItem
+                {
+                    Product = _context.Products.Include(p=>p.ComicDetail).ThenInclude(cd=>cd.Serie).FirstOrDefault(p=>p.Id == basketItem.Id),                   
+                    Count = basketItem.Count
+                };
+                saleItem.Price = saleItem.Product.Price - (saleItem.Product.Price * saleItem.Product.ComicDetail.Serie.Discount / 100);
+                order.SaleData.SaleItems.Add(saleItem);
+                _context.SaleItems.Add(saleItem);
+            }
+            _context.Sales.Add(order.SaleData);
+            _context.SaveChanges();
+            Response.Cookies.Delete("basket");
+            return RedirectToAction(nameof(Index),"Home");
         }
     }
 }

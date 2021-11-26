@@ -1,4 +1,5 @@
-﻿using DarkComics.Models.Entity;
+﻿using DarkComics.Helpers.Enums;
+using DarkComics.Models.Entity;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

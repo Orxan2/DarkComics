@@ -31,7 +31,7 @@ namespace DarkComics.Models.Entity
         [Required]
         public int? Quantity { get; set; }
         public DateTime CreatedDate { get; set; }
-        [AllowHtml, DataType("text")]
+        [AllowHtml]
         public string Description { get; set; }
         [AllowHtml, DataType("text")]
         public string MailMessage { get; set; }
@@ -40,5 +40,6 @@ namespace DarkComics.Models.Entity
         public int? ComicDetailId { get; set; }
         //public List<ComicDetail> ComicDetails { get; set; }
         public List<ProductCharacter> ProductCharacters { get; set; }
+        public List<SaleItem> SaleItems { get; set; }
     }
 }

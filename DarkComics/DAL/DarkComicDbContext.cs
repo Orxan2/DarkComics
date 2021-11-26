@@ -33,6 +33,8 @@ namespace DarkComics.DAL
         public DbSet<TagNews> TagNews { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,6 +60,10 @@ namespace DarkComics.DAL
              Property(c => c.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<News>().
             Property(n => n.CreatedDate).HasColumnType("Date");
+            modelBuilder.Entity<Sale>().
+          Property(s => s.CreatedDate).HasColumnType("Date");
+            modelBuilder.Entity<Sale>().
+         Property(s => s.BirthDay).HasColumnType("Date");
 
             modelBuilder.Entity<Toy>().
              Property(c => c.DeactivatedDate).HasColumnType("Date");
@@ -77,7 +83,9 @@ namespace DarkComics.DAL
                 Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<City>().
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
-            
+            modelBuilder.Entity<Sale>().
+                Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+
 
             modelBuilder.Entity<Serie>(c => c.HasData(
                new Serie
@@ -919,7 +927,6 @@ namespace DarkComics.DAL
                   Title = "Batman and Superman Return to Animation with Two Thrilling New Series",
                   Image = "cover.jpg",
                   Blogger = "Tim Beedle",
-                  CreatedDate = DateTime.Now,
                   ShortDescription = "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...",
                   Text = "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >"
               },

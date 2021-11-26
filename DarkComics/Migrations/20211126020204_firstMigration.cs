@@ -41,7 +41,9 @@ namespace DarkComics.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Fullname = table.Column<string>(nullable: false),
-                    IsAgree = table.Column<bool>(nullable: false)
+                    IsAgree = table.Column<bool>(nullable: false),
+                    IsSubscriber = table.Column<bool>(nullable: false),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,9 +73,10 @@ namespace DarkComics.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: false),
                     Text = table.Column<string>(type: "Text", nullable: false),
+                    ShortDescription = table.Column<string>(nullable: false),
                     Blogger = table.Column<string>(nullable: false),
                     Image = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "Date", nullable: true, defaultValueSql: "dateadd(hour,4,getutcdate())")
                 },
                 constraints: table =>
                 {
@@ -91,6 +94,25 @@ namespace DarkComics.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Powers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sales",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Client = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    BirthDay = table.Column<DateTime>(type: "Date", nullable: false),
+                    Mobile = table.Column<string>(nullable: false),
+                    Home = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sales", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,6 +273,27 @@ namespace DarkComics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
+                    UserId1 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
                 {
@@ -322,8 +365,8 @@ namespace DarkComics.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TagId = table.Column<int>(nullable: false),
-                    NewsId = table.Column<int>(nullable: false)
+                    TagId = table.Column<int>(nullable: true),
+                    NewsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -333,13 +376,39 @@ namespace DarkComics.Migrations
                         column: x => x.NewsId,
                         principalTable: "News",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TagNews_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NewsId = table.Column<int>(nullable: true),
+                    CommentId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostComments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PostComments_News_NewsId",
+                        column: x => x.NewsId,
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -348,8 +417,8 @@ namespace DarkComics.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CharacterId = table.Column<int>(nullable: false),
-                    NewsId = table.Column<int>(nullable: false)
+                    CharacterId = table.Column<int>(nullable: true),
+                    NewsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -359,13 +428,13 @@ namespace DarkComics.Migrations
                         column: x => x.CharacterId,
                         principalTable: "Characters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CharacterNews_News_NewsId",
                         column: x => x.NewsId,
                         principalTable: "News",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,6 +503,7 @@ namespace DarkComics.Migrations
                     Quantity = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
                     Description = table.Column<string>(nullable: true),
+                    MailMessage = table.Column<string>(nullable: true),
                     DeActivatedDate = table.Column<DateTime>(type: "Date", nullable: false),
                     ComicDetailId = table.Column<int>(nullable: true)
                 },
@@ -495,6 +565,34 @@ namespace DarkComics.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SaleItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Count = table.Column<int>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    ProductId = table.Column<int>(nullable: true),
+                    SaleId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SaleItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SaleItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SaleItems_Sales_SaleId",
+                        column: x => x.SaleId,
+                        principalTable: "Sales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "Id", "IsActive", "Name" },
@@ -507,12 +605,12 @@ namespace DarkComics.Migrations
 
             migrationBuilder.InsertData(
                 table: "News",
-                columns: new[] { "Id", "Blogger", "CreatedDate", "Image", "Text", "Title" },
+                columns: new[] { "Id", "Blogger", "Image", "ShortDescription", "Text", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Tim Beedle", null, "cover.png", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" },
-                    { 2, "Tim Beedle", null, "cover.png", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" },
-                    { 3, "Tim Beedle", null, "cover.png", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" }
+                    { 1, "Tim Beedle", "cover.jpg", "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" },
+                    { 2, "Tim Beedle", "cover.jpg", "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" },
+                    { 3, "Tim Beedle", "cover.jpg", "From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super...", "<div class='body-insertable'><p>From the iconic, beloved Fleischer shorts of the 1940s to the groundbreaking shared animated universe that introduced DC’s Super Heroes to legions of fans, Superman and Batman have a long legacy in animation.</p><p> A legacy that will soon enter a thrilling new chapter.</p><p> HBO Max and Cartoon Network announced a pair of new animated series this morning featuring DC’s two biggest heroes—Batman and Superman. <strong><em> Batman: Caped Crusader </em></strong> stems from the creative minds of Bruce Timm,J.J.Abrams and Matt Reeves and promises a fresh take on the Dark Knight and his popular rogues’ gallery.In contrast, <strong><em> My Adventures with Superman </em></strong> will bring youthful energy to the world of the Man of Steel in a new animated series aimed at kids and families.</p><p> Produced by Warner Bros.Animation,                  Bad Robot Productions and 6 <sup> th </sup>&amp; Idaho, and executive produced by Timm, Abrams and Reeves, <em> Batman: Caped Crusader</em> notably marks Timm’s return to Batman in animated episodic television after his iconic work on the Emmy-winning < a href = 'https://www.dccomics.com/tv/batman-the-animated-series-1992-1995' target = '_blank' ><em> Batman: The Animated Series,</ em ></ a > which ran from 1992 through 1995 and spawned an interconnected animated universe that’s still growing to this day.Critically acclaimed and viewed by many as the gold standard of animated superhero storytelling, < em > Batman: The Animated Series </ em > is considered one of the best depictions of the Dark Knight in any medium.</ p >", "Batman and Superman Return to Animation with Two Thrilling New Series" }
                 });
 
             migrationBuilder.InsertData(
@@ -599,44 +697,44 @@ namespace DarkComics.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Category", "ComicDetailId", "DeActivatedDate", "Description", "Image", "IsActive", "Name", "Price", "Quantity" },
+                columns: new[] { "Id", "Category", "ComicDetailId", "DeActivatedDate", "Description", "Image", "IsActive", "MailMessage", "Name", "Price", "Quantity" },
                 values: new object[,]
                 {
-                    { 22, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #78", 7.5, 8 },
-                    { 21, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "justice League #15", 7.5, 8 },
-                    { 20, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #1", 7.5, 12 },
-                    { 16, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #29", 7.5, 8 },
-                    { 18, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #7", 7.5, 23 },
-                    { 17, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #13", 7.5, 8 },
-                    { 23, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #29", 7.5, 8 },
-                    { 19, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman New 52 #2", 7.5, 8 },
-                    { 24, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #13", 7.5, 8 },
-                    { 28, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #13", 7.5, 8 },
-                    { 26, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman New 52 #2", 7.5, 8 },
-                    { 27, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #1", 7.5, 12 },
-                    { 15, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #78", 7.5, 8 },
-                    { 29, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #7", 7.5, 23 },
-                    { 30, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman New 52 #2", 7.5, 8 },
-                    { 31, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #1", 7.5, 12 },
-                    { 32, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "justice League #15", 7.5, 8 },
-                    { 33, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #78", 7.5, 8 },
-                    { 34, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #29", 7.5, 8 },
-                    { 25, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #7", 7.5, 23 },
-                    { 14, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "justice League #15", 7.5, 8 },
-                    { 10, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #13", 7.5, 8 },
-                    { 12, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman New 52 #2", 7.5, 8 },
-                    { 1, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Nightwing Rebirth #1", 6.5, 3 },
-                    { 13, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #1", 7.5, 12 },
-                    { 2, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #1", 7.5, 8 },
-                    { 4, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #7", 7.5, 23 },
-                    { 5, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman New 52 #2", 7.5, 8 },
-                    { 3, 1, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Justice League Rebirth #1", 10.0, 12 },
-                    { 7, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "justice League #15", 7.5, 8 },
-                    { 8, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #78", 7.5, 8 },
-                    { 9, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #29", 7.5, 8 },
-                    { 35, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #13", 7.5, 8 },
-                    { 11, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Batman Rebirth #7", 7.5, 23 },
-                    { 6, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "Dedective Comics #1", 7.5, 12 }
+                    { 22, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
+                    { 21, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
+                    { 20, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
+                    { 16, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
+                    { 18, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
+                    { 17, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
+                    { 23, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
+                    { 19, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
+                    { 24, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
+                    { 28, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
+                    { 26, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
+                    { 27, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
+                    { 15, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
+                    { 29, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
+                    { 30, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
+                    { 31, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
+                    { 32, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
+                    { 33, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
+                    { 34, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
+                    { 25, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
+                    { 14, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
+                    { 10, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
+                    { 12, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
+                    { 1, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Nightwing Rebirth #1", 6.5, 3 },
+                    { 13, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
+                    { 2, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #1", 7.5, 8 },
+                    { 4, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
+                    { 5, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
+                    { 3, 1, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Justice League Rebirth #1", 10.0, 12 },
+                    { 7, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
+                    { 8, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
+                    { 9, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
+                    { 35, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
+                    { 11, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
+                    { 6, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 }
                 });
 
             migrationBuilder.InsertData(
@@ -766,6 +864,21 @@ namespace DarkComics.Migrations
                 column: "SerieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId1",
+                table: "Comments",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostComments_CommentId",
+                table: "PostComments",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostComments_NewsId",
+                table: "PostComments",
+                column: "NewsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductCharacters_CharacterId",
                 table: "ProductCharacters",
                 column: "CharacterId");
@@ -784,6 +897,16 @@ namespace DarkComics.Migrations
                 name: "IX_ReadingComics_ComicDetailId",
                 table: "ReadingComics",
                 column: "ComicDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SaleItems_ProductId",
+                table: "SaleItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SaleItems_SaleId",
+                table: "SaleItems",
+                column: "SaleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TagNews_NewsId",
@@ -830,10 +953,16 @@ namespace DarkComics.Migrations
                 name: "CharacterPowers");
 
             migrationBuilder.DropTable(
+                name: "PostComments");
+
+            migrationBuilder.DropTable(
                 name: "ProductCharacters");
 
             migrationBuilder.DropTable(
                 name: "ReadingComics");
+
+            migrationBuilder.DropTable(
+                name: "SaleItems");
 
             migrationBuilder.DropTable(
                 name: "TagNews");
@@ -845,13 +974,16 @@ namespace DarkComics.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Powers");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Sales");
 
             migrationBuilder.DropTable(
                 name: "News");
@@ -864,6 +996,9 @@ namespace DarkComics.Migrations
 
             migrationBuilder.DropTable(
                 name: "Toys");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "ComicDetails");

@@ -6,12 +6,12 @@
 <div class="col-2 d-flex justify-content-center align-items-center">
     <ul class="icons d-flex m-0">
         <!-- <div id="search-btn" class="fas fa-search"></div> -->
-        <li><a href="#" class="fas fa-heart"></a></li>
+        <li>@*<a href="#" class="fas fa-heart"></a>*@</li>
         <li><a asp-controller="Basket" asp-action="Index" class="fas fa-shopping-cart"></a></li>
         @if (User.Identity.IsAuthenticated)
         {
             <li class="position-relative">
-                <a id="profile-btn" class="mx-3" style="cursor:pointer"><img src="~/assets/img/users/@Model.User.Image" class="rounded-circle" width="40" height="40" /></a>
+                <a id="profile-btn" class="mx-3" style="cursor:pointer"><i class="fas fa-user"></i></a>
 
                 <ul id="profile" class="list-group position-absolute my-4" style="width:250px; transform:translateX(-50%); z-index:1000; display:none;">
                     <li class="list-group-item p-0">
@@ -19,13 +19,7 @@
                             <i class="@((Model.User.IsSubscriber)?"fas fa-bell":"far fa-bell")"></i>
                             <p class="mx-3 my-0">Subscription</p>
                         </a>
-                    </li>
-                    <li class="list-group-item p-0">
-                        <a class="btn btn-outline-dark border-0 w-100 d-flex align-items-center">
-                            <i class="fas fa-address-card"></i>
-                            <p class="mx-3 my-0">Edit Profile</p>
-                        </a>
-                    </li>
+                    </li>                    
                     <li class="list-group-item p-0">
                         <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-outline-dark border-0 w-100 d-flex align-items-center">
                             <i class="fas fa-user-lock"></i>
@@ -44,7 +38,7 @@
         }
         else
         {
-            <li><a id="login-btn" class="fas fa-user"></a></li>
+            <li><a id="login-btn" class="fas fa-sign-in-alt"></a></li>
         }
     </ul>
 </div>
