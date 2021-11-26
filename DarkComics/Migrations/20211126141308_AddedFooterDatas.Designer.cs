@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211126141308_AddedFooterDatas")]
+    partial class AddedFooterDatas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -520,35 +522,6 @@ namespace DarkComics.Migrations
                     b.HasIndex("UserId1");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("DarkComics.Models.Entity.Contact", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
-                        .HasDefaultValue(new DateTime(2021, 11, 26, 18, 54, 10, 699, DateTimeKind.Local).AddTicks(6542));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("DarkComics.Models.Entity.Footer", b =>

@@ -62,5 +62,19 @@ namespace DarkComics.Controllers
 
             return View(homeDetailViewModel);
         }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Contact(FooterViewModel footerViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(footerViewModel);
+
+            _context.Contact.Add(footerViewModel.Contact);
+            _context.SaveChanges();
+
+
+            return RedirectToAction(nameof(Index));
+        }
     }
     }

@@ -30,99 +30,8 @@
         <!--Loader End-->
     </main>
     <!-- Main End -->
-    <!-- Footer Start -->
-    <footer>
-        <div class="responsive-footer container">
-            <div class="row">
-                <div class="col-12 col-xl-3">
-                    <div class="social-networks">
-                        <nav>
-                            <ul class="social-list">
-                                <li class="social-list-item">
-                                    <a href="https://www.facebook.com/" target="_blank">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                                <li class="social-list-item">
-                                    <a href="https://twitter.com/" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li class="social-list-item">
-                                    <a href="https://www.instagram.com/" target="_blank">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                </li>
-                                <li class="social-list-item">
-                                    <a href="https://www.youtube.com/" target="_blank">
-                                        <i class="fab fa-youtube"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <p>©2021 MARVEL</p>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xl-9">
-                    <div class="row">
-                        <ul class="col-12 col-md-6 col-lg-4">
-                            <h3>Popular Avenger</h3>
-                            <li>
-                                <a href="#heroes">Spider Man</a>
-                            </li>
-                            <li>
-                                <a href="#heroes">Hulk</a>
-                            </li>
-                            <li>
-                                <a href="#heroes">Doctor Strange</a>
-                            </li>
-                            <li>
-                                <a href="#heroes">Daredevil</a>
-                            </li>
-                            <li>
-                                <a href="#heroes">Black Panther</a>
-                            </li>
-                            <li>
-                                <a href="#heroes">Thor</a>
-                            </li>
-                        </ul>
-
-                        <ul class="col-12 col-md-6 col-lg-4">
-                            <h3>Woman Heroines</h3>
-                            <li>
-                                <a href="#women">Black Widow</a>
-                            </li>
-                            <li>
-                                <a href="#women">Captain Marvel</a>
-                            </li>
-                            <li>
-                                <a href="#women">She Hulk</a>
-                            </li>
-                            <li>
-                                <a href="#women">Black Cat</a>
-                            </li>
-                        </ul>
-
-                        <ul class="col-12 col-md-6 col-lg-4">
-                            <h3>Young Avengers</h3>
-                            <li>
-                                <a href="#youngs">Cassie Lang</a>
-                            </li>
-                            <li>
-                                <a href="#youngs">Kid Loki</a>
-                            </li>
-                            <li>
-                                <a href="#youngs">Hulkling</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer End -->
-
+   
+    @await Component.InvokeAsync("Footer")
 
     <script src="~/assets/jquery/jquery.js"></script>
     @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -130,9 +39,9 @@
     <script src="~/assets/plugin/js/owl.carousel.min.js"></script>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <script src="~/assets/scripts/main.js"></script>
-    @RenderSection("summernote", false);
+    @RenderSection("summernote", false)
     <script src="~/assets/js/main.js"></script>
-    @RenderSection("basket", false);
+    @RenderSection("basket", false)
 </body>
 
 </html>

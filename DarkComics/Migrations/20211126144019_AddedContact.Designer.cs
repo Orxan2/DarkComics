@@ -4,14 +4,16 @@ using DarkComics.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    partial class DarkComicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211126144019_AddedContact")]
+    partial class AddedContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -532,7 +534,7 @@ namespace DarkComics.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("Date")
-                        .HasDefaultValue(new DateTime(2021, 11, 26, 18, 54, 10, 699, DateTimeKind.Local).AddTicks(6542));
+                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Email")
                         .IsRequired()

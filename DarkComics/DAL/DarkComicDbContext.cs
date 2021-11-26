@@ -29,6 +29,9 @@ namespace DarkComics.DAL
         public DbSet<Serie> Series { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Footer> Footer { get; set; }
+        public DbSet<Social> SocialLinks { get; set; }
         public DbSet<CharacterNews> CharacterNews { get; set; }
         public DbSet<TagNews> TagNews { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -58,13 +61,14 @@ namespace DarkComics.DAL
               Property(p => p.DeActivatedDate).HasColumnType("Date");
             modelBuilder.Entity<City>().
              Property(c => c.CreatedDate).HasColumnType("Date");
+            modelBuilder.Entity<Contact>().
+            Property(c => c.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<News>().
             Property(n => n.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<Sale>().
           Property(s => s.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<Sale>().
          Property(s => s.BirthDay).HasColumnType("Date");
-
             modelBuilder.Entity<Toy>().
              Property(c => c.DeactivatedDate).HasColumnType("Date");
 
@@ -83,9 +87,44 @@ namespace DarkComics.DAL
                 Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<City>().
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            modelBuilder.Entity<Contact>().
+               Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");          
             modelBuilder.Entity<Sale>().
                 Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
+            modelBuilder.Entity<Footer>(c => c.HasData(
+             new Footer
+             {
+                 Id = 1,
+                 Address = "Mybook Book Store 48 Boulevard Jourdan, Paris, France",
+                 Phone = "+994 55 748 26 00",
+                 Email = "orxan.ibrahimli.98@gmail.com"
+             }
+             ));
+
+            modelBuilder.Entity<Social>(c => c.HasData(
+             new Social
+             {
+                 Id = 1,
+                 FooterId = 1,
+                 Link = "facebook.com",
+                 Icon = "fab fa-facebook-f"
+             },
+              new Social
+              {
+                  Id = 2,
+                  FooterId = 1,
+                  Link = "twitter.com",
+                  Icon = "fab fa-twitter"
+              },
+              new Social
+              {
+                  Id = 3,
+                  FooterId = 1,
+                  Link = "instagram.com",
+                  Icon = "fab fa-instagram"
+              }
+             ));
 
             modelBuilder.Entity<Serie>(c => c.HasData(
                new Serie
@@ -1077,6 +1116,8 @@ namespace DarkComics.DAL
                  Image = "10.jpg"
              }
              ));
+
+
         }
 
         internal object Include(Func<object, object> p)
