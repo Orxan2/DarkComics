@@ -23,7 +23,10 @@ namespace DarkComics.Controllers
         public IActionResult Index()
         {
             var cookie = HttpContext.Request.Cookies["basket"];
-            var temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+            var temporaryList = new List<BasketProduct>();
+            if (!string.IsNullOrEmpty(cookie))
+                temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
+
             List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
              ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
             BasketViewModel basketView = BasketMethod.ShowBasket(products, cookie);

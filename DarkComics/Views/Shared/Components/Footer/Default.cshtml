@@ -11,13 +11,16 @@
                 <div class="social-networks">
                     <nav>
                         <ul class="social-list justify-content-center">
-                            @foreach (var social in Model.Footer.SocialLinks)
+                            @if (Model.Footer != null)
                             {
-                                <li class="social-list-item">
-                                    <a href="@social.Link" target="_blank">
-                                        <i class="@social.Icon"></i>
-                                    </a>
-                                </li>
+                                @foreach (var social in Model.Footer.SocialLinks)
+                                {
+                                    <li class="social-list-item">
+                                        <a href="@social.Link" target="_blank">
+                                            <i class="@social.Icon"></i>
+                                        </a>
+                                    </li>
+                                }
                             }
                         </ul>
                     </nav>
@@ -30,13 +33,13 @@
                     <ul class="col-12 col-md-6 col-lg-4">
                         <h3>About Us</h3>
                         <li class="my-3">
-                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-map-marked-alt"></i> Address : </span>@Model.Footer.Address</p>
+                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-map-marked-alt"></i> Address : </span>@(Model.Footer?.Address)</p>
                         </li>
                         <li class="my-3">
-                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-envelope"></i> Email : </span>@Model.Footer.Email</p>
+                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-envelope"></i> Email : </span>@(Model.Footer?.Email)</p>
                         </li>
                         <li class="my-3">
-                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-phone-alt"></i> Call Us : </span>@Model.Footer.Phone</p>
+                            <p class="text-white"><span class="text-success fw-bold"><i class="fas fa-phone-alt"></i> Call Us : </span>@(Model.Footer?.Phone)</p>
                         </li>
                     </ul>
 

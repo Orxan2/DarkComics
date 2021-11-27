@@ -277,13 +277,16 @@ namespace DarkComics.Areas.Admin.Controllers
                SerieList = new List<SelectListItem>()
 
            };
-            comicViewModel.Cover = comicViewModel.Comic.Image;
-            comicViewModel.Backface = comicViewModel.Comic.ComicDetail.Backface;
-           
+
             if (comicViewModel.Comic == null)
             {
                 return BadRequest();
             }
+
+            comicViewModel.Cover = comicViewModel.Comic.Image;
+            comicViewModel.Backface = comicViewModel.Comic.ComicDetail.Backface;
+           
+            
 
             foreach (var character in comicViewModel.Characters)
             {

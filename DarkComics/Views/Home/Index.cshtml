@@ -67,7 +67,7 @@
                                 <h1 class="text-center">@character.Name - @character.HeroName</h1>
                                 <div class="card-body">
                                     <p>
-                                       @Html.Raw(character.AboutCharacter)
+                                       @Html.Raw(character.AboutCharacter?.Substring(0,20))
                                     </p>
                                 </div>
                                 <div class="card-footer">
@@ -83,106 +83,7 @@
     </div>
 </section>
 <!-- Characters Section End -->
-<!-- featured section starts  -->
-<section class="featured" id="featured">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="heading"> <span>featured books</span> </h1>
-                <div class="swiper featured-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide box">
-                            <div class="icons">
-                                <a href="#" class="fas fa-search"></a>
-                                <a href="#" class="fas fa-heart"></a>
-                                <a href="#" class="fas fa-eye"></a>
-                            </div>
-                            <div class="image">
-                                <img src="assets/img/book-1.png" alt="book-1" />
-                            </div>
-                            <div class="content">
-                                <h3>featured books</h3>
-                                <div class="price">$15.99 <span>$20.99</span></div>
-                                <a href="#" class="btn">add to cart</a>
-                            </div>
-                        </div>
 
-                        <div class="swiper-slide box">
-                            <div class="icons">
-                                <a href="#" class="fas fa-search"></a>
-                                <a href="#" class="fas fa-heart"></a>
-                                <a href="#" class="fas fa-eye"></a>
-                            </div>
-                            <div class="image">
-                                <img src="assets/img/book-2.png" alt="book-2" />
-                            </div>
-                            <div class="content">
-                                <h3>featured books</h3>
-                                <div class="price">$15.99 <span>$20.99</span></div>
-                                <a href="#" class="btn">add to cart</a>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide box">
-                            <div class="icons">
-                                <a href="#" class="fas fa-search"></a>
-                                <a href="#" class="fas fa-heart"></a>
-                                <a href="#" class="fas fa-eye"></a>
-                            </div>
-                            <div class="image">
-                                <img src="assets/img/book-3.png" alt="book-3" />
-                            </div>
-                            <div class="content">
-                                <h3>featured books</h3>
-                                <div class="price">$15.99 <span>$20.99</span></div>
-                                <a href="#" class="btn">add to cart</a>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide box">
-                            <div class="icons">
-                                <a href="#" class="fas fa-search"></a>
-                                <a href="#" class="fas fa-heart"></a>
-                                <a href="#" class="fas fa-eye"></a>
-                            </div>
-                            <div class="image">
-                                <img src="assets/img/book-4.png" alt="book-4" />
-                            </div>
-                            <div class="content">
-                                <h3>featured books</h3>
-                                <div class="price">$15.99 <span>$20.99</span></div>
-                                <a href="#" class="btn">add to cart</a>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide box">
-                            <div class="icons">
-                                <a href="#" class="fas fa-search"></a>
-                                <a href="#" class="fas fa-heart"></a>
-                                <a href="#" class="fas fa-eye"></a>
-                            </div>
-                            <div class="image">
-                                <img src="assets/img/book-5.png" alt="book-5" />
-                            </div>
-                            <div class="content">
-                                <h3>featured books</h3>
-                                <div class="price">$15.99 <span>$20.99</span></div>
-                                <a href="#" class="btn">add to cart</a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-<!-- featured section ends -->
 <!-- Comics Start -->
 <section id="bestComics">
     <div class="container">
@@ -226,73 +127,7 @@
     </div>
 </section>
 <!-- Comics End -->
-<!-- Toys Start -->
-<section id="toys">
-    <div class="container">
-        <div class="row my-5">
-            <div class="col-12 position-relative">
-                <span class="heading px-4">BestSeller Toys</span>
-            </div>
-            <div id="hero-background" class="d-none d-lg-flex justify-content-center w-100 py-5">
-                <img src="~/assets/img/toy.png" width="300" alt="toy-read-comic" />
-            </div>
-        </div>
 
-        <div class="row py-5">
-            <div class="owl-carousel owl-theme">
-                <div class="item rounded">
-                    <div class="toy-card">
-                        <a href="" class="toy-card__body">
-                            <img src="~/assets/img/cap-logo.png" alt="cap" />
-                        </a>
-                        <div class="toy-card__footer py-2">
-                            <h3 class="px-3">Cap Toy</h3>
-                            <h2 class="px-3">$78.90</h2>
-                            <div class="d-flex justify-content-between">
-                                <a href="" class="toy-card__btn">Go Detail</a>
-                                <a href="" class="toy-card__btn">Add to cart</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="item rounded">
-                    <div class="toy-card">
-                        <a href="" class="toy-card__body">
-                            <img src="~/assets/img/toy.png" alt="cap" />
-                        </a>
-                        <div class="toy-card__footer py-2">
-                            <h3 class="px-3">Cap Toy</h3>
-                            <h2 class="px-3">$78.90</h2>
-                            <div class="d-flex justify-content-between">
-                                <a href="" class="toy-card__btn">Go Detail</a>
-                                <a href="" class="toy-card__btn">Add to cart</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="item rounded">
-                    <div class="toy-card">
-                        <a href="" class="toy-card__body">
-                            <img src="~/assets/img/cap-logo.png" alt="cap" />
-                        </a>
-                        <div class="toy-card__footer py-2">
-                            <h3 class="px-3">Cap Toy</h3>
-                            <h2 class="px-3">$78.90</h2>
-                            <div class="d-flex justify-content-between">
-                                <a href="" class="toy-card__btn">Go Detail</a>
-                                <a href="" class="toy-card__btn">Add to cart</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Toys End -->
 <!-- Current Series Start -->
 <section id="current">
     <div class="container">
@@ -305,7 +140,7 @@
             @foreach (var serie in Model.Series)
             {
                 <div class="col-6 offset-3 offset-sm-0 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    <a class="comic-box">
+                    <a asp-controller="Comic" asp-action="FilterSerie" asp-route-id="@serie.Id" class="comic-box">
                         <div class="comic-box__body">
                             <img src="~/assets/img/comics/serie-@serie.Id/@serie.Cover" class="w-100 h-100" alt="current" />
                         </div>

@@ -57,9 +57,7 @@ namespace DarkComics.Areas.Admin.Controllers
         public ActionResult Remove(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             Tag tag = _db.Tags.Include(c => c.TagNews).ThenInclude(tn => tn.News).FirstOrDefault(c => c.Id == id);
 
