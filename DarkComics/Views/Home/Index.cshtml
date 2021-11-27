@@ -91,9 +91,13 @@
             <div class="col-12 position-relative">
                 <span class="heading px-4">The Best 3 Comics</span>
                
-                <div id="hero-background" class="d-none d-lg-flex justify-content-between w-100">
-                    <img src="~/assets/img/cap-logo.png" width="300" alt="hero-read-comic" />
-                    <img src="~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />
+                <div id="hero-background" data-img="" class="d-none d-lg-flex justify-content-between w-100">
+                    @foreach (var product in Model.BestComics)
+                    {
+                        <img src="~/assets/img/character-@product.ProductCharacters.FirstOrDefault().Character.Id/@product.ProductCharacters.FirstOrDefault().Character.FirstImage" width="300" alt="hero-read-comic" />
+                    }
+
+                    @*<img src="~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />*@
                 </div>
             </div>
         </div>
@@ -116,8 +120,9 @@
                             <p><strong>Price : </strong>@bestComic.Price.ToString(".00")</p>
                             <p><strong>Art By : </strong>Orxan Ibra</p>
                             <p><strong>Written By : </strong>Orxan Ibra</p>
-                             <p><strong>Page Count : </strong>@bestComic.ComicDetail.PageCount</p> 
+                            <p><strong>Page Count : </strong>@bestComic.ComicDetail.PageCount</p>
                             <a asp-controller="Home" asp-action="Detail" asp-route-id="@bestComic.Id" class="cover__btn">Go Detail</a>
+                            <a data-id="@bestComic.Id" class="basket btn volume__btn" data-toggle="modal" data-target=".bd-example-modal-lg">Add to cart</a>
                         </div>
                     </div>
                 </div>

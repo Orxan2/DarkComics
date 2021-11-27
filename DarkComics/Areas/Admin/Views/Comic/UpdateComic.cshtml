@@ -13,6 +13,7 @@
             <div>
                 <h1>Edit the Comic</h1>
                 <div class="page-title-subheading">
+                    <a href="C:\Users\ASUS\Desktop\Dark Comics Project - Copy\DarkComics\DarkComics\Areas\Admin\Views\Comic\UpdateComic.cshtml">C:\Users\ASUS\Desktop\Dark Comics Project - Copy\DarkComics\DarkComics\Areas\Admin\Views\Comic\UpdateComic.cshtml</a>
                     Wide selection of buttons that feature different styles for backgrounds, borders and hover options!
                 </div>
             </div>
@@ -62,11 +63,11 @@
                 </div>
 
                 @*<div class="col-md-6 mb-3">
-                        <label>Serie</label>
-                        <select class="form-control" disabled>
-                            <option value="@Model.Serie.Id">@Model.Serie.Name</option>
-                        </select>
-                    </div>*@
+            <label>Serie</label>
+            <select class="form-control" disabled>
+                <option value="@Model.Serie.Id">@Model.Serie.Name</option>
+            </select>
+        </div>*@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Comic.Photo"></label>
@@ -104,7 +105,20 @@
                     <span asp-validation-for="Comic.Description"></span>
                 </div>
 
+                <div class="col-12 mb-3">
+                    <label asp-for="Comic.MailHeading"></label>
+                    <div class="toolbar-container"></div>
+                    <input asp-for="Comic.MailHeading" placeholder="Type Heading for Subscribers" class="form-control" required />
+                    <span asp-validation-for="Comic.MailHeading"></span>
+                </div>
 
+                <div class="col-12 mb-3">
+                    <label asp-for="Comic.MailMessage"></label>
+                    <div class="toolbar-container"></div>
+                    <textarea asp-for="Comic.MailMessage" class="form-control"></textarea>
+                    <span asp-validation-for="Comic.MailMessage"></span>
+
+                </div>
             </div>
 
             <button asp-route-cover="@Model.Cover" asp-route-backface="@Model.Backface" class="btn btn-primary" type="submit">Submit form</button>
