@@ -49,19 +49,16 @@
                             <th>Character</th>
                             <th>Delete</th>
                         </tr>
-                    </thead>
+                    </thead>                    
                     <tbody>
-                        @foreach (var characterNews in Model.News.CharacterNews)
+                        @for (int i = 0; i < Model.News.CharacterNews.Count(); i++)
                         {
-                            {
-                                count++;
-                            }
                             <tr>
-                                <th scope="row">@count</th>
-                                <td>@characterNews.Character.Name</td>
-                                <td><a asp-action="DeleteCharacter" asp-route-id="@characterNews.Character.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg pe-7s-trash"></i></a></td>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Model.News.CharacterNews[i].Character.Name</td>
+                                <td><a asp-action="DeleteCharacter" asp-route-id="@Model.News.CharacterNews[i].Character.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg pe-7s-trash"></i></a></td>
                             </tr>
-                        }                       
+                        }
                     </tbody>
                 </table>
             </div>
@@ -78,7 +75,7 @@
                             <th>Tag</th>
                             <th>Delete</th>
                         </tr>
-                    </thead>
+                    </thead>                    
                     <tbody>
                         @for (int i = 0; i < Model.News.TagNews.Count(); i++)
                         {
@@ -107,8 +104,7 @@
                         <th>Sended Date</th>
                     </tr>
                 </thead>
-                <tbody>
-
+                <tbody>                    
                     @foreach (var postComment in Model.News.PostComments)
                     {
 

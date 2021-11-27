@@ -11,6 +11,7 @@ namespace DarkComics.Models.Entity
     {
         [Required(ErrorMessage = "You must Write tag's Title")]
         public string Title { get; set; }
+        public DateTime CreatedDate { get; set; }
         public List<TagNews> TagNews { get; set; }
     }
 }

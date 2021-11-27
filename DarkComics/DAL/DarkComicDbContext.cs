@@ -77,7 +77,9 @@ namespace DarkComics.DAL
             modelBuilder.Entity<News>().
                 Property(n => n.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Toy>().
-                Property(p => p.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+                Property(t => t.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            modelBuilder.Entity<Tag>().
+               Property(t => t.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<ReadingComic>().
                 Property(rc => rc.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Character>().
