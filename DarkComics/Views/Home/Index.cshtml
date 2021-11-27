@@ -67,7 +67,7 @@
                                 <h1 class="text-center">@character.Name - @character.HeroName</h1>
                                 <div class="card-body">
                                     <p>
-                                       @Html.Raw(character.AboutCharacter?.Substring(0,20))
+                                       @Html.Raw(character.AboutCharacter)
                                     </p>
                                 </div>
                                 <div class="card-footer">
@@ -96,8 +96,6 @@
                     {
                         <img src="~/assets/img/character-@product.ProductCharacters.FirstOrDefault().Character.Id/@product.ProductCharacters.FirstOrDefault().Character.FirstImage" width="300" alt="hero-read-comic" />
                     }
-
-                    @*<img src="~/assets/img/nightwing.png" width="250" alt="hero-read-comic" />*@
                 </div>
             </div>
         </div>
@@ -121,7 +119,7 @@
                             <p><strong>Art By : </strong>Orxan Ibra</p>
                             <p><strong>Written By : </strong>Orxan Ibra</p>
                             <p><strong>Page Count : </strong>@bestComic.ComicDetail.PageCount</p>
-                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@bestComic.Id" class="cover__btn">Go Detail</a>
+                            <a asp-controller="Comic" asp-action="Detail" asp-route-id="@bestComic.Id" class="cover__btn">Go Detail</a>
                             <a data-id="@bestComic.Id" class="basket btn volume__btn" data-toggle="modal" data-target=".bd-example-modal-lg">Add to cart</a>
                         </div>
                     </div>

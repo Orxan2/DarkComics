@@ -37,7 +37,30 @@ namespace DarkComics.Controllers
 
             return View(comicViewModel);
         }
-           
+
+        public IActionResult Detail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Product comic = _context.Products.Include(c => c.ComicDetail).ThenInclude(c => c.Serie).Include(c => c.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(c => c.IsActive == true && c.Category == Category.Comic).FirstOrDefault(c => c.Id == id);
+
+            if (comic == null)
+            {
+                return NotFound();
+            }
+            ComicViewModel comicViewModel = new ComicViewModel
+            {
+                Comic = comic,
+                Comics = _context.Products.Include(c => c.ComicDetail).ThenInclude(c => c.Serie).Include(c => c.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(p => p.IsActive == true && p.Category == Category.Comic && 
+                p.ComicDetail.Serie.IsDeleted == false && p.ComicDetail.Serie.Id == comic.ComicDetail.Serie.Id && p.Id != comic.Id).ToList()
+            };
+
+            return View(comicViewModel);
+        }
 
         public IActionResult LoadMore(int skip = 0, int take = 2)
         {

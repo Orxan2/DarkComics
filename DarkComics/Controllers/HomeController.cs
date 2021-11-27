@@ -42,27 +42,7 @@ namespace DarkComics.Controllers
 
             return View(homeViewModel);
         }
-        public IActionResult Detail(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            Product comic = _context.Products.Include(c => c.ComicDetail).ThenInclude(c => c.Serie).Include(c => c.ProductCharacters).
-                ThenInclude(pc => pc.Character).Where(c => c.IsActive == true && c.Category == Category.Comic).FirstOrDefault(c => c.Id == id);
-
-            if (comic == null)
-            {
-                return NotFound();
-            }
-            HomeDetailViewModel homeDetailViewModel = new HomeDetailViewModel
-            {
-                Comic = comic
-            };
-
-            return View(homeDetailViewModel);
-        }
-
+       
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public IActionResult Contact(FooterViewModel footerViewModel)
