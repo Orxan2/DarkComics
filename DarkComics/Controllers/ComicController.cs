@@ -29,10 +29,10 @@ namespace DarkComics.Controllers
             ComicViewModel comicViewModel = new ComicViewModel
             {              
                 RandomComics = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true).ToList()
+               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true && p.ComicDetail.Serie.IsDeleted == false).ToList()
             };
 
-            int count = _context.Series.Count();
+            int count = _context.Series.Where(s=>s.IsDeleted == false).Count();
             HttpContext.Response.Cookies.Append("comics", count.ToString());
 
             return View(comicViewModel);
@@ -44,7 +44,7 @@ namespace DarkComics.Controllers
             ComicViewModel comicViewModel = new ComicViewModel
             {
                 Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).OrderBy(s => s.Id).Skip(skip).Take(take).ToList()
+               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).OrderBy(s => s.Id).Skip(skip).Take(take).ToList()
             };
 
 
@@ -56,7 +56,7 @@ namespace DarkComics.Controllers
             ComicViewModel comicViewModel = new ComicViewModel
             {
                 Series = _context.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).OrderBy(c => c.Id).Where(s=>s.Name.Contains(search)).ToList()
+               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).OrderBy(c => c.Id).Where(s=>s.Name.Contains(search)).ToList()
             };
 
             return View("_LoadMore", comicViewModel);

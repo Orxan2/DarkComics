@@ -1,6 +1,7 @@
 ﻿@model NewsDetailViewModel
 @{
     ViewData["Title"] = "Detail";
+    int count = 0;
 }
 
 
@@ -12,7 +13,7 @@
                 </i>
             </div>
             <div>
-                <h1>News Detail</h1>               
+                <h1>News Detail</h1>
             </div>
         </div>
     </div>
@@ -31,7 +32,7 @@
     </div>
     <div class="col-12 m-3">
         <h2><strong>News :</strong> <i>@Html.Raw(Model.News.Text)</i></h2>
-    </div>    
+    </div>
     <div class="col-12 m-3">
         <h2><strong>Created Date :</strong> <i>@Model.News.CreatedDate</i></h2>
     </div>
@@ -50,14 +51,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.News.CharacterNews.Count(); i++)
+                        @foreach (var characterNews in Model.News.CharacterNews)
                         {
+                            {
+                                count++;
+                            }
                             <tr>
-                                <th scope="row">@(i + 1)</th>
-                                <td>@Model.News.CharacterNews[i].Character.Name</td>
-                                <td><a asp-action="DeleteCharacter" asp-route-id="@Model.News.CharacterNews[i].Character.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg pe-7s-trash"></i></a></td>
+                                <th scope="row">@count</th>
+                                <td>@characterNews.Character.Name</td>
+                                <td><a asp-action="DeleteCharacter" asp-route-id="@characterNews.Character.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-lg pe-7s-trash"></i></a></td>
                             </tr>
-                        }
+                        }                       
                     </tbody>
                 </table>
             </div>
@@ -89,4 +93,45 @@
             </div>
         </div>
     </div>
+</div>
+<div class="col-12 m-3">
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <h5 class="card-title">News Tags</h5>
+            <table class="mb-0 table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Sender</th>
+                        <th>Message</th>
+                        <th>Sended Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var postComment in Model.News.PostComments)
+                    {
+
+                        if (postComment.Comment.IsActive || (!postComment.Comment.IsActive && User.IsInRole(Role.SuperAdmin.ToString())))
+                        {
+                            {
+                                count++;
+                            }
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@postComment.Comment.User.UserName</td>
+                                <td>@postComment.Comment.Message</td>
+                                <td>@postComment.Comment.CreatedDate.ToString("dd MMM yyyy HH:dd")</td>
+                                @if (User.IsInRole(Role.SuperAdmin.ToString()))
+                                {
+                                    <td><a asp-action="MakeActiveOrDeactiveMessage" asp-route-id="@postComment.CommentId" class="mb-2 mr-2 btn @(postComment.Comment.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(postComment.Comment.IsActive?"pe-7s-trash":"pe-7s-refresh")"></i></a></td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </div>

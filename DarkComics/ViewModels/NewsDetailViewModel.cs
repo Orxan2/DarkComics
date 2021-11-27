@@ -9,5 +9,7 @@ namespace DarkComics.ViewModels
     public class NewsDetailViewModel
     {
         public News News { get; set; }
+        public List<PostComment> PostComments { get; set; }
+
     }
 }

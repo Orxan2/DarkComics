@@ -61,8 +61,7 @@ namespace DarkComics.DAL
               Property(p => p.DeActivatedDate).HasColumnType("Date");
             modelBuilder.Entity<City>().
              Property(c => c.CreatedDate).HasColumnType("Date");
-            //modelBuilder.Entity<Contact>().
-            //Property(c => c.CreatedDate).HasColumnType("Date");
+           
             modelBuilder.Entity<News>().
             Property(n => n.CreatedDate).HasColumnType("Date");
             modelBuilder.Entity<Sale>().
@@ -89,7 +88,11 @@ namespace DarkComics.DAL
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Contact>().
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            modelBuilder.Entity<Comment>().
+               Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Contact>().
+               Property(c => c.IsActive).HasDefaultValue(true);
+            modelBuilder.Entity<Comment>().
                Property(c => c.IsActive).HasDefaultValue(true);
             modelBuilder.Entity<Sale>().
                 Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");

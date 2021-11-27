@@ -39,32 +39,38 @@
                     {
                         count++;
                     }
-                    <tr>
-                        <th scope="row">@count</th>
-                        <td>
-                            <div class="widget-content p-0">
-                                <div class="widget-content-wrapper">
-                                    <div class="widget-content-left mr-3">
-                                        <div class="widget-content-left">
-                                            <img width="40" height="40" class="rounded-circle" src="~/assets/img/comics/serie-@serie.Id/@serie.Cover" alt="@serie.Name" />
+                    if (!serie.IsDeleted || (serie.IsDeleted && User.IsInRole(Role.SuperAdmin.ToString())))
+                    {
+                        <tr>
+                            <th scope="row">@count</th>
+                            <td>
+                                <div class="widget-content p-0">
+                                    <div class="widget-content-wrapper">
+                                        <div class="widget-content-left mr-3">
+                                            <div class="widget-content-left">
+                                                <img width="40" height="40" class="rounded-circle" src="~/assets/img/comics/serie-@serie.Id/@serie.Cover" alt="@serie.Name" />
+                                            </div>
+                                        </div>
+                                        <div class="widget-content-left flex2">
+                                            <div class="widget-heading">@serie.Name</div>
+                                            <div class="widget-subheading opacity-7">@(serie.IsTeam?"Team":"Personal")</div>
                                         </div>
                                     </div>
-                                    <div class="widget-content-left flex2">
-                                        <div class="widget-heading">@serie.Name</div>
-                                        <div class="widget-subheading opacity-7">@(serie.IsTeam?"Team":"Personal")</div>
-                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>@serie.Discount %</td>
-                        <td>@serie.CreatedDate</td>
-                        <td class="text-center">
-                            <a asp-action="ComicIndex" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
-                            <a asp-action="UpdateSerie" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
-                            <a asp-action="MakeActiveOrDeactiveSerie" asp-route-id="@serie.Id" class="mb-2 mr-2 btn @((!serie.IsDeleted)?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @((!serie.IsDeleted)?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
-                        </td>                      
+                            </td>
+                            <td>@serie.Discount %</td>
+                            <td>@serie.CreatedDate</td>
+                            <td class="text-center">
+                                <a asp-action="ComicIndex" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
+                                <a asp-action="UpdateSerie" asp-route-id="@serie.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
+                                @if (User.IsInRole(Role.SuperAdmin.ToString()))
+                                {
+                                    <a asp-action="MakeActiveOrDeactiveSerie" asp-route-id="@serie.Id" class="mb-2 mr-2 btn @((!serie.IsDeleted)?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @((!serie.IsDeleted)?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
+                                }
+                            </td>
 
-                    </tr>
+                        </tr>
+                    }
                 }
 
             </tbody>

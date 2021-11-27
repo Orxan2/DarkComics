@@ -73,7 +73,7 @@ namespace DarkComics.Controllers
 
             PostComment postComment = new PostComment
             {
-                CommentId = _context.Comments.Max(c => c.Id) + 1,
+                Comment = comment,
                 NewsId = id
             };
             _context.PostComments.Add(postComment);

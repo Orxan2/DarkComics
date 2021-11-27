@@ -10,8 +10,10 @@ namespace DarkComics.Models.Entity
     public class Comment : BaseEntity
     {
         public string Message { get; set; }
-        public int? UserId { get; set; }
-        public AppUser User { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public bool IsActive { get; set; }
+        public string UserId { get; set; }
+        public AppUser User { get; set; }       
         public List<PostComment> PostComments { get; set; }
     }
 }

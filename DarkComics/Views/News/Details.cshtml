@@ -43,7 +43,7 @@
             <div class="col-12">
                 <h1>Comment</h1>
                 <ul id="addHere">
-                    @foreach (var postComment in Model.News.PostComments)
+                    @foreach (var postComment in Model.News.PostComments.Where(pc=>pc.Comment.IsActive))
                     {
                         <li class="list-group-item list-group-item-info border-0">
                             <h1>@postComment.Comment.User.UserName</h1>

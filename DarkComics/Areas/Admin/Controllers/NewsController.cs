@@ -29,7 +29,8 @@ namespace DarkComics.Areas.Admin.Controllers
         {
             NewsViewModel newsViewModel = new NewsViewModel
             {
-                NewsList = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).ToList() 
+                NewsList = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n=>n.PostComments).
+                ThenInclude(pc => pc.Comment).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).ToList() 
             };
             return View(newsViewModel);
         }
@@ -41,7 +42,9 @@ namespace DarkComics.Areas.Admin.Controllers
 
             NewsDetailViewModel newsDetailViewModel = new NewsDetailViewModel
             {
-                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).ThenInclude(tn => tn.Tag).FirstOrDefault(n=>n.Id == id)
+                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
+                ThenInclude(tn => tn.Tag).Include(n=>n.PostComments).ThenInclude(pc=>pc.Comment).ThenInclude(c=>c.User).FirstOrDefault(n=>n.Id == id),
+                
             };
 
             if (newsDetailViewModel.News == null)
@@ -302,6 +305,30 @@ namespace DarkComics.Areas.Admin.Controllers
 
             return View(nameof(Detail), newsDetailViewModel);
         }
+
+        public IActionResult MakeActiveOrDeactiveMessage(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            Comment comment = _db.Comments.Include(c=>c.PostComments).ThenInclude(pc=>pc.News).FirstOrDefault(c => c.Id == id);
+
+            if (comment.IsActive)
+                comment.IsActive = false;
+            else
+                comment.IsActive = true;
+
+            _db.SaveChanges();
+            NewsDetailViewModel newsDetailViewModel = new NewsDetailViewModel
+            {
+                News = _db.News.Include(n => n.CharacterNews).ThenInclude(cn => cn.Character).Include(n => n.TagNews).
+               ThenInclude(tn => tn.Tag).Include(n => n.PostComments).ThenInclude(pc => pc.Comment).ThenInclude(c=>c.User).FirstOrDefault(n => n.Id == comment.PostComments[0].NewsId)
+            };
+
+            return View(nameof(Detail),newsDetailViewModel);
+        }
+
+
         public string RenderImage(News news, IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))

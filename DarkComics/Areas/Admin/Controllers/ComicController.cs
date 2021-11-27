@@ -122,10 +122,11 @@ namespace DarkComics.Areas.Admin.Controllers
                 ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).FirstOrDefault(s => s.Id == id),
                 CharacterList = new List<SelectListItem>(),
                 Characters = _db.Characters.ToList()
-
         };
 
-           
+            if (comicViewModel.Serie == null)
+                return NotFound();
+
             foreach (var character in comicViewModel.Characters)
             {
                 comicViewModel.CharacterList.AddRange(new List<SelectListItem>{
@@ -428,11 +429,17 @@ namespace DarkComics.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (serie.IsDeleted == true)
-                serie.IsDeleted = false;
+            if (serie.IsDeleted == false)
+            {
+                serie.IsDeleted = true;
+                foreach (var comic in serie.ComicDetails)
+                {
+                    comic.Products.FirstOrDefault().IsActive = false;
+                }
+            }
 
             else
-                serie.IsDeleted = true;
+                serie.IsDeleted = false;
 
             _db.SaveChanges();
 
