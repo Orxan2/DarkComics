@@ -33,7 +33,7 @@ namespace DarkComics.Areas.Admin.Controllers
             ComicViewModel comicViewModel = new ComicViewModel
             {
                 Series = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).ToList()
+               ThenInclude(pc => pc.Character).ToList()
             };
 
             return View(comicViewModel);
@@ -185,13 +185,7 @@ namespace DarkComics.Areas.Admin.Controllers
                 _db.ProductCharacters.Add(productCharacter);
                 _db.SaveChanges();
             }
-
-            List<AppUser> users = _db.Users.Where(u => u.IsSubscriber == true).ToList();
-            foreach (var user in users)
-            {
-                MailOpertions.SendMessage(user.Email,comicView.Comic.MailMessage,true);
-            }
-
+            
             return RedirectToAction("Index");
         }
 
@@ -396,8 +390,49 @@ namespace DarkComics.Areas.Admin.Controllers
 
             if (product.IsActive == true)
                 product.IsActive = false;
+
             else
+            {
                 product.IsActive = true;
+
+                List<AppUser> users = _db.Users.Where(u => u.IsSubscriber == true).ToList();
+                foreach (var user in users)
+                {
+                    MailOpertions.SendMessage(user.Email, product.MailHeading, product.MailMessage, true);
+                }
+            }
+
+            _db.SaveChanges();
+
+            ComicViewModel comicView = new ComicViewModel
+            {
+                RandomComics = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+             ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.SerieId == product.ComicDetail.SerieId).ToList()
+        };
+
+            return View(nameof(ComicIndex),comicView);
+        }
+
+        public ActionResult MakeActiveOrDeactiveSerie(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Serie serie = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+                ThenInclude(pc => pc.Character).FirstOrDefault(s => s.Id == id);
+
+            if (serie == null)
+            {
+                return NotFound();
+            }
+
+            if (serie.IsDeleted == true)
+                serie.IsDeleted = false;
+
+            else
+                serie.IsDeleted = true;
 
             _db.SaveChanges();
 

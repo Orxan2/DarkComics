@@ -70,6 +70,7 @@ namespace DarkComics.Controllers
             if (!ModelState.IsValid)
                 return View(footerViewModel);
 
+            //footerViewModel.Contact.CreatedDate = DateTime.UtcNow.AddHours(4);
             _context.Contact.Add(footerViewModel.Contact);
             _context.SaveChanges();
 

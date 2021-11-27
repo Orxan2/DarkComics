@@ -8,7 +8,7 @@ namespace DarkComics.Helpers.Methods
 {
     public static class MailOpertions
     {
-        public static void SendMessage(string mail,string message,bool isHtml = false)
+        public static void SendMessage(string mail,string subject,string message,bool isHtml = false)
         {
 
             var client = new SmtpClient();
@@ -20,7 +20,7 @@ namespace DarkComics.Helpers.Methods
 
             var mailMessage = new System.Net.Mail.MailMessage("orkhanaib@code.edu.az", mail);
 
-            mailMessage.Subject = "Security Code For Registration";
+            mailMessage.Subject = subject;
             mailMessage.Body = message;
             mailMessage.Priority = MailPriority.High;
             mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess;

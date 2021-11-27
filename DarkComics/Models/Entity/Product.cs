@@ -35,6 +35,8 @@ namespace DarkComics.Models.Entity
         public string Description { get; set; }
         [AllowHtml, DataType("text")]
         public string MailMessage { get; set; }
+        [Required]
+        public string MailHeading { get; set; }
         public DateTime DeActivatedDate { get; set; }
         public ComicDetail ComicDetail { get; set; }
         public int? ComicDetailId { get; set; }

@@ -53,11 +53,15 @@ namespace DarkComics.Areas.Admin.Controllers
             {
                 return View(admin);
             }
+            var dbUser = await _userManager.FindByNameAsync(register.Username);
+            if (dbUser != null)
+                return BadRequest();                     
 
             AppUser user = new AppUser
             {
                 Fullname = register.FullName,
-                UserName = register.Username,
+                UserName = register.Username, 
+                Email = register.Email,
                 Image = "default.jpg"
             };
 

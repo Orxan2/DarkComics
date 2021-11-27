@@ -85,10 +85,19 @@
                     <span asp-validation-for="Comic.Description"></span>
                 </div>
 
+                <h1>Type Down Email Message For SubsCribers</h1>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Comic.MailHeading"></label>
+                    <div class="toolbar-container"></div>
+                    <input asp-for="Comic.MailHeading" placeholder="Type Heading for Subscribers" class="form-control" required />
+                    <span asp-validation-for="Comic.MailHeading"></span>
+                </div>
+
                 <div class="col-12 mb-3">
                     <label asp-for="Comic.MailMessage"></label>
                     <div class="toolbar-container"></div>
-                    <textarea asp-for="Comic.MailMessage" class="form-control" placeholder="Type Message for Subscribers"></textarea>
+                    <textarea asp-for="Comic.MailMessage" class="form-control" ></textarea>
                     <span asp-validation-for="Comic.MailMessage"></span>
                 </div>
 
@@ -116,9 +125,11 @@
         });
         $(document).ready(function () {
             $('#Comic_MailMessage').summernote({
-                placeholder: 'Hello stand alone ui',
+                placeholder: 'Type Here Message',
                 height: 250,
             });
+
+          
         });
     </script>
 }

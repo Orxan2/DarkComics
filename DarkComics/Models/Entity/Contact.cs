@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DarkComics.Models.Entity
 {
@@ -13,8 +14,9 @@ namespace DarkComics.Models.Entity
         public string Email { get; set; }
         [Required]
         public string Subject { get; set; }
-        [Required]
+        [Required]       
         public string Message { get; set; }
+        public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

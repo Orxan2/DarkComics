@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DarkComics.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class UpdateProductTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,6 +66,38 @@ namespace DarkComics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: false),
+                    Subject = table.Column<string>(nullable: false),
+                    Message = table.Column<string>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false, defaultValue: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Footer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Footer", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -89,7 +121,9 @@ namespace DarkComics.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -338,6 +372,27 @@ namespace DarkComics.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialLinks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Icon = table.Column<string>(nullable: true),
+                    Link = table.Column<string>(nullable: true),
+                    FooterId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SocialLinks_Footer_FooterId",
+                        column: x => x.FooterId,
+                        principalTable: "Footer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ComicDetails",
                 columns: table => new
                 {
@@ -504,6 +559,7 @@ namespace DarkComics.Migrations
                     CreatedDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
                     Description = table.Column<string>(nullable: true),
                     MailMessage = table.Column<string>(nullable: true),
+                    MailHeading = table.Column<string>(nullable: false),
                     DeActivatedDate = table.Column<DateTime>(type: "Date", nullable: false),
                     ComicDetailId = table.Column<int>(nullable: true)
                 },
@@ -604,6 +660,11 @@ namespace DarkComics.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Footer",
+                columns: new[] { "Id", "Address", "Email", "Phone" },
+                values: new object[] { 1, "Mybook Book Store 48 Boulevard Jourdan, Paris, France", "orxan.ibrahimli.98@gmail.com", "+994 55 748 26 00" });
+
+            migrationBuilder.InsertData(
                 table: "News",
                 columns: new[] { "Id", "Blogger", "Image", "ShortDescription", "Text", "Title" },
                 values: new object[,]
@@ -615,12 +676,12 @@ namespace DarkComics.Migrations
 
             migrationBuilder.InsertData(
                 table: "Powers",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "CreatedDate", "IsActive", "Name" },
                 values: new object[,]
                 {
-                    { 1, "super speed" },
-                    { 2, "exceptional martial artist" },
-                    { 3, "Science" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "super speed" },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "exceptional martial artist" },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "Science" }
                 });
 
             migrationBuilder.InsertData(
@@ -664,6 +725,16 @@ namespace DarkComics.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "SocialLinks",
+                columns: new[] { "Id", "FooterId", "Icon", "Link" },
+                values: new object[,]
+                {
+                    { 1, 1, "fab fa-facebook-f", "facebook.com" },
+                    { 2, 1, "fab fa-twitter", "twitter.com" },
+                    { 3, 1, "fab fa-instagram", "instagram.com" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "TagNews",
                 columns: new[] { "Id", "NewsId", "TagId" },
                 values: new object[,]
@@ -697,44 +768,12 @@ namespace DarkComics.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Category", "ComicDetailId", "DeActivatedDate", "Description", "Image", "IsActive", "MailMessage", "Name", "Price", "Quantity" },
+                columns: new[] { "Id", "Category", "ComicDetailId", "DeActivatedDate", "Description", "Image", "IsActive", "MailHeading", "MailMessage", "Name", "Price", "Quantity" },
                 values: new object[,]
                 {
-                    { 22, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
-                    { 21, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
-                    { 20, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
-                    { 16, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
-                    { 18, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
-                    { 17, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
-                    { 23, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
-                    { 19, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
-                    { 24, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
-                    { 28, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
-                    { 26, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
-                    { 27, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
-                    { 15, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
-                    { 29, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
-                    { 30, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
-                    { 31, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
-                    { 32, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
-                    { 33, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
-                    { 34, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
-                    { 25, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
-                    { 14, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
-                    { 10, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
-                    { 12, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
-                    { 1, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Nightwing Rebirth #1", 6.5, 3 },
-                    { 13, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 },
-                    { 2, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #1", 7.5, 8 },
-                    { 4, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
-                    { 5, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman New 52 #2", 7.5, 8 },
-                    { 3, 1, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Justice League Rebirth #1", 10.0, 12 },
-                    { 7, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "justice League #15", 7.5, 8 },
-                    { 8, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #78", 7.5, 8 },
-                    { 9, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #29", 7.5, 8 },
-                    { 35, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #13", 7.5, 8 },
-                    { 11, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Batman Rebirth #7", 7.5, 23 },
-                    { 6, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, null, "Dedective Comics #1", 7.5, 12 }
+                    { 2, 1, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "This is Description", null, "Batman Rebirth #1", 7.5, 8 },
+                    { 3, 1, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "This is Description", null, "Justice League Rebirth #1", 10.0, 12 },
+                    { 1, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is Detail", "cover.jpg", true, "This is Description", null, "Nightwing Rebirth #1", 6.5, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -742,57 +781,32 @@ namespace DarkComics.Migrations
                 columns: new[] { "Id", "ComicDetailId", "Image" },
                 values: new object[,]
                 {
-                    { 10, 1, "10.jpg" },
-                    { 8, 1, "8.jpg" },
-                    { 7, 1, "7.jpg" },
-                    { 6, 1, "6.jpg" },
-                    { 5, 1, "5.jpg" },
-                    { 4, 1, "4.jpg" },
                     { 3, 1, "3.jpg" },
-                    { 2, 1, "2.jpg" },
+                    { 4, 1, "4.jpg" },
+                    { 5, 1, "5.jpg" },
+                    { 6, 1, "6.jpg" },
+                    { 7, 1, "7.jpg" },
+                    { 8, 1, "8.jpg" },
+                    { 9, 1, "9.jpg" },
+                    { 10, 1, "10.jpg" },
                     { 1, 1, "1.jpg" },
-                    { 9, 1, "9.jpg" }
+                    { 2, 1, "2.jpg" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ProductCharacters",
                 columns: new[] { "Id", "CharacterId", "ProductId" },
-                values: new object[,]
-                {
-                    { 1, 2, 1 },
-                    { 32, 1, 32 },
-                    { 31, 1, 31 },
-                    { 30, 1, 30 },
-                    { 29, 1, 29 },
-                    { 27, 1, 27 },
-                    { 26, 1, 26 },
-                    { 25, 1, 25 },
-                    { 24, 1, 24 },
-                    { 23, 1, 23 },
-                    { 22, 1, 22 },
-                    { 21, 1, 21 },
-                    { 20, 1, 20 },
-                    { 19, 1, 19 },
-                    { 18, 1, 18 },
-                    { 33, 1, 33 },
-                    { 28, 1, 17 },
-                    { 16, 1, 16 },
-                    { 15, 1, 15 },
-                    { 14, 1, 14 },
-                    { 13, 1, 13 },
-                    { 12, 1, 12 },
-                    { 11, 1, 11 },
-                    { 10, 1, 10 },
-                    { 9, 1, 9 },
-                    { 8, 1, 8 },
-                    { 7, 1, 7 },
-                    { 6, 1, 6 },
-                    { 5, 1, 5 },
-                    { 4, 1, 4 },
-                    { 2, 1, 2 },
-                    { 17, 1, 17 },
-                    { 3, 3, 3 }
-                });
+                values: new object[] { 1, 2, 1 });
+
+            migrationBuilder.InsertData(
+                table: "ProductCharacters",
+                columns: new[] { "Id", "CharacterId", "ProductId" },
+                values: new object[] { 2, 1, 2 });
+
+            migrationBuilder.InsertData(
+                table: "ProductCharacters",
+                columns: new[] { "Id", "CharacterId", "ProductId" },
+                values: new object[] { 3, 3, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -909,6 +923,11 @@ namespace DarkComics.Migrations
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SocialLinks_FooterId",
+                table: "SocialLinks",
+                column: "FooterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TagNews_NewsId",
                 table: "TagNews",
                 column: "NewsId");
@@ -953,6 +972,9 @@ namespace DarkComics.Migrations
                 name: "CharacterPowers");
 
             migrationBuilder.DropTable(
+                name: "Contact");
+
+            migrationBuilder.DropTable(
                 name: "PostComments");
 
             migrationBuilder.DropTable(
@@ -963,6 +985,9 @@ namespace DarkComics.Migrations
 
             migrationBuilder.DropTable(
                 name: "SaleItems");
+
+            migrationBuilder.DropTable(
+                name: "SocialLinks");
 
             migrationBuilder.DropTable(
                 name: "TagNews");
@@ -984,6 +1009,9 @@ namespace DarkComics.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sales");
+
+            migrationBuilder.DropTable(
+                name: "Footer");
 
             migrationBuilder.DropTable(
                 name: "News");

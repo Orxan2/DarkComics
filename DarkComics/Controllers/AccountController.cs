@@ -43,8 +43,8 @@ namespace DarkComics.Controllers
 
             string data = JsonSerializer.Serialize(register);
             HttpContext.Response.Cookies.Append("user", data);
-
-            MailOpertions.SendMessage(register.Email,register.SecurityCode);            
+            string message = "Security code for registration";
+            MailOpertions.SendMessage(register.Email, message,register.SecurityCode);            
 
             return View("CompleteRegister");
         }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DarkComics.Migrations
 {
     [DbContext(typeof(DarkComicDbContext))]
-    [Migration("20211126145411_AddedContactAgain")]
-    partial class AddedContactAgain
+    [Migration("20211127021913_UpdateProductTable")]
+    partial class UpdateProductTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -533,12 +533,17 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
-                        .HasDefaultValue(new DateTime(2021, 11, 26, 18, 54, 10, 699, DateTimeKind.Local).AddTicks(6542));
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -744,6 +749,10 @@ namespace DarkComics.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("MailHeading")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MailMessage")
                         .HasColumnType("nvarchar(max)");
 
@@ -776,6 +785,7 @@ namespace DarkComics.Migrations
                             Description = "This is Detail",
                             Image = "cover.jpg",
                             IsActive = true,
+                            MailHeading = "This is Description",
                             Name = "Nightwing Rebirth #1",
                             Price = 6.5,
                             Quantity = 3
@@ -790,6 +800,7 @@ namespace DarkComics.Migrations
                             Description = "This is Detail",
                             Image = "cover.jpg",
                             IsActive = true,
+                            MailHeading = "This is Description",
                             Name = "Batman Rebirth #1",
                             Price = 7.5,
                             Quantity = 8
@@ -804,457 +815,10 @@ namespace DarkComics.Migrations
                             Description = "This is Detail",
                             Image = "cover.jpg",
                             IsActive = true,
+                            MailHeading = "This is Description",
                             Name = "Justice League Rebirth #1",
                             Price = 10.0,
                             Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #7",
-                            Price = 7.5,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman New 52 #2",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #1",
-                            Price = 7.5,
-                            Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "justice League #15",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #78",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #29",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #13",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #7",
-                            Price = 7.5,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman New 52 #2",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #1",
-                            Price = 7.5,
-                            Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "justice League #15",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #78",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #29",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #13",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #7",
-                            Price = 7.5,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman New 52 #2",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #1",
-                            Price = 7.5,
-                            Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "justice League #15",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #78",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #29",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #13",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #7",
-                            Price = 7.5,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman New 52 #2",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #1",
-                            Price = 7.5,
-                            Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #13",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #7",
-                            Price = 7.5,
-                            Quantity = 23
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman New 52 #2",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #1",
-                            Price = 7.5,
-                            Quantity = 12
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "justice League #15",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Dedective Comics #78",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #29",
-                            Price = 7.5,
-                            Quantity = 8
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Category = 1,
-                            ComicDetailId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeActivatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This is Detail",
-                            Image = "cover.jpg",
-                            IsActive = true,
-                            Name = "Batman Rebirth #13",
-                            Price = 7.5,
-                            Quantity = 8
                         });
                 });
 
@@ -1297,186 +861,6 @@ namespace DarkComics.Migrations
                             Id = 3,
                             CharacterId = 3,
                             ProductId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CharacterId = 1,
-                            ProductId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CharacterId = 1,
-                            ProductId = 5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CharacterId = 1,
-                            ProductId = 6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CharacterId = 1,
-                            ProductId = 7
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CharacterId = 1,
-                            ProductId = 8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CharacterId = 1,
-                            ProductId = 9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CharacterId = 1,
-                            ProductId = 10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CharacterId = 1,
-                            ProductId = 11
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CharacterId = 1,
-                            ProductId = 12
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CharacterId = 1,
-                            ProductId = 13
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CharacterId = 1,
-                            ProductId = 14
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CharacterId = 1,
-                            ProductId = 15
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CharacterId = 1,
-                            ProductId = 16
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CharacterId = 1,
-                            ProductId = 17
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CharacterId = 1,
-                            ProductId = 18
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CharacterId = 1,
-                            ProductId = 19
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CharacterId = 1,
-                            ProductId = 20
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CharacterId = 1,
-                            ProductId = 21
-                        },
-                        new
-                        {
-                            Id = 22,
-                            CharacterId = 1,
-                            ProductId = 22
-                        },
-                        new
-                        {
-                            Id = 23,
-                            CharacterId = 1,
-                            ProductId = 23
-                        },
-                        new
-                        {
-                            Id = 24,
-                            CharacterId = 1,
-                            ProductId = 24
-                        },
-                        new
-                        {
-                            Id = 25,
-                            CharacterId = 1,
-                            ProductId = 25
-                        },
-                        new
-                        {
-                            Id = 26,
-                            CharacterId = 1,
-                            ProductId = 26
-                        },
-                        new
-                        {
-                            Id = 27,
-                            CharacterId = 1,
-                            ProductId = 27
-                        },
-                        new
-                        {
-                            Id = 28,
-                            CharacterId = 1,
-                            ProductId = 17
-                        },
-                        new
-                        {
-                            Id = 29,
-                            CharacterId = 1,
-                            ProductId = 29
-                        },
-                        new
-                        {
-                            Id = 30,
-                            CharacterId = 1,
-                            ProductId = 30
-                        },
-                        new
-                        {
-                            Id = 31,
-                            CharacterId = 1,
-                            ProductId = 31
-                        },
-                        new
-                        {
-                            Id = 32,
-                            CharacterId = 1,
-                            ProductId = 32
-                        },
-                        new
-                        {
-                            Id = 33,
-                            CharacterId = 1,
-                            ProductId = 33
                         });
                 });
 
