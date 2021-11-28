@@ -21,7 +21,7 @@ else
         <div class="row">
             <a class="col-3 minus btn btn-outline-info @((product.Count==0)?"disabled":null)">-</a>
             <input class="col-5 mx-1" disabled value="@product.Count" />
-            <a class="col-3 plus btn btn-outline-info">+</a>
+            <a class="col-3 plus btn btn-outline-info @((product.Count >= product.Product.Quantity)?"disabled":null)">+</a>
         </div>
     </div>
     <div class="col-auto">

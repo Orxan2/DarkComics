@@ -30,7 +30,8 @@ namespace DarkComics.Controllers
                 Comics = _context.Products.Include(c => c.ComicDetail).ThenInclude(c => c.Serie).Include(c => c.ProductCharacters).
                 ThenInclude(pc=>pc.Character).Where(c => c.IsActive == true && c.Category == Category.Comic).ToList(),
                 BestComics = _context.Products.Include(c => c.ComicDetail).ThenInclude(c => c.Serie).Include(c => c.ProductCharacters).
-                ThenInclude(pc => pc.Character).Where(c => c.IsActive == true && c.Category == Category.Comic).OrderByDescending(c => c.Quantity).Take(3).ToList(),
+                ThenInclude(pc => pc.Character).Include(p=>p.SaleItems).ThenInclude(si=>si.Sale).
+                Where(p => p.IsActive == true && p.Category == Category.Comic).OrderByDescending(c => c.SaleItems.Count).Take(3).ToList(),
                 Characters = _context.Characters.Include(c => c.City).Include(c => c.ProductCharacters).ThenInclude(c => c.Product).ThenInclude(p => p.ComicDetail).
                 Include(c => c.CharacterPowers).ThenInclude(cp => cp.Power).Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).
                 Include(c => c.ToyCharacters).ThenInclude(tc => tc.Toy).Include(c => c.CharacterNews).ThenInclude(cn => cn.News).Where(c => c.IsActive == true).ToList(),

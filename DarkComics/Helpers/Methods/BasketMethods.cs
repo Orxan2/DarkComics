@@ -38,19 +38,23 @@ namespace DarkComics.Helpers.Methods
                 temporaryList = JsonSerializer.Deserialize<List<BasketProduct>>(cookie);
                 var temporaryProduct = temporaryList.FirstOrDefault(tp => tp.Id == basketItem.Id);
 
-                if (temporaryProduct == null)
-                {
-                    temporaryProduct = new BasketProduct
+               
+                    if (temporaryProduct == null && basketItem.Quantity > 0)
+                    {                    
+                        temporaryProduct = new BasketProduct
+                        {
+                            Id = basketItem.Id,
+                            Count = 1
+                        };
+                        temporaryList.Add(temporaryProduct);
+                                        
+                    }
+                    else if(temporaryProduct != null && (basketItem.Quantity - temporaryProduct.Count) > 0)
                     {
-                        Id = basketItem.Id,
-                        Count = 1
-                    };
-                    temporaryList.Add(temporaryProduct);
-                }
-                else
-                {
-                    temporaryProduct.Count++;
-                }
+                        temporaryProduct.Count++;
+                    }
+                
+               
             }
         
             //Response.Cookies.Append("basket", JsonSerializer.Serialize(temporaryList));
@@ -78,15 +82,18 @@ namespace DarkComics.Helpers.Methods
                         {
                             var basketItem = products.FirstOrDefault(p => p.Id == temporaryProduct.Id && p.IsActive == true);
 
-                            BasketItemViewModel basketItemViewModel = new BasketItemViewModel
+                            if (basketItem != null)
                             {
+                                BasketItemViewModel basketItemViewModel = new BasketItemViewModel
+                                {
 
-                                Product = basketItem,
-                                Count = temporaryProduct.Count
-                            };
-                            basketVM.ProductDetails.Add(basketItemViewModel);
-                            basketVM.TotalCount++;
-                            basketVM.TotalPrice += Convert.ToDecimal(basketItem.Price * basketItemViewModel.Count);
+                                    Product = basketItem,
+                                    Count = temporaryProduct.Count
+                                };
+                                basketVM.ProductDetails.Add(basketItemViewModel);
+                                basketVM.TotalCount++;
+                                basketVM.TotalPrice += Convert.ToDecimal(basketItem.Price * basketItemViewModel.Count);
+                            }
                         }
                     }
                 }

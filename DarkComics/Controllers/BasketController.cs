@@ -54,7 +54,7 @@ namespace DarkComics.Controllers
             // Show Cookie
 
             List<Product> products = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(p => p.IsActive == true).ToList();
+               ThenInclude(pc => pc.Character).Where(p => p.IsActive == true && p.Quantity > 0).ToList();
             BasketViewModel basketView = BasketMethod.ShowBasket(products, myCookie);
 
             return View("_Basket", basketView);
@@ -136,7 +136,7 @@ namespace DarkComics.Controllers
                 if (temporaryList != null)
                 {
                     var product = temporaryList.FirstOrDefault(p => p.Id == id);
-                    if (product != null)
+                    if (product != null && dbProduct.Quantity - product.Count > 0)
                     {
                         product.Count++;
                         Response.Cookies.Append("basket", JsonSerializer.Serialize(temporaryList));
@@ -177,10 +177,12 @@ namespace DarkComics.Controllers
                     Count = basketItem.Count
                 };
                 saleItem.Price = saleItem.Product.Price - (saleItem.Product.Price * saleItem.Product.ComicDetail.Serie.Discount / 100);
+                saleItem.Product.Quantity -= saleItem.Count;
                 order.SaleData.SaleItems.Add(saleItem);
                 _context.SaleItems.Add(saleItem);
             }
             _context.Sales.Add(order.SaleData);
+          
             _context.SaveChanges();
             Response.Cookies.Delete("basket");
             return RedirectToAction(nameof(Index),"Home");
