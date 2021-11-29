@@ -340,7 +340,6 @@ namespace DarkComics.Areas.Admin.Controllers
                 return View(comicViewModel);
 
             comicViewModel.Comic.ComicDetailId = comicViewModel.Comic.ComicDetail.Id;
-            comicViewModel.Comic.IsActive = true;
             comicViewModel.Comic.Category = Category.Comic;
 
             ////_db.ComicDetails.Update(comicViewModel.Comic.ComicDetail);
@@ -395,7 +394,7 @@ namespace DarkComics.Areas.Admin.Controllers
             if (product.IsActive == true)
                 product.IsActive = false;
 
-            else
+            else if(product.Quantity > 0)
             {
                 product.IsActive = true;
 

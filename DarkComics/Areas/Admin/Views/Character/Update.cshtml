@@ -176,10 +176,10 @@
                 </div>
 
                 <div class="col-12 mb-3">
-                <label asp-for="Character.AboutCharacter"></label>
-                <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"></textarea>
-                <span asp-validation-for="Character.AboutCharacter"></span>
-            </div>
+                    <label asp-for="Character.AboutCharacter"></label>
+                    <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"></textarea>
+                    <span asp-validation-for="Character.AboutCharacter"></span>
+                </div>
             </div>
 
             <button class="btn btn-primary" asp-route-logo="@Model.Logo" asp-route-profile="@Model.Profile" asp-route-firstimage="@Model.FirstImage" asp-route-SecondImage="@Model.SecondImage" asp-route-LayoutImage="@Model.LayoutImage" type="submit">Submit form</button>
@@ -187,8 +187,12 @@
     </div>
 </div>
 
+@section summernoteStyle{
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+}
 
-@section summernote{   
+@section summernote{
 
     <!-- include libraries(jQuery, bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

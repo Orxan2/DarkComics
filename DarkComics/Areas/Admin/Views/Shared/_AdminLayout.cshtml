@@ -26,9 +26,10 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="~/assets/css/bootstrap.css" />
+    @RenderSection("summernoteStyle", false);
+    
+   
     <link href="~/admin/assets/css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -486,6 +487,12 @@
                                 </ul>
                             </li>
 
+                            <li>
+                                <a asp-controller="Sale" asp-action="Index">
+                                    <i class="metismenu-icon"></i>
+                                    Sale
+                                </a>
+                            </li>
 
                             <li>
                                 <a href="#">
@@ -513,8 +520,8 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>                          
-                           
+                            </li>
+
 
                             <li class="app-sidebar__heading">Footer Datas</li>
 

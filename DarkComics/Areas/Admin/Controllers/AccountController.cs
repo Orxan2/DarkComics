@@ -79,7 +79,7 @@ namespace DarkComics.Areas.Admin.Controllers
 
             await _userManager.AddToRoleAsync(user, register.Role);
 
-            return View(nameof(Login));
+            return RedirectToAction(nameof(Login), "Account");
         }
 
         public async Task CreateAsync()
@@ -90,7 +90,8 @@ namespace DarkComics.Areas.Admin.Controllers
         }
         public IActionResult Login()
         {
-            return View();
+            AdminLoginViewModel adminLogin = new AdminLoginViewModel();
+            return View(adminLogin);
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]

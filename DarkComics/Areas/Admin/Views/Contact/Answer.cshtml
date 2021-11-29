@@ -29,7 +29,7 @@
             <div class="form-row">
                 <div class="col-12 col-md-4 mb-3">
                     <label asp-for="Message.Email"></label>
-                    <input asp-for="Message.Email" class="form-control" >
+                    <input asp-for="Message.Email" class="form-control">
                     <span asp-validation-for="Message.Email"></span>
                 </div>
 
@@ -52,6 +52,10 @@
     </div>
 </div>
 
+@section summernoteStyle{
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+}
 
 @section summernote{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>

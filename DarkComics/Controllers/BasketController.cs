@@ -180,8 +180,10 @@ namespace DarkComics.Controllers
                 saleItem.Product.Quantity -= saleItem.Count;
                 order.SaleData.SaleItems.Add(saleItem);
                 _context.SaleItems.Add(saleItem);
+                saleItem.Product.IsActive = false;
             }
             _context.Sales.Add(order.SaleData);
+
           
             _context.SaveChanges();
             Response.Cookies.Delete("basket");

@@ -11,6 +11,7 @@ namespace DarkComics.Models.Entity
     {
         [Required]
         public string Client { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]

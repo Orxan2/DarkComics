@@ -63,11 +63,11 @@
                 </div>
 
                 @*<div class="col-md-6 mb-3">
-            <label>Serie</label>
-            <select class="form-control" disabled>
-                <option value="@Model.Serie.Id">@Model.Serie.Name</option>
-            </select>
-        </div>*@
+                        <label>Serie</label>
+                        <select class="form-control" disabled>
+                            <option value="@Model.Serie.Id">@Model.Serie.Name</option>
+                        </select>
+                    </div>*@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Comic.Photo"></label>
@@ -126,6 +126,10 @@
     </div>
 </div>
 
+@section summernoteStyle{
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+}
 
 @section summernote{
 

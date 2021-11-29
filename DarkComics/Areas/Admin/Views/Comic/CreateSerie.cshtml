@@ -52,7 +52,7 @@
                         <option value="false">Personal</option>
                     </select>
                 </div>
-                                
+
                 <div class="col-md-3 mb-3">
                     <label asp-for="Serie.BackfacePhoto"></label>
                     <input asp-for="Serie.BackfacePhoto" placeholder="Backface" class="form-control" accept="image/*" required>
@@ -67,6 +67,11 @@
     </div>
 </div>
 
+
+@section summernoteStyle{
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+}
 
 @section summernote{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
