@@ -39,7 +39,6 @@
                                 <div class="icons">
                                     <a asp-controller="Comic" asp-action="ComicDetail" asp-route-id="@comic.Id" class="pe-7s-look pe-lg"></a>
                                     <a asp-controller="Comic" asp-action="UpdateComic" asp-route-id="@comic.Id" class="pe-7s-pen pe-lg"></a>
-                                    <a asp-controller="ReadingComic" asp-action="Index" asp-route-id="@comic.Id" class="pe-7s-pen pe-lg"></a>
                                     <a asp-controller="Comic" asp-action="MakeActiveOrDeactive" asp-route-id="@comic.Id" class="@(comic.IsActive?"pe-7s-close-circle buton-outline-danger":"pe-7s-refresh-2")"></a>
                                 </div>
                                 <div class="image">
