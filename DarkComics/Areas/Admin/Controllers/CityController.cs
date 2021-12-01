@@ -46,8 +46,7 @@ namespace DarkComics.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 return View(cityViewModel);
-            }            
-
+            }
             _db.Cities.Add(cityViewModel.City);
             _db.SaveChanges();
            

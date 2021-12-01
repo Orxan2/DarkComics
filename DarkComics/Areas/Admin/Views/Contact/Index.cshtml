@@ -55,7 +55,7 @@
                                 <td>@message.Email</td>
                                 <td>@message.Subject</td>
                                 <td>@message.Message</td>
-                                <td>@(message.CreatedDate>DateTime.Now.AddDays(-1)?(message.CreatedDate.ToString("HH:dd")):(message.CreatedDate.ToString("dd MMM")))</td>
+                                <td>@(message.CreatedDate>DateTime.Now.AddDays(-1)?(message.CreatedDate.ToString("HH:mm")):(message.CreatedDate.ToString("dd MMM")))</td>
                                 <td>
                                     <a asp-action="Detail" asp-route-id="@message.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
                                     <a asp-action="RemoveMessage" asp-route-id="@message.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-7s-trash pe-lg"></i></a>

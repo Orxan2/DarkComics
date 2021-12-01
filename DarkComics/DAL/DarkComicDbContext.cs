@@ -43,33 +43,12 @@ namespace DarkComics.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Product>().
-             Property(p => p.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<Toy>().
-             Property(c => c.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<Character>().
-             Property(c => c.CreatedDate).HasColumnType("Date");
+            
             modelBuilder.Entity<Character>().
            Property(c => c.AboutCharacter).HasColumnType("Text");
             modelBuilder.Entity<News>().
                  Property(c => c.Text).HasColumnType("Text");
-            modelBuilder.Entity<Serie>().
-             Property(s => s.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<ReadingComic>().
-             Property(rc => rc.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<Product>().
-              Property(p => p.DeActivatedDate).HasColumnType("Date");
-            modelBuilder.Entity<City>().
-             Property(c => c.CreatedDate).HasColumnType("Date");
-           
-            modelBuilder.Entity<News>().
-            Property(n => n.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<Sale>().
-          Property(s => s.CreatedDate).HasColumnType("Date");
-            modelBuilder.Entity<Sale>().
-         Property(s => s.BirthDay).HasColumnType("Date");
-            modelBuilder.Entity<Toy>().
-             Property(c => c.DeactivatedDate).HasColumnType("Date");
+            
 
 
             modelBuilder.Entity<Product>().

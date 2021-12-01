@@ -103,7 +103,7 @@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Character.FirstPhoto"></label>
-                    <img src="~/assets/img/character-id/@Model.Character.FirstImage" width="300" />
+                    <img src="~/assets/img/character-@Model.Character.Id/@Model.Character.FirstImage" width="300" />
                     <input asp-for="Character.FirstPhoto" accept="image/*" class="form-control" />
                     <span asp-validation-for="Character.FirstPhoto"></span>
                 </div>
@@ -158,11 +158,10 @@
                     <input asp-for="Character.Education" class="form-control" required />
                     <span asp-validation-for="Character.Education"></span>
                 </div>
-
+                <a href="C:\Users\ASUS\Desktop\Dark Comics Project - Copy\DarkComics\DarkComics\Areas\Admin\Views\Character\Update.cshtml">C:\Users\ASUS\Desktop\Dark Comics Project - Copy\DarkComics\DarkComics\Areas\Admin\Views\Character\Update.cshtml</a>
                 <div class="col-md-6 mb-3">
                     <label asp-for="ChosenPowers"></label>
                     <select asp-for="ChosenPowers" asp-items="@Model.PowerList" class="form-control" multiple>
-                        <option value="" disabled>chose</option>
                     </select>
                     <span asp-validation-for="ChosenPowers"></span>
                 </div>
@@ -170,7 +169,6 @@
                 <div class="col-md-6 mb-3">
                     <label asp-for="Character.CityId"></label>
                     <select asp-for="Character.CityId" asp-items="@Model.CitiesList" class="form-control">
-                        <option value="" disabled>chose</option>
                     </select>
                     <span asp-validation-for="Character.CityId"></span>
                 </div>
@@ -180,6 +178,13 @@
                     <textarea asp-for="Character.AboutCharacter" class="form-control" placeholder="First name"></textarea>
                     <span asp-validation-for="Character.AboutCharacter"></span>
                 </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label asp-for="Character.ShortDescription">Short Description</label>
+                <div class="toolbar-container"></div>
+                <textarea asp-for="Character.ShortDescription" class="form-control" placeholder="First name"></textarea>
+                <span asp-validation-for="Character.ShortDescription"></span>
             </div>
 
             <button class="btn btn-primary" asp-route-logo="@Model.Logo" asp-route-profile="@Model.Profile" asp-route-firstimage="@Model.FirstImage" asp-route-SecondImage="@Model.SecondImage" asp-route-LayoutImage="@Model.LayoutImage" type="submit">Submit form</button>
@@ -203,6 +208,10 @@
     <script>
         $(document).ready(function () {
             $('#Character_AboutCharacter').summernote({
+                placeholder: 'Hello stand alone ui',
+                height: 250,                
+            });
+            $('#Character_ShortDescription').summernote({
                 placeholder: 'Hello stand alone ui',
                 height: 250,
             });

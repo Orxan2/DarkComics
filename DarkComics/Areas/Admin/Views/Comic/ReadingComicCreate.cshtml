@@ -1,0 +1,42 @@
+﻿@*@model ComicViewModel
+@{
+    ViewData["Title"] = "Create Comic";
+}
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading page-title-icon-rounded">
+            <div class="page-title-icon">
+                <i class="pe-7s-id icon-gradient bg-tempting-azure font-weight-bolder">
+                </i>
+            </div>
+            <div>
+                <h1>Add a New Comic</h1>
+                <div class="page-title-subheading">
+                    Wide selection of buttons that feature different styles for backgrounds, borders and hover options!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <h5 class="card-title">Bootstrap 4 Form Validation</h5>
+        <form enctype="multipart/form-data" class="needs-validation" novalidate="" method="post">
+            <div asp-validation-summary="ModelOnly"></div>          
+
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Comic.ComicDetail.ReadingComics"></label>
+                    <input asp-for="Comic.Photo" class="form-control" accept="image/*" required>
+                    <span asp-validation-for="Comic.Photo"></span>
+                </div>              
+
+            </div>
+
+            <button asp-route-id="@Model.Serie.Id" class="btn btn-primary" type="submit">Submit form</button>
+        </form>
+    </div>
+</div>*@
+

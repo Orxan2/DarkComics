@@ -4,6 +4,7 @@ using DarkComics.Helpers.Methods;
 using DarkComics.Models.Entity;
 using DarkComics.ViewModels;
 using DarkComics.ViewModels.Basket;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace DarkComics.Controllers
 {
+    [Authorize]
     public class ComicController : Controller
     {
         private readonly DarkComicDbContext _context;
@@ -85,21 +87,23 @@ namespace DarkComics.Controllers
             return View("_LoadMore", comicViewModel);
         }
 
-        public IActionResult FilterSerie(int? id)
+        public IActionResult FilterSerie(int? id, int pageIndex = 1, int pageSize = 4)
         {
             if (id == null)
                 return NotFound();
 
-            ComicViewModel comicViewModel = new ComicViewModel
-            {
-                Comics = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
-               ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true && p.ComicDetail.Serie.IsDeleted == false && p.ComicDetail.Serie.Id == id).ToList()
-          };
+            List<Product> Comics = _context.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.IsCover == true && p.IsActive == true && p.ComicDetail.Serie.IsDeleted == false && p.ComicDetail.Serie.Id == id).ToList();
 
-            if (comicViewModel.Comics == null)
-                return BadRequest();
+            if (Comics == null)
+                return NotFound();
 
-            return View(comicViewModel);
+            PaginationViewModel<Product> paginationViewModel = new PaginationViewModel<Product>(Comics, pageSize, pageIndex);
+
+
+            return View(paginationViewModel);          
+
+            
         }
     }
 }

@@ -40,7 +40,7 @@
                     <td scope="row">@count</td>
                     <td>@sale.Client</td>
                     <td>@Html.Raw(sale.Description)</td>
-                    <td>@(sale.CreatedDate>DateTime.Now.AddDays(-1)?(sale.CreatedDate.ToString("HH:dd")):(sale.CreatedDate.ToString("dd MMM")))</td>
+                    <td>@(sale.CreatedDate>DateTime.Now.AddDays(-1)?(sale.CreatedDate.ToString("HH:mm")):(sale.CreatedDate.ToString("dd MMM")))</td>
                     <td class="text-center">
                         <a asp-action="Detail" asp-route-id="@sale.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
                     </td>

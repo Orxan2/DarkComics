@@ -345,7 +345,12 @@ namespace DarkComics.Areas.Admin.Controllers
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "assets", "img", $"character-{character.Id}");
             if (character.Id == null)
-                newSlider = Path.Combine(environment, "assets", "img", $"character-{_db.Characters.Max(c => c.Id + 1)}");
+            {
+                if (_db.Characters.Max(c => c.Id) + 1 == null)
+                    newSlider = Path.Combine(environment, "assets", "img", $"character-1");
+                else 
+                    newSlider = Path.Combine(environment, "assets", "img", $"character-{_db.Characters.Max(c => c.Id) + 1}");
+            }
 
 
 

@@ -113,7 +113,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Creator")
@@ -194,6 +194,10 @@ namespace DarkComics.Migrations
                     b.Property<string>("SecondImage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Speed")
                         .IsRequired()
                         .HasColumnType("int");
@@ -266,7 +270,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<bool>("IsActive")
@@ -407,7 +411,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Image")
@@ -488,11 +492,11 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<DateTime>("DeActivatedDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -563,7 +567,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Image")
@@ -588,7 +592,7 @@ namespace DarkComics.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDay")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Client")
                         .IsRequired()
@@ -596,7 +600,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("Description")
@@ -661,7 +665,7 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<DateTime>("DeletedDate")
@@ -759,11 +763,11 @@ namespace DarkComics.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
+                        .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<DateTime?>("DeactivatedDate")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

@@ -58,13 +58,13 @@ namespace DarkComics
             {
                 endpoints.MapControllerRoute(
                    name: "areaRoute",
-                   pattern: "{area:exists}/{controller=character}/{action=Index}/{id?}");
+                   pattern: "{area:exists}/{controller=Account}/{action=Login}/{id?}");
             });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Comic}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

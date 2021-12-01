@@ -43,20 +43,40 @@ namespace DarkComics.Areas.Admin.Controllers
         public ActionResult ComicIndex(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
+
             List<Product> products = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
                ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.SerieId == id).ToList();
-                        
+
             ComicViewModel comicView = new ComicViewModel
             {
-                RandomComics = products
+                RandomComics = products,
+                Serie = _db.Series.FirstOrDefault(s=>s.Id == id)
             };
+
+            if (comicView.RandomComics == null || comicView.Serie == null)
+                return BadRequest();
 
             return View(comicView);
         }
 
+        //public ActionResult ReadingComicIndex(int? id)
+        //{
+        //    if (id == null)
+        //        return NotFound();
+
+
+        //    ReadComicViewModel readComicViewModel = new ReadComicViewModel
+        //    {
+        //        ReadingComic = _db.Products.Include(p=>p.ComicDetail).ThenInclude(cd=>cd.ReadingComics).FirstOrDefault(p=>p.Id == id)
+                
+        //    };
+
+        //    if (readComicViewModel.ReadingComic == null)
+        //        return BadRequest();
+
+        //    return View(readComicViewModel);
+        //}
         public ActionResult CreateSerie()
         {
             ComicViewModel comicViewModel = new ComicViewModel
@@ -68,9 +88,9 @@ namespace DarkComics.Areas.Admin.Controllers
             };
 
             return View(comicViewModel);
-        }
+        }        
 
-
+        
         public IActionResult ComicDetail(int? id)
         {
             if (id == null)
@@ -113,6 +133,27 @@ namespace DarkComics.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //public ActionResult ReadingComicCreate()
+        //{        
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[AutoValidateAntiforgeryToken]
+        //public ActionResult ReadingComicCreate(ComicViewModel comicView)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return NotFound();
+
+        //    foreach (var readingComic in comicView.Comic.ComicDetail.ReadingComics)
+        //    {
+        //        readingComic.Image = RenderImage(comicView, comicView.Comic.ComicDetail.BackfacePhoto);
+        //    }
+            
+        //    return View(comicView);
+        //}
+
         public ActionResult CreateComic(int? id)
         {
            
@@ -410,8 +451,9 @@ namespace DarkComics.Areas.Admin.Controllers
             ComicViewModel comicView = new ComicViewModel
             {
                 RandomComics = _db.Products.Include(p => p.ComicDetail).ThenInclude(cd => cd.Serie).Include(p => p.ProductCharacters).
-             ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.SerieId == product.ComicDetail.SerieId).ToList()
-        };
+             ThenInclude(pc => pc.Character).Where(p => p.Category == Category.Comic && p.ComicDetail.SerieId == product.ComicDetail.SerieId).ToList(),
+                Serie = _db.Series.FirstOrDefault(s => s.Id == product.ComicDetail.Serie.Id)
+            };
 
             return View(nameof(ComicIndex),comicView);
         }
@@ -463,8 +505,12 @@ namespace DarkComics.Areas.Admin.Controllers
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "assets", "img", $"product-{comicVM.Comic.Id}");
             if (comicVM.Comic.Id == null)
-              newSlider = Path.Combine(environment, "assets", "img",  $"product-{_db.Products.Max(c => c.Id + 1)}");
-
+            {
+                if (_db.Products.Max(p => p.Id) == null)
+                    newSlider = Path.Combine(environment, "assets", "img", $"product-1");
+                else
+                    newSlider = Path.Combine(environment, "assets", "img", $"product-{_db.Products.Max(p => p.Id) + 1}");
+            }
 
             if (!Directory.Exists(newSlider))
             {
@@ -506,8 +552,13 @@ namespace DarkComics.Areas.Admin.Controllers
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "assets", "img", "comics", $"serie-{comicVM.Serie.Id}");
             if (comicVM.Serie.Id == null)
-              newSlider = Path.Combine(environment, "assets", "img", "comics", $"serie-{_db.Series.Max(c => c.Id + 1)}");
-
+            {
+                if (_db.Series.Max(s => s.Id) == null)
+                    newSlider = Path.Combine(environment, "assets", "img", "comics", $"serie-1");
+                else
+                    newSlider = Path.Combine(environment, "assets", "img", "comics", $"serie-{_db.Series.Max(s => s.Id) + 1}");
+            }
+           
             if (!Directory.Exists(newSlider))
             {
                 Directory.CreateDirectory(newSlider);

@@ -39,20 +39,20 @@
                     {
                         count++;
                     }
-                    <tr>
-                        <td scope="row">@count</td>
-                        <td>@power.Name</td>
-                        <td>@power.CreatedDate.ToString("dd MMM")</td>
-                        <td class="text-center">
-                            <a asp-action="Update" asp-route-id="@power.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
-                            @if (User.IsInRole(Role.SuperAdmin.ToString()))
-                            {
-                                <a asp-action="MakeActiveOrDeactive" asp-route-id="@power.Id" class="mb-2 mr-2 btn @(power.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(power.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
-                            }
-                        </td>
+                <tr>
+                    <td scope="row">@count</td>
+                    <td>@power.Name</td>
+                    <td>@(power.CreatedDate>DateTime.Now.AddDays(-1)?(power.CreatedDate.ToString("HH:mm")):(power.CreatedDate.ToString("dd MMM")))</td>
+                    <td class="text-center">
+                        <a asp-action="Update" asp-route-id="@power.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
+                        @if (User.IsInRole(Role.SuperAdmin.ToString()))
+                        {
+                            <a asp-action="MakeActiveOrDeactive" asp-route-id="@power.Id" class="mb-2 mr-2 btn @(power.IsActive?"btn-outline-danger":"btn-outline-success")"><i class="pe-lg @(power.IsActive?"pe-7s-delete-user":"pe-7s-refresh")"> </i></a>
+                        }
+                    </td>
 
 
-                    </tr>
+                </tr>
                 }
 
             </tbody>

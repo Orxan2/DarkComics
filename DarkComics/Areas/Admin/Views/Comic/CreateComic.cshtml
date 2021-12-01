@@ -35,19 +35,19 @@
 
                 <div class="col-md-4 mb-3">
                     <label asp-for="Comic.Price"></label>
-                    <input asp-for="Comic.Price" class="form-control" placeholder="First name" required>
+                    <input asp-for="Comic.Price" class="form-control" required>
                     <span asp-validation-for="Comic.Price"></span>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label asp-for="Comic.Quantity"></label>
-                    <input asp-for="Comic.Quantity" class="form-control" placeholder="First name" required>
+                    <input asp-for="Comic.Quantity" class="form-control" required>
                     <span asp-validation-for="Comic.Quantity"></span>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label asp-for="Comic.ComicDetail.PageCount"></label>
-                    <input asp-for="Comic.ComicDetail.PageCount" class="form-control" placeholder="First name" required>
+                    <input asp-for="Comic.ComicDetail.PageCount" class="form-control" required>
                     <span asp-validation-for="Comic.ComicDetail.PageCount"></span>
                 </div>
 
@@ -60,14 +60,13 @@
 
                 <div class="col-md-3 mb-3">
                     <label asp-for="Comic.Photo"></label>
-                    <input asp-for="Comic.Photo" class="form-control" accept="image/*" required>
+                    <input asp-for="Comic.Photo" class="form-control" multiple accept="image/*" required>
                     <span asp-validation-for="Comic.Photo"></span>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label asp-for="ChosenCharacters"></label>
                     <select asp-for="ChosenCharacters" asp-items="@Model.CharacterList" class="form-control" multiple>
-                        <option value="" disabled>chose</option>
                     </select>
                     <span asp-validation-for="ChosenCharacters"></span>
                 </div>

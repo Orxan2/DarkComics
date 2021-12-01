@@ -62,18 +62,15 @@
                     <div class="col-12 col-md-6 col-lg-4 p-4">
                         <h3 class="text-center text-white fw-bold">Contact Us</h3>
                         <form asp-controller="Home" asp-action="Contact" method="post">
-                            <div class="form-group">
-                                <label asp-for="Contact.Email"></label>
+                            <div class="form-group my-2">
                                 <input asp-for="Contact.Email" class="form-control" placeholder="Your Email" required>
                                 <span asp-validation-for="Contact.Email" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Contact.Subject"></label>
+                            <div class="form-group my-2">
                                 <input asp-for="Contact.Subject" class="form-control" placeholder="Subject" required>
                                 <span asp-validation-for="Contact.Subject" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Contact.Message"></label>
+                            <div class="form-groupmy-2">
                                 <textarea asp-for="Contact.Message" class="form-control" rows="5" cols="5" placeholder="How we can help ?" required></textarea>
                                 <span asp-validation-for="Contact.Message" class="text-danger"></span>
                             </div>

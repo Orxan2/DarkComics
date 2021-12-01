@@ -41,7 +41,7 @@
                     <tr>
                         <td scope="row">@count</td>                
                         <td>@city.Name</td>
-                        <td>@city.CreatedDate.ToString("dd MMM hh:mm:ss")</td>
+                        <td>@(city.CreatedDate>DateTime.Now.AddDays(-1)?(city.CreatedDate.ToString("HH:mm")):(city.CreatedDate.ToString("dd MMM")))</td>
                         <td class="text-center">
                             <a asp-action="Update" asp-route-id="@city.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
                             @if (User.IsInRole(Role.SuperAdmin.ToString()))

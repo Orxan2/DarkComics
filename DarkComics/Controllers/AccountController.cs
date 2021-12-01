@@ -124,7 +124,7 @@ namespace DarkComics.Controllers
         }
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();            
             return RedirectToAction("Index", "Home");
         }
         public IActionResult ChangePassword()
