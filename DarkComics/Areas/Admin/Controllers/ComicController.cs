@@ -316,14 +316,15 @@ namespace DarkComics.Areas.Admin.Controllers
                Series = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
                ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).ToList(),
                SerieList = new List<SelectListItem>()
-
            };
-
+                        
             if (comicViewModel.Comic == null)
             {
                 return BadRequest();
             }
 
+            comicViewModel.Serie = _db.Series.Include(p => p.ComicDetails).ThenInclude(cd => cd.Products).ThenInclude(p => p.ProductCharacters).
+                ThenInclude(pc => pc.Character).Where(s => s.IsDeleted == false).FirstOrDefault(s => s.Id == comicViewModel.Comic.ComicDetail.Serie.Id);
             comicViewModel.Cover = comicViewModel.Comic.Image;
             comicViewModel.Backface = comicViewModel.Comic.ComicDetail.Backface;
            
@@ -352,7 +353,14 @@ namespace DarkComics.Areas.Admin.Controllers
             if (id == null || comicViewModel.Comic.Id != id)
             {
                 return NotFound();
-            }            
+            }
+
+            //Serie serie = _db.Series.FirstOrDefault(s => s.Id == id);
+
+            //if (serie == null)
+            //{
+            //    return NotFound();
+            //}
 
             //if user don't choose image program enter here
             if (comicViewModel.Comic.Photo == null)

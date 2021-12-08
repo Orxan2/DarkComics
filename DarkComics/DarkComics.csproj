@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20211130204205_Okay.cs" />
     <Compile Remove="Migrations\20211130204205_Okay.Designer.cs" />
+    <Compile Remove="Migrations\20211201053817_UpdateDatabase.cs" />
+    <Compile Remove="Migrations\20211201053817_UpdateDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20211201054500_UpdateDatabase.cs" />
+    <Compile Remove="Migrations\20211201054500_UpdateDatabase.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

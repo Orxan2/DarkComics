@@ -202,7 +202,7 @@ namespace DarkComics.Areas.Admin.Controllers
 
 
             List<TagNews> tagNews = _db.TagNews.Where(tn => tn.NewsId == newsViewModel.News.Id).ToList();
-            List<CharacterNews> characterNews = _db.CharacterNews.Where(cn => cn.NewsId == newsViewModel.News.Id).ToList();
+            List<CharacterNews> characterNews = _db.CharacterNews.Include(c=>c.Character).ThenInclude(c=>c.CharacterNews).Where(cn => cn.NewsId == newsViewModel.News.Id).ToList();
 
             foreach (var oldCharacterNews in characterNews)            {
 

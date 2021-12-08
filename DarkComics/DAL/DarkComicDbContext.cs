@@ -71,6 +71,8 @@ namespace DarkComics.DAL
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Comment>().
                Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            modelBuilder.Entity<News>().
+              Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             modelBuilder.Entity<Contact>().
                Property(c => c.IsActive).HasDefaultValue(true);
             modelBuilder.Entity<Comment>().

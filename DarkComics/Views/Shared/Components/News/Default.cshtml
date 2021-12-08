@@ -29,7 +29,6 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="comment mx-1"><i class="far fa-comment"> @news.PostComments.Where(pc=>pc.Comment.IsActive).Count()</i></p>
-                                            <p class="like mx-1"><i class="far fa-heart"></i> 5</p>
                                         </div>
                                         <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id" class="news-card__btn">Go Detail...</a>
                                     </div>

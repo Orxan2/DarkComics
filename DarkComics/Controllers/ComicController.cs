@@ -16,8 +16,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DarkComics.Controllers
-{
-    [Authorize]
+{    
     public class ComicController : Controller
     {
         private readonly DarkComicDbContext _context;

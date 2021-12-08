@@ -10,7 +10,7 @@
         <div class="row py-4 justify-content-between align-items-center">
             <div class="col-2">
                 <a asp-controller="Home" asp-action="Index" class="logo-container overflow-hidden">
-                    <img src="assets/img/logo-2.png" width="75" alt="logo" class="rounded-circle" />
+                    <img src="~/assets/img/logo-2.png" width="75" alt="logo" class="rounded-circle" />
                 </a>
             </div>
             @await Component.InvokeAsync("Search")
@@ -28,7 +28,6 @@
                 <li><a asp-controller="Character" asp-action="Index" class="menu-text"><i class="fas fa-mask"></i> Characters</a></li>
                 <li><a asp-controller="Comic" asp-action="Index" class="menu-text"><i class="fas fa-book"></i> Comics</a></li>
                 <li><a asp-controller="News" asp-action="Index" class="menu-text"><i class="fas fa-puzzle-piece"></i> News</a></li>
-                <li><a asp-controller="Read" asp-action="Index" class="menu-text"><i class="fas fa-book-open"></i> Read Comics</a></li>
             </ul>
         </div>
     </div>

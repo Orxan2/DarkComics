@@ -44,19 +44,19 @@
                     {
                         count++;
                     }
-                    <tr>
-                        <th scope="row">@count</th>
+                <tr>
+                    <th scope="row">@count</th>
 
-                        <td>@news.Title</td>
-                        <td>@news.Blogger</td>
-                        <td>@Html.Raw(news.ShortDescription).ToString().Substring(0, 20)</td>
-                        <td>@news.CreatedDate.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm::ss")</td>
-                        <td class="text-center">
-                            <a asp-action="Detail" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
-                            <a asp-action="Update" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
-                            <a asp-action="Delete" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-7s-trash pe-lg"></i></a>
-                        </td>
-                    </tr>
+                    <td>@news.Title</td>
+                    <td>@news.Blogger</td>
+                    <td>@Html.Raw(news.ShortDescription)</td>
+                    <td>@(news.CreatedDate.GetValueOrDefault() > DateTime.Now.AddDays(-1)?(news.CreatedDate.GetValueOrDefault().ToString("HH:mm")):(news.CreatedDate.GetValueOrDefault().ToString("dd MMM")))</td>
+                    <td class="text-center">
+                        <a asp-action="Detail" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-info"><i class="pe-7s-look pe-lg"></i></a>
+                        <a asp-action="Update" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-warning"><i class="pe-7s-pen pe-lg"></i></a>
+                        <a asp-action="Delete" asp-route-id="@news.Id" class="mb-2 mr-2 btn btn-outline-danger"><i class="pe-7s-trash pe-lg"></i></a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
